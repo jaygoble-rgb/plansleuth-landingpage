@@ -78,7 +78,7 @@ export default function Home() {
           <div className="relative animate-in slide-in-from-right-8 duration-1000 fade-in fill-mode-both delay-300">
             <div className="absolute -inset-4 bg-gradient-to-tr from-secondary/20 to-transparent blur-2xl rounded-full opacity-50"></div>
             <img 
-              src="/hero-illustration.png" 
+              src="/hero-illustration.png?v=2" 
               alt="A warm, inviting desk scene with a magnifying glass" 
               className="w-full h-auto rounded-2xl shadow-2xl object-cover border border-primary/5 relative z-10"
               onError={(e) => {
