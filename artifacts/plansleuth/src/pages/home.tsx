@@ -79,40 +79,82 @@ export default function Home() {
           </div>
           
           <div className="relative flex items-center justify-center animate-in fade-in slide-in-from-right-8 duration-1000 fill-mode-both delay-300">
-            {/* Magnifying glass visual */}
+            {/* Magnifying glass + bills visual */}
             <div className="relative w-80 h-96 md:w-96 md:h-[440px]">
-              {/* SVG magnifying glass */}
-              <svg viewBox="0 0 340 380" className="absolute inset-0 w-full h-full" style={{ animation: "float 5s ease-in-out infinite" }}>
-                {/* Handle */}
-                <line x1="248" y1="248" x2="310" y2="320" stroke="hsl(var(--primary))" strokeWidth="18" strokeLinecap="round" />
-                {/* Outer ring */}
-                <circle cx="150" cy="150" r="138" fill="white" stroke="hsl(var(--primary))" strokeWidth="3" />
-                {/* Inner lens */}
-                <circle cx="150" cy="150" r="122" fill="hsl(28 80% 97%)" />
-              </svg>
+              <svg viewBox="0 0 340 390" className="absolute inset-0 w-full h-full" style={{ animation: "float 5s ease-in-out infinite" }}>
+                <defs>
+                  <clipPath id="lensClip">
+                    <circle cx="152" cy="152" r="112" />
+                  </clipPath>
+                  <linearGradient id="scanGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="transparent" />
+                    <stop offset="25%" stopColor="hsla(21,73%,43%,0.65)" />
+                    <stop offset="75%" stopColor="hsla(21,73%,43%,0.65)" />
+                    <stop offset="100%" stopColor="transparent" />
+                  </linearGradient>
+                </defs>
 
-              {/* Case file card inside the lens */}
-              <div className="absolute" style={{ top: 28, left: 28, width: 244, height: 244, borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div className="bg-white border border-primary/10 rounded-lg shadow-lg p-3 w-44" style={{ fontSize: 11 }}>
-                  <div className="text-secondary font-bold uppercase tracking-widest pb-2 mb-2 border-b border-primary/10" style={{ fontSize: 8, letterSpacing: "1.5px" }}>
-                    Case File — Active
-                  </div>
-                  {[
-                    { service: "Cell Plan", saving: "−$22/mo", flag: true },
-                    { service: "Internet", saving: "−$18/mo", flag: true },
-                  ].map((row, i) => (
-                    <div key={i} className="flex justify-between items-center py-1.5 border-b border-primary/5">
-                      <span className="text-muted-foreground">{row.service}</span>
-                      <span className="font-bold text-green-600">{row.saving}</span>
-                    </div>
-                  ))}
-                  <div className="mt-2 bg-secondary/10 border border-secondary/30 rounded p-1.5 text-secondary font-semibold leading-snug" style={{ fontSize: 9 }}>
-                    Better plans found. Alert sent.
-                  </div>
-                </div>
-                {/* Scan line */}
-                <div className="absolute left-0 right-0" style={{ height: 2, background: "linear-gradient(90deg, transparent, rgba(192,82,31,0.5), transparent)", animation: "scanline 2.5s ease-in-out infinite" }} />
-              </div>
+                {/* Bill stack — back sheets for depth */}
+                <rect x="84" y="78" width="172" height="226" rx="8" fill="#e8e4dc" stroke="#ccc8c0" strokeWidth="1" />
+                <rect x="72" y="65" width="172" height="226" rx="8" fill="#f0ede7" stroke="#d4d0c8" strokeWidth="1.2" />
+
+                {/* Front bill */}
+                <rect x="60" y="52" width="172" height="226" rx="8" fill="white" stroke="#c8c4bc" strokeWidth="1.5" />
+
+                {/* Bill header bar */}
+                <rect x="60" y="52" width="172" height="34" rx="8" fill="hsl(221,47%,18%)" />
+                <rect x="60" y="70" width="172" height="16" fill="hsl(221,47%,18%)" />
+
+                {/* Header: carrier name placeholder + "MONTHLY BILL" */}
+                <rect x="72" y="61" width="64" height="5" rx="2" fill="rgba(255,255,255,0.6)" />
+                <rect x="72" y="69" width="44" height="4" rx="2" fill="rgba(255,255,255,0.25)" />
+                <rect x="208" y="58" width="12" height="4" rx="2" fill="rgba(255,255,255,0.2)" />
+                <rect x="208" y="65" width="12" height="4" rx="2" fill="rgba(255,255,255,0.15)" />
+
+                {/* Account section */}
+                <rect x="72" y="100" width="52" height="4" rx="2" fill="#d0ccc4" />
+                {/* Amount due — large */}
+                <rect x="72" y="111" width="36" height="4" rx="2" fill="#c4c0b8" />
+                <rect x="72" y="120" width="72" height="12" rx="3" fill="#b0aba2" />
+
+                {/* Divider */}
+                <line x1="72" y1="144" x2="218" y2="144" stroke="#ece8e2" strokeWidth="1" />
+
+                {/* Line items: service rows */}
+                <rect x="72" y="153" width="88" height="4" rx="2" fill="#dedad2" />
+                <rect x="196" y="153" width="28" height="4" rx="2" fill="#dedad2" />
+
+                <rect x="72" y="167" width="72" height="4" rx="2" fill="#e8e4dc" />
+                <rect x="196" y="167" width="28" height="4" rx="2" fill="#e8e4dc" />
+
+                <rect x="72" y="181" width="82" height="4" rx="2" fill="#dedad2" />
+                <rect x="196" y="181" width="28" height="4" rx="2" fill="#dedad2" />
+
+                <rect x="72" y="195" width="62" height="4" rx="2" fill="#e8e4dc" />
+                <rect x="196" y="195" width="28" height="4" rx="2" fill="#e8e4dc" />
+
+                {/* Divider */}
+                <line x1="72" y1="212" x2="218" y2="212" stroke="#d8d4cc" strokeWidth="1" />
+
+                {/* Total */}
+                <rect x="72" y="220" width="40" height="5" rx="2" fill="#c4c0b8" />
+                <rect x="180" y="218" width="44" height="10" rx="2" fill="#b0aba2" />
+
+                {/* Magnifying glass handle */}
+                <line x1="242" y1="242" x2="314" y2="322" stroke="hsl(221,47%,18%)" strokeWidth="22" strokeLinecap="round" />
+
+                {/* Lens ring */}
+                <circle cx="152" cy="152" r="112" fill="rgba(210,228,255,0.10)" stroke="hsl(221,47%,18%)" strokeWidth="14" />
+
+                {/* Glass shine */}
+                <ellipse cx="112" cy="106" rx="26" ry="18" fill="rgba(255,255,255,0.13)" />
+
+                {/* Animated scan line clipped to lens */}
+                <g clipPath="url(#lensClip)" style={{ animation: "scanlineSVG 2.8s ease-in-out infinite" }}>
+                  <rect x="40" y="148" width="224" height="7" rx="3" fill="url(#scanGrad)" />
+                  <rect x="40" y="153" width="224" height="2" rx="1" fill="rgba(192,82,31,0.15)" />
+                </g>
+              </svg>
 
               {/* "Case Open" stamp */}
               <div className="absolute flex items-center justify-center text-center"
@@ -137,11 +179,10 @@ export default function Home() {
                 0%, 100% { transform: translateY(0px); }
                 50% { transform: translateY(-10px); }
               }
-              @keyframes scanline {
-                0% { top: 30px; opacity: 0; }
-                10% { opacity: 1; }
-                90% { opacity: 1; }
-                100% { top: 210px; opacity: 0; }
+              @keyframes scanlineSVG {
+                0%   { transform: translateY(-108px); }
+                50%  { transform: translateY(108px); }
+                100% { transform: translateY(-108px); }
               }
             `}</style>
           </div>
