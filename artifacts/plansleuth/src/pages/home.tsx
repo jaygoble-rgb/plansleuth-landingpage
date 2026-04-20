@@ -156,7 +156,6 @@ export default function Home() {
               }
             ].map((step, i) => (
               <div key={i} className="p-8 rounded-2xl bg-white border border-primary/5 shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
-                <div className="absolute top-6 right-6 font-serif text-5xl font-bold text-primary/5 select-none">{step.number}</div>
                 <div className="text-4xl font-serif font-bold text-primary/10 mb-6">{step.number}</div>
                 <h3 className="text-xl font-bold mb-3 text-primary">{step.title}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">{step.desc}</p>
