@@ -45,7 +45,10 @@ export default function Home() {
               The Case of the<br /><em className="font-serif italic text-secondary">Overpriced Plan</em>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
-              We monitor your cell phone and internet plans and alert you when a better deal appears. <strong className="text-primary font-medium">On plan, on budget.</strong>
+              We all know it. Providers count on us not paying attention — and quietly raise prices while we're busy with everything else. Enough!
+            </p>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
+              PlanSleuth continuously monitors cell phone and internet plans — ours, yours, everyone's — and alerts you the moment a better deal appears. The more members, the smarter we get.
             </p>
             
             <form onSubmit={handleSubscribe} className="relative flex flex-col sm:flex-row gap-3 max-w-md w-full">
