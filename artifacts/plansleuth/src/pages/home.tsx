@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Shield, Bell, CheckCircle, Wifi, Smartphone, ArrowRight, Users, Clock } from "lucide-react";
+import { Search, CheckCircle, Wifi, Smartphone, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -224,60 +224,6 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Solution / Value Props */}
-      <section className="py-24 md:py-32 bg-primary/5">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="order-2 md:order-1">
-              <div className="space-y-12">
-                {[
-                  {
-                    title: "Known Savings Opportunities",
-                    desc: "We do the digging. When a better rate for your specific usage appears, you're the first to know.",
-                    icon: Bell
-                  },
-                  {
-                    title: "Short-List Recommendations",
-                    desc: "Powered by the wisdom of the community. See exactly what your neighbors are actually paying and saving.",
-                    icon: Users
-                  },
-                  {
-                    title: "Hassle-Free Updates",
-                    desc: "Make the switch with a click. We guide you through the process, minus the hours on hold.",
-                    icon: ArrowRight
-                  },
-                  {
-                    title: "Peace of Mind",
-                    desc: "Rest easy knowing someone smart is looking out for your wallet. You'll never overpay again.",
-                    icon: Shield
-                  }
-                ].map((prop, i) => (
-                  <div key={i} className="flex gap-6">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center border border-primary/10">
-                      <prop.icon className="w-6 h-6 text-secondary" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2 text-primary">{prop.title}</h3>
-                      <p className="text-muted-foreground text-lg">{prop.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="order-1 md:order-2 bg-white rounded-3xl p-8 shadow-xl border border-primary/5 relative">
-              <div className="absolute -top-6 -right-6 bg-secondary text-primary font-bold py-2 px-6 rounded-full transform rotate-3 shadow-lg">
-                Your personal plan detective
-              </div>
-              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-primary">We've got your back.</h2>
-              <p className="text-xl text-muted-foreground leading-relaxed">
-                Think of PlanSleuth as your trusted private investigator who quietly watches the market. We do the research, crunch the numbers, and bring you the evidence.
-              </p>
-            </div>
           </div>
         </div>
       </section>
