@@ -42,7 +42,7 @@ export default function Home() {
               Now investigating
             </div>
             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6 text-primary">
-              The Case of the Overpriced Plan
+              The Case of the<br /><em className="font-serif italic text-secondary">Overpriced Plan</em>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
               We monitor your cell phone and internet plans and alert you when a better deal appears. <strong className="text-primary font-medium">On plan, on budget.</strong>
