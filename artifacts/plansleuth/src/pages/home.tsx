@@ -29,7 +29,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <header className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden flex items-center justify-center">
+      <header className="relative pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden flex items-center justify-center">
         <div className="absolute inset-0 z-0 pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/40 via-background to-background" />
         
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full grid md:grid-cols-2 gap-12 items-center">
