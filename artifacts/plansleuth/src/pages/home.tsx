@@ -252,7 +252,7 @@ export default function Home() {
               {
                 number: "03",
                 title: "Case closed.",
-                desc: "You get an alert the moment a genuinely better plan exists. Be better informed and make the switch. Case closed.",
+                desc: "You get an alert the moment a genuinely better plan for you exists. Be better informed to make a switch. Case closed.",
                 tag: "Switch to a better plan"
               }
             ].map((step, i) => (
