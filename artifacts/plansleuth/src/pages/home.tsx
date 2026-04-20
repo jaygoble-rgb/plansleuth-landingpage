@@ -105,40 +105,38 @@ export default function Home() {
                 <rect x="60" y="52" width="172" height="34" rx="8" fill="hsl(221,47%,18%)" />
                 <rect x="60" y="70" width="172" height="16" fill="hsl(221,47%,18%)" />
 
-                {/* Header: carrier name placeholder + "MONTHLY BILL" */}
-                <rect x="72" y="61" width="64" height="5" rx="2" fill="rgba(255,255,255,0.6)" />
-                <rect x="72" y="69" width="44" height="4" rx="2" fill="rgba(255,255,255,0.25)" />
-                <rect x="208" y="58" width="12" height="4" rx="2" fill="rgba(255,255,255,0.2)" />
-                <rect x="208" y="65" width="12" height="4" rx="2" fill="rgba(255,255,255,0.15)" />
+                {/* Header text */}
+                <text x="72" y="66" fontFamily="sans-serif" fontSize="8" fontWeight="700" letterSpacing="1.5" fill="rgba(255,255,255,0.9)">WIRELESS BILL</text>
+                <text x="72" y="77" fontFamily="sans-serif" fontSize="6.5" fill="rgba(255,255,255,0.5)">April 2026</text>
+                <text x="224" y="66" fontFamily="sans-serif" fontSize="6.5" fill="rgba(255,255,255,0.45)" textAnchor="end">Acct #8847</text>
 
-                {/* Account section */}
-                <rect x="72" y="100" width="52" height="4" rx="2" fill="#d0ccc4" />
-                {/* Amount due — large */}
-                <rect x="72" y="111" width="36" height="4" rx="2" fill="#c4c0b8" />
-                <rect x="72" y="120" width="72" height="12" rx="3" fill="#b0aba2" />
+                {/* Account / amount due */}
+                <text x="72" y="100" fontFamily="sans-serif" fontSize="7" fill="#a8a49c">J. Smith — Unlimited Plus</text>
+                <text x="72" y="113" fontFamily="sans-serif" fontSize="7" fill="#b0aba2">Amount Due</text>
+                <text x="72" y="128" fontFamily="sans-serif" fontSize="14" fontWeight="700" fill="#6b665e">$89.99</text>
 
                 {/* Divider */}
                 <line x1="72" y1="144" x2="218" y2="144" stroke="#ece8e2" strokeWidth="1" />
 
-                {/* Line items: service rows */}
-                <rect x="72" y="153" width="88" height="4" rx="2" fill="#dedad2" />
-                <rect x="196" y="153" width="28" height="4" rx="2" fill="#dedad2" />
+                {/* Line items */}
+                <text x="72" y="157" fontFamily="sans-serif" fontSize="7.5" fill="#8c887f">Base Plan</text>
+                <text x="224" y="157" fontFamily="sans-serif" fontSize="7.5" fill="#8c887f" textAnchor="end">$45.00</text>
 
-                <rect x="72" y="167" width="72" height="4" rx="2" fill="#e8e4dc" />
-                <rect x="196" y="167" width="28" height="4" rx="2" fill="#e8e4dc" />
+                <text x="72" y="171" fontFamily="sans-serif" fontSize="7.5" fill="#8c887f">Unlimited Data</text>
+                <text x="224" y="171" fontFamily="sans-serif" fontSize="7.5" fill="#8c887f" textAnchor="end">$25.00</text>
 
-                <rect x="72" y="181" width="82" height="4" rx="2" fill="#dedad2" />
-                <rect x="196" y="181" width="28" height="4" rx="2" fill="#dedad2" />
+                <text x="72" y="185" fontFamily="sans-serif" fontSize="7.5" fill="#8c887f">Device Payment</text>
+                <text x="224" y="185" fontFamily="sans-serif" fontSize="7.5" fill="#8c887f" textAnchor="end">$12.50</text>
 
-                <rect x="72" y="195" width="62" height="4" rx="2" fill="#e8e4dc" />
-                <rect x="196" y="195" width="28" height="4" rx="2" fill="#e8e4dc" />
+                <text x="72" y="199" fontFamily="sans-serif" fontSize="7.5" fill="#8c887f">Taxes &amp; Fees</text>
+                <text x="224" y="199" fontFamily="sans-serif" fontSize="7.5" fill="#8c887f" textAnchor="end">$7.49</text>
 
                 {/* Divider */}
                 <line x1="72" y1="212" x2="218" y2="212" stroke="#d8d4cc" strokeWidth="1" />
 
                 {/* Total */}
-                <rect x="72" y="220" width="40" height="5" rx="2" fill="#c4c0b8" />
-                <rect x="180" y="218" width="44" height="10" rx="2" fill="#b0aba2" />
+                <text x="72" y="225" fontFamily="sans-serif" fontSize="7.5" fontWeight="700" fill="#6b665e">Total Due</text>
+                <text x="224" y="225" fontFamily="sans-serif" fontSize="9" fontWeight="700" fill="#6b665e" textAnchor="end">$89.99</text>
 
                 {/* Magnifying glass handle */}
                 <line x1="242" y1="242" x2="314" y2="322" stroke="hsl(221,47%,18%)" strokeWidth="22" strokeLinecap="round" />
