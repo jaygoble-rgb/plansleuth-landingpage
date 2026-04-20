@@ -68,7 +68,7 @@ export default function Home() {
                     required
                   />
                   <Button type="submit" size="lg" className="h-14 rounded-xl px-8 bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20">
-                    Get Early Access
+                    Join the Investigation
                   </Button>
                 </>
               )}
