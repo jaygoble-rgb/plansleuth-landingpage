@@ -33,7 +33,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0 pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/40 via-background to-background" />
         
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full grid md:grid-cols-2 gap-12 items-center">
-          <div className="max-w-xl animate-in slide-in-from-bottom-8 duration-700 fade-in fill-mode-both">
+          <div className="animate-in slide-in-from-bottom-8 duration-700 fade-in fill-mode-both">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 text-secondary-foreground text-sm font-medium mb-6">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
@@ -44,13 +44,13 @@ export default function Home() {
             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6 text-primary">
               The Case of the<br /><em className="font-serif italic text-secondary">Overpriced Plan</em>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
               We all know it. Providers count on us not paying attention — quietly offering cheaper plans to new customers while loyal ones keep paying full price. Enough.
             </p>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
               We built PlanSleuth to continuously monitor cell phone and internet plans — ours, yours, everyone's — and alert you the moment a better deal appears. The more members, the smarter we all get.
             </p>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
               PlanSleuth is in private beta. Join the waitlist and be among the first to stop overpaying.
             </p>
             
