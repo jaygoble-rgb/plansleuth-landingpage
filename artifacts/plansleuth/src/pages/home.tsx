@@ -165,7 +165,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4">
               {[
                 { label: "Cell Phone", icon: Smartphone, active: true },
-                { label: "Internet & TV", icon: Wifi, active: true },
+                { label: "Internet", icon: Wifi, active: true },
               ].map((service, i) => (
                 <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center gap-3 hover:bg-white/10 transition-colors">
                   <service.icon className="w-8 h-8 text-secondary" />
