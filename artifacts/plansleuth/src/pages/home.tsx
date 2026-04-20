@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Shield, Bell, CheckCircle, Wifi, Smartphone, ArrowRight, Eye, Users, FileText, Clock } from "lucide-react";
+import { Search, Shield, Bell, CheckCircle, Wifi, Smartphone, ArrowRight, Users, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -124,43 +124,46 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pain Points */}
+      {/* How It Works — Three Steps */}
       <section className="py-24 md:py-32 relative">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-primary">Why We Overpay</h2>
-            <p className="text-xl text-muted-foreground">The industry has engineered a system designed to keep you locked into subpar rates. We found the four main culprits.</p>
+            <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-4">Method of investigation</p>
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-primary">
+              Three steps.<br /><em className="font-serif font-normal text-secondary">One less headache.</em>
+            </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                title: "Apathy",
-                desc: "Life gets busy. Reviewing a cable bill falls to the very bottom of the to-do list.",
-                icon: FileText
+                number: "01",
+                title: "File your plan",
+                desc: "Tell us what you're paying now. Cell plan, internet bill — whatever you've been quietly dreading to look at.",
+                tag: "Takes 2 minutes"
               },
               {
-                title: "Decision Paralysis",
-                desc: "Hundreds of confusing plans, bundled offers, and fine print make choosing impossible.",
-                icon: ArrowRight
+                number: "02",
+                title: "We investigate",
+                desc: "PlanSleuth monitors the market continuously — and cross-checks it against what thousands of real members are paying and switching to.",
+                tag: "Community-powered"
               },
               {
-                title: "Intimidation",
-                desc: "No one wants to call the retention department and negotiate. It's built to be frustrating.",
-                icon: Shield
-              },
-              {
-                title: "Lack of Confidence",
-                desc: "How do you even know if a deal is actually good? The math is deliberately complex.",
-                icon: Eye
+                number: "03",
+                title: "Case closed.",
+                desc: "You get an alert the moment a genuinely better plan exists. Make the switch. Case closed.",
+                tag: "Switch to a better plan"
               }
-            ].map((pain, i) => (
-              <div key={i} className="p-8 rounded-2xl bg-white border border-primary/5 shadow-sm hover:shadow-md transition-all group">
-                <div className="w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center mb-6 group-hover:bg-secondary/20 transition-colors">
-                  <pain.icon className="w-6 h-6 text-primary group-hover:text-secondary transition-colors" />
+            ].map((step, i) => (
+              <div key={i} className="p-8 rounded-2xl bg-white border border-primary/5 shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
+                <div className="absolute top-6 right-6 font-serif text-5xl font-bold text-primary/5 select-none">{step.number}</div>
+                <div className="text-4xl font-serif font-bold text-primary/10 mb-6">{step.number}</div>
+                <h3 className="text-xl font-bold mb-3 text-primary">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-6">{step.desc}</p>
+                <div className="inline-flex items-center gap-2 text-sm font-medium text-secondary">
+                  <ArrowRight className="w-4 h-4" />
+                  {step.tag}
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-primary">{pain.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{pain.desc}</p>
               </div>
             ))}
           </div>
