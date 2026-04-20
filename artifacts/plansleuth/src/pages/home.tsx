@@ -240,7 +240,7 @@ export default function Home() {
               {
                 number: "01",
                 title: "File your plan",
-                desc: "Tell us what you're paying now. Cell plan, internet bill — whatever you've been quietly dreading to look at.",
+                desc: "Tell us what plan you're on. Cell plan, internet bill - whatever you've been quietly dreading to look at.",
                 tag: "Takes 2 minutes"
               },
               {
