@@ -45,7 +45,7 @@ export default function Home() {
               The Case of the<br /><em className="font-serif italic text-secondary">Overpriced Plan</em>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
-              We all know it. Providers count on us not paying attention — quietly offering cheaper plans without telling us. Enough.
+              We all know it. Providers count on us not paying attention — quietly offering cheaper plans without telling us. Enough!
             </p>
             <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
               We built PlanSleuth to continuously monitor cell phone and internet plans — ours, yours, everyone's — and alert you the moment a better deal appears. The more members, the smarter we all get.
