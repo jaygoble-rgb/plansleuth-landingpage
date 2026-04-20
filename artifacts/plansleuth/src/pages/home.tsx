@@ -75,16 +75,72 @@ export default function Home() {
             </form>
           </div>
           
-          <div className="relative animate-in slide-in-from-right-8 duration-1000 fade-in fill-mode-both delay-300">
-            <div className="absolute -inset-4 bg-gradient-to-tr from-secondary/20 to-transparent blur-2xl rounded-full opacity-50"></div>
-            <img 
-              src="/hero-illustration.png?v=2" 
-              alt="A warm, inviting desk scene with a magnifying glass" 
-              className="w-full h-auto rounded-2xl shadow-2xl object-cover border border-primary/5 relative z-10"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
-            />
+          <div className="relative flex items-center justify-center animate-in fade-in slide-in-from-right-8 duration-1000 fill-mode-both delay-300">
+            {/* Magnifying glass visual */}
+            <div className="relative w-80 h-96 md:w-96 md:h-[440px]">
+              {/* SVG magnifying glass */}
+              <svg viewBox="0 0 340 380" className="absolute inset-0 w-full h-full" style={{ animation: "float 5s ease-in-out infinite" }}>
+                {/* Handle */}
+                <line x1="248" y1="248" x2="310" y2="320" stroke="hsl(var(--primary))" strokeWidth="18" strokeLinecap="round" />
+                {/* Outer ring */}
+                <circle cx="150" cy="150" r="138" fill="white" stroke="hsl(var(--primary))" strokeWidth="3" />
+                {/* Inner lens */}
+                <circle cx="150" cy="150" r="122" fill="hsl(28 80% 97%)" />
+              </svg>
+
+              {/* Case file card inside the lens */}
+              <div className="absolute" style={{ top: 28, left: 28, width: 244, height: 244, borderRadius: "50%", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div className="bg-white border border-primary/10 rounded-lg shadow-lg p-3 w-44" style={{ fontSize: 11 }}>
+                  <div className="text-secondary font-bold uppercase tracking-widest pb-2 mb-2 border-b border-primary/10" style={{ fontSize: 8, letterSpacing: "1.5px" }}>
+                    Case File — Active
+                  </div>
+                  {[
+                    { service: "Cell Plan", saving: "−$22/mo", flag: true },
+                    { service: "Internet", saving: "−$18/mo", flag: true },
+                  ].map((row, i) => (
+                    <div key={i} className="flex justify-between items-center py-1.5 border-b border-primary/5">
+                      <span className="text-muted-foreground">{row.service}</span>
+                      <span className="font-bold text-green-600">{row.saving}</span>
+                    </div>
+                  ))}
+                  <div className="mt-2 bg-secondary/10 border border-secondary/30 rounded p-1.5 text-secondary font-semibold leading-snug" style={{ fontSize: 9 }}>
+                    Better plans found. Alert sent.
+                  </div>
+                </div>
+                {/* Scan line */}
+                <div className="absolute left-0 right-0" style={{ height: 2, background: "linear-gradient(90deg, transparent, rgba(192,82,31,0.5), transparent)", animation: "scanline 2.5s ease-in-out infinite" }} />
+              </div>
+
+              {/* "Case Open" stamp */}
+              <div className="absolute flex items-center justify-center text-center"
+                style={{
+                  top: 16, right: -10, width: 76, height: 76,
+                  border: "2.5px solid hsl(var(--secondary))",
+                  borderRadius: "50%",
+                  fontFamily: "serif",
+                  fontSize: 11,
+                  color: "hsl(var(--secondary))",
+                  transform: "rotate(6deg)",
+                  background: "hsl(var(--background))",
+                  lineHeight: 1.2,
+                  fontWeight: 700,
+                }}>
+                Case<br />Open
+              </div>
+            </div>
+
+            <style>{`
+              @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+              }
+              @keyframes scanline {
+                0% { top: 30px; opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { top: 210px; opacity: 0; }
+              }
+            `}</style>
           </div>
         </div>
       </header>
