@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Shield, Bell, CheckCircle, Home as HomeIcon, Wifi, Smartphone, Car, Landmark, ArrowRight, Eye, Users, FileText } from "lucide-react";
+import { Search, Shield, Bell, CheckCircle, Wifi, Smartphone, ArrowRight, Eye, Users, FileText, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -45,7 +45,7 @@ export default function Home() {
               The Case of the Overpriced Plan
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
-              We monitor your household service plans and alert you when a better deal appears. <strong className="text-primary font-medium">On plan, on budget.</strong>
+              We monitor your cell phone and internet plans and alert you when a better deal appears. <strong className="text-primary font-medium">On plan, on budget.</strong>
             </p>
             
             <form onSubmit={handleSubscribe} className="relative flex flex-col sm:flex-row gap-3 max-w-md w-full">
@@ -105,18 +105,20 @@ export default function Home() {
             
             <div className="grid grid-cols-2 gap-4">
               {[
-                { label: "Cell Phone", icon: Smartphone },
-                { label: "Internet & TV", icon: Wifi },
-                { label: "Car Insurance", icon: Car },
-                { label: "Home Insurance", icon: HomeIcon },
-                { label: "Mortgages", icon: Landmark },
-                { label: "More coming...", icon: Search }
+                { label: "Cell Phone", icon: Smartphone, active: true },
+                { label: "Internet & TV", icon: Wifi, active: true },
               ].map((service, i) => (
                 <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center gap-3 hover:bg-white/10 transition-colors">
                   <service.icon className="w-8 h-8 text-secondary" />
                   <span className="font-medium text-white">{service.label}</span>
+                  <span className="text-xs text-secondary font-medium px-2 py-0.5 bg-secondary/20 rounded-full">Available at launch</span>
                 </div>
               ))}
+              <div className="col-span-2 bg-white/5 border border-white/10 border-dashed p-6 rounded-2xl flex flex-col items-center justify-center text-center gap-3">
+                <Clock className="w-8 h-8 text-white/40" />
+                <span className="font-medium text-white/60">More services coming</span>
+                <span className="text-xs text-white/40">Car insurance, home insurance, mortgages & more</span>
+              </div>
             </div>
           </div>
         </div>
@@ -228,7 +230,7 @@ export default function Home() {
           <Search className="w-16 h-16 text-secondary mx-auto mb-8" />
           <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6 text-white">Join the Investigation.</h2>
           <p className="text-xl text-white/80 mb-12">
-            PlanSleuth is currently in private beta. Join the waitlist to be among the first to stop overpaying for household services.
+            PlanSleuth is currently in private beta, starting with cell phone and internet plans. Join the waitlist to be among the first to stop overpaying.
           </p>
           
           <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
