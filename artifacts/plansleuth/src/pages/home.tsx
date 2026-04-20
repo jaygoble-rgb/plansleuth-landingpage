@@ -199,7 +199,7 @@ export default function Home() {
               <p className="text-xl text-primary-foreground/80 leading-relaxed mb-8">
                 Case file: US consumers lose approximately $400B every year on household services. That's about <strong className="text-secondary">$4,500 per household</strong> taken from your pocket.
               </p>
-              <p className="text-lg text-primary-foreground/70 leading-relaxed">
+              <p className="text-xl text-primary-foreground/80 leading-relaxed">
                 Providers rely on you setting it and forgetting it. They introduce cheaper and better plans without telling you. It's not an accident—it's their business model.
               </p>
             </div>
