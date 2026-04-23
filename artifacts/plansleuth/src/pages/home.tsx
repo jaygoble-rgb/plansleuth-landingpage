@@ -51,7 +51,7 @@ export default function Home() {
               We built <strong className="text-xl md:text-2xl text-primary">PlanSleuth</strong> to continuously monitor <strong className="text-xl md:text-2xl text-primary">cell phone</strong> and <strong className="text-xl md:text-2xl text-primary">internet plans</strong> — ours, yours, everyone's — and alert you the moment a better deal appears. The more members, the smarter we all get.
             </p>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-              PlanSleuth is currently in private beta. Join the waitlist for early access — we're opening spots in small batches.
+              <strong className="text-xl md:text-2xl text-primary">PlanSleuth</strong> is currently in private beta. <strong>Join the waitlist for early access</strong> — we're opening spots in small batches.
             </p>
             
             <form onSubmit={handleSubscribe} className="relative flex flex-col sm:flex-row gap-3 max-w-md w-full">
