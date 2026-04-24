@@ -23,9 +23,6 @@ export default function Home() {
           <Search className="w-6 h-6 text-secondary" strokeWidth={3} />
           <span>PlanSleuth</span>
         </div>
-        <Button variant="outline" className="hidden md:flex rounded-full border-primary/20 hover:bg-primary/5 text-primary">
-          Join Waitlist
-        </Button>
       </nav>
 
       {/* Hero Section */}
