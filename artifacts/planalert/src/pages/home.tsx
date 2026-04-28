@@ -39,7 +39,7 @@ export default function Home() {
               Now monitoring
             </div>
             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6 text-primary">
-              Stop overpaying on your<br /><em className="not-italic text-secondary" style={{ fontFamily: "'Satisfy', cursive" }}>cell phone &amp; internet plans</em>
+              Stop overpaying on your<br /><em className="not-italic text-secondary" style={{ fontFamily: "'Yellowtail', cursive" }}>cell phone &amp; internet plans</em>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
               Providers quietly offer cheaper plans to new customers and never tell you. We think that's a little unfair.
