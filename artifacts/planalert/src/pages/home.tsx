@@ -39,7 +39,7 @@ export default function Home() {
               Now monitoring
             </div>
             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6 text-primary">
-              Stop overpaying on your<br /><em className="not-italic text-secondary" style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 700 }}>cell phone &amp; internet plans</em>
+              Stop overpaying on your<br /><em className="font-serif italic text-secondary">cell phone &amp; internet plans</em>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
               We built <strong className="text-xl md:text-2xl text-primary">PlanAlert</strong> to continuously monitor <strong className="text-xl md:text-2xl text-primary">cell phone</strong> and <strong className="text-xl md:text-2xl text-primary">internet plans</strong> — ours, yours, everyone's — and ping you the moment a better deal appears. The more members, the smarter we all get.
