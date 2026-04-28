@@ -75,60 +75,7 @@ export default function Home() {
           <div className="relative flex items-center justify-center animate-in fade-in slide-in-from-right-8 duration-1000 fill-mode-both delay-300">
             {/* Bills + alert notification visual */}
             <div className="relative w-80 h-96 md:w-96 md:h-[440px]">
-              <svg viewBox="0 0 340 390" className="absolute inset-0 w-full h-full" style={{ animation: "float 5s ease-in-out infinite" }}>
-                <defs>
-                  <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="hsla(38,92%,50%,0)" />
-                    <stop offset="50%" stopColor="hsla(38,92%,50%,0.35)" />
-                    <stop offset="100%" stopColor="hsla(38,92%,50%,0)" />
-                  </linearGradient>
-                </defs>
-
-                {/* Bill stack — back sheets for depth */}
-                <rect x="74" y="98" width="200" height="244" rx="10" fill="#e8e4dc" stroke="#ccc8c0" strokeWidth="1" transform="rotate(4 174 220)" />
-                <rect x="62" y="84" width="200" height="244" rx="10" fill="#f0ede7" stroke="#d4d0c8" strokeWidth="1.2" transform="rotate(-2 162 206)" />
-
-                {/* Front bill */}
-                <rect x="58" y="72" width="200" height="244" rx="10" fill="white" stroke="#c8c4bc" strokeWidth="1.5" />
-
-                {/* Bill header bar */}
-                <rect x="58" y="72" width="200" height="40" rx="10" fill="hsl(215,65%,11%)" />
-                <rect x="58" y="92" width="200" height="20" fill="hsl(215,65%,11%)" />
-
-                {/* Header text */}
-                <text x="72" y="89" fontFamily="sans-serif" fontSize="9" fontWeight="700" letterSpacing="1.5" fill="rgba(255,255,255,0.9)">WIRELESS BILL</text>
-                <text x="72" y="102" fontFamily="sans-serif" fontSize="7" fill="rgba(255,255,255,0.5)">April 2026</text>
-                <text x="248" y="89" fontFamily="sans-serif" fontSize="7" fill="rgba(255,255,255,0.45)" textAnchor="end">Acct #8847</text>
-
-                {/* Account / amount due */}
-                <text x="72" y="130" fontFamily="sans-serif" fontSize="8" fill="#a8a49c">J. Smith — Unlimited Plus</text>
-                <text x="72" y="146" fontFamily="sans-serif" fontSize="8" fill="#b0aba2">Amount Due</text>
-                <text x="72" y="164" fontFamily="sans-serif" fontSize="16" fontWeight="700" fill="#6b665e">$89.99</text>
-
-                {/* Divider */}
-                <line x1="72" y1="180" x2="244" y2="180" stroke="#ece8e2" strokeWidth="1" />
-
-                {/* Line items */}
-                <text x="72" y="196" fontFamily="sans-serif" fontSize="8.5" fill="#8c887f">Base Plan</text>
-                <text x="244" y="196" fontFamily="sans-serif" fontSize="8.5" fill="#8c887f" textAnchor="end">$45.00</text>
-
-                <text x="72" y="212" fontFamily="sans-serif" fontSize="8.5" fill="#8c887f">Unlimited Data</text>
-                <text x="244" y="212" fontFamily="sans-serif" fontSize="8.5" fill="#8c887f" textAnchor="end">$25.00</text>
-
-                <text x="72" y="228" fontFamily="sans-serif" fontSize="8.5" fill="#8c887f">Device Payment</text>
-                <text x="244" y="228" fontFamily="sans-serif" fontSize="8.5" fill="#8c887f" textAnchor="end">$12.50</text>
-
-                <text x="72" y="244" fontFamily="sans-serif" fontSize="8.5" fill="#8c887f">Taxes &amp; Fees</text>
-                <text x="244" y="244" fontFamily="sans-serif" fontSize="8.5" fill="#8c887f" textAnchor="end">$7.49</text>
-
-                {/* Divider */}
-                <line x1="72" y1="260" x2="244" y2="260" stroke="#d8d4cc" strokeWidth="1" />
-
-                {/* Total — softly highlighted */}
-                <rect x="64" y="268" width="188" height="22" rx="4" fill="url(#highlightGrad)" style={{ animation: "highlightPulse 3s ease-in-out infinite" }} />
-                <text x="72" y="284" fontFamily="sans-serif" fontSize="9" fontWeight="700" fill="#6b665e">Total Due</text>
-                <text x="244" y="284" fontFamily="sans-serif" fontSize="11" fontWeight="700" fill="#6b665e" textAnchor="end">$89.99</text>
-              </svg>
+              <img src="/bill.svg" alt="Wireless bill" className="absolute inset-0 w-full h-full" />
 
               {/* Alert notification card */}
               <div
@@ -165,14 +112,6 @@ export default function Home() {
             </div>
 
             <style>{`
-              @keyframes float {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-10px); }
-              }
-              @keyframes highlightPulse {
-                0%, 100% { opacity: 0.4; }
-                50% { opacity: 1; }
-              }
               @keyframes notifPop {
                 0%, 100% { transform: translateY(0) scale(1); }
                 50% { transform: translateY(-6px) scale(1.02); }
