@@ -42,9 +42,6 @@ export default function Home() {
               Stop overpaying on your<br /><em className="not-italic text-secondary" style={{ fontFamily: "'Yellowtail', cursive" }}>cell phone &amp; internet plans</em>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
-              Providers quietly offer cheaper plans to new customers and never tell you. We think that's a little unfair.
-            </p>
-            <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
               We built <strong className="text-xl md:text-2xl text-primary">PlanAlert</strong> to continuously monitor <strong className="text-xl md:text-2xl text-primary">cell phone</strong> and <strong className="text-xl md:text-2xl text-primary">internet plans</strong> — ours, yours, everyone's — and ping you the moment a better deal appears. The more members, the smarter we all get.
             </p>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
