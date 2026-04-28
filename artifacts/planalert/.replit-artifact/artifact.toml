@@ -1,5 +1,5 @@
 kind = "web"
-previewPath = "/planalert/"
+previewPath = "/"
 title = "PlanAlert - Coming Soon"
 version = "1.0.0"
 id = "artifacts/planalert"
@@ -11,7 +11,7 @@ version = "1.0.0"
 
 [[services]]
 name = "web"
-paths = [ "/planalert/" ]
+paths = [ "/" ]
 localPort = 18839
 
 [services.development]
@@ -28,4 +28,4 @@ to = "/index.html"
 
 [services.env]
 PORT = "18839"
-BASE_PATH = "/planalert/"
+BASE_PATH = "/"
