@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Bell, CheckCircle, Wifi, Smartphone, ArrowRight, Clock, Sparkles } from "lucide-react";
+import { Bell, CheckCircle, Wifi, Smartphone, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -78,45 +78,14 @@ export default function Home() {
               <img src="/bill.svg" alt="Wireless bill" className="absolute inset-0 w-full h-full" />
 
               {/* Alert notification card */}
-              <div
-                className="absolute bg-white rounded-xl shadow-xl border border-primary/10 p-3 flex items-start gap-3 w-64"
-                style={{
-                  bottom: -8,
-                  right: -16,
-                  animation: "notifPop 4s ease-in-out infinite",
-                  transformOrigin: "bottom right",
-                }}
-              >
-                <div className="relative flex-shrink-0">
-                  <div className="w-9 h-9 rounded-full bg-secondary/15 flex items-center justify-center">
-                    <Bell className="w-5 h-5 text-secondary fill-secondary" strokeWidth={2.5} />
-                  </div>
-                  <span className="absolute -top-0.5 -right-0.5 flex h-3 w-3">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-secondary border-2 border-white"></span>
-                  </span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-secondary mb-0.5">
-                    <Sparkles className="w-3 h-3" />
-                    PlanAlert
-                  </div>
-                  <div className="text-sm font-semibold text-primary leading-snug mb-0.5">
-                    Better deal found
-                  </div>
-                  <div className="text-xs text-muted-foreground leading-snug">
-                    Same plan, <strong className="text-primary">$30/mo less</strong>. Tap to review.
-                  </div>
-                </div>
-              </div>
+              <img
+                src="/notification.svg"
+                alt="Better deal found notification"
+                className="absolute w-64"
+                style={{ bottom: -8, right: -16 }}
+              />
             </div>
 
-            <style>{`
-              @keyframes notifPop {
-                0%, 100% { transform: translateY(0) scale(1); }
-                50% { transform: translateY(-6px) scale(1.02); }
-              }
-            `}</style>
           </div>
         </div>
       </header>
