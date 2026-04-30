@@ -56,7 +56,6 @@ export default function BlogIndex() {
       <SiteNav variant="sticky" />
       <main className="flex-1">
         <header className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-12">
-          <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-4">The Files</p>
           <h1 className="font-serif text-5xl md:text-6xl font-bold text-primary mb-6">
             The PlanAlert <em className="font-serif italic text-secondary">Blog</em>
           </h1>
