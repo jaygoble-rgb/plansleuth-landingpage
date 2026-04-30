@@ -1,8 +1,13 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "kjQfjJRHqv7JbzDtoyEri"
 uri = "file://artifacts/plansleuth/public/hero-illustration.png"
 type = "image"
 title = "detective desk cell phone internet investigation"
+
+[[outputs]]
+id = "r45S597B_Onb887u5V6ax"
+uri = "file://artifacts/planalert/public/bell-icon.svg"
+type = "image"
+title = "PlanAlert Bell Icon"
