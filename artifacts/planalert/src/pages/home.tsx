@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Bell, CheckCircle, Wifi, Smartphone, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "wouter";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -22,6 +23,11 @@ export default function Home() {
         <div className="flex items-center gap-2 font-serif text-2xl font-bold text-primary">
           <Bell className="w-6 h-6 text-secondary fill-secondary" strokeWidth={2.5} />
           <span>PlanAlert</span>
+        </div>
+        <div className="flex items-center gap-6">
+          <Link href="/blog" className="text-sm font-medium text-primary/70 hover:text-primary transition-colors">
+            Blog
+          </Link>
         </div>
       </nav>
 
