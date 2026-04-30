@@ -4,16 +4,32 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
+import { waitlist } from "@/lib/blog-api";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
+    const value = email.trim();
+    if (!value || submitting) return;
+    setSubmitting(true);
+    setErrorMsg(null);
+    try {
+      await waitlist.signup(value, "home");
       setSubmitted(true);
       setEmail("");
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again.";
+      setErrorMsg(message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -44,28 +60,35 @@ export default function Home() {
               <strong className="text-xl md:text-2xl text-primary">PlanAlert</strong> is currently in private beta. <strong className="text-xl md:text-2xl text-primary">Join the waitlist for early access</strong> — we're opening spots in small batches.
             </p>
             
-            <form onSubmit={handleSubscribe} className="relative flex flex-col sm:flex-row gap-3 max-w-md w-full">
+            <form onSubmit={handleSubscribe} className="relative flex flex-col sm:flex-row gap-3 max-w-md w-full" data-testid="form-waitlist-hero">
               {submitted ? (
-                <div className="flex items-center gap-3 p-4 bg-primary/5 border border-primary/10 rounded-xl text-primary font-medium w-full animate-in zoom-in-95">
+                <div className="flex items-center gap-3 p-4 bg-primary/5 border border-primary/10 rounded-xl text-primary font-medium w-full animate-in zoom-in-95" data-testid="text-waitlist-success">
                   <CheckCircle className="w-5 h-5 text-secondary" />
                   You're on the list! We'll be in touch.
                 </div>
               ) : (
                 <>
-                  <Input 
-                    type="email" 
-                    placeholder="Enter your email address" 
+                  <Input
+                    type="email"
+                    placeholder="Enter your email address"
                     className="h-14 rounded-xl px-4 text-base bg-white border-primary/10 shadow-sm focus-visible:ring-secondary"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    disabled={submitting}
+                    data-testid="input-waitlist-email-hero"
                   />
-                  <Button type="submit" size="lg" className="h-14 rounded-xl px-8 bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20">
-                    Join Waitlist
+                  <Button type="submit" size="lg" disabled={submitting} className="h-14 rounded-xl px-8 bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20" data-testid="button-waitlist-submit-hero">
+                    {submitting ? "Joining…" : "Join Waitlist"}
                   </Button>
                 </>
               )}
             </form>
+            {errorMsg && !submitted && (
+              <p className="mt-3 text-sm text-destructive" data-testid="text-waitlist-error">
+                {errorMsg}
+              </p>
+            )}
           </div>
           
           <div className="relative flex items-center justify-center animate-in fade-in slide-in-from-right-8 duration-1000 fill-mode-both delay-300">
@@ -181,7 +204,7 @@ export default function Home() {
             PlanAlert is currently in private beta, starting with cell phone and internet plans. Join the waitlist to be among the first to stop overpaying.
           </p>
           
-          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
+          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto" data-testid="form-waitlist-cta">
             {submitted ? (
               <div className="flex items-center justify-center gap-3 p-4 bg-white/10 rounded-xl text-white font-medium w-full border border-white/20 animate-in zoom-in-95">
                 <CheckCircle className="w-6 h-6 text-secondary" />
@@ -189,20 +212,25 @@ export default function Home() {
               </div>
             ) : (
               <>
-                <Input 
-                  type="email" 
-                  placeholder="Enter your email address" 
+                <Input
+                  type="email"
+                  placeholder="Enter your email address"
                   className="h-14 rounded-xl px-6 text-lg bg-white/10 border-white/20 text-white placeholder:text-white/50 focus-visible:ring-secondary focus-visible:border-transparent"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  disabled={submitting}
+                  data-testid="input-waitlist-email-cta"
                 />
-                <Button type="submit" size="lg" className="h-14 rounded-xl px-8 bg-secondary hover:bg-secondary/90 text-primary font-bold text-lg">
-                  Join Waitlist
+                <Button type="submit" size="lg" disabled={submitting} className="h-14 rounded-xl px-8 bg-secondary hover:bg-secondary/90 text-primary font-bold text-lg" data-testid="button-waitlist-submit-cta">
+                  {submitting ? "Joining…" : "Join Waitlist"}
                 </Button>
               </>
             )}
           </form>
+          {errorMsg && !submitted && (
+            <p className="mt-4 text-sm text-secondary text-center">{errorMsg}</p>
+          )}
         </div>
       </section>
 

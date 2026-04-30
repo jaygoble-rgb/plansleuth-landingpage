@@ -4,8 +4,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
-import BlogIndex from "@/pages/blog-index";
-import BlogPost from "@/pages/blog-post";
+import BlogIndex from "@/pages/blog/index";
+import BlogPost from "@/pages/blog/post";
+import BlogAdminLogin from "@/pages/blogadmin/login";
+import BlogAdminDashboard from "@/pages/blogadmin/dashboard";
+import BlogAdminEditor from "@/pages/blogadmin/editor";
+import BlogAdminWaitlist from "@/pages/blogadmin/waitlist";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +19,11 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/blog" component={BlogIndex} />
       <Route path="/blog/:slug" component={BlogPost} />
+      <Route path="/blogadmin/login" component={BlogAdminLogin} />
+      <Route path="/blogadmin/new" component={BlogAdminEditor} />
+      <Route path="/blogadmin/edit/:id" component={BlogAdminEditor} />
+      <Route path="/blogadmin/waitlist" component={BlogAdminWaitlist} />
+      <Route path="/blogadmin" component={BlogAdminDashboard} />
       <Route component={NotFound} />
     </Switch>
   );
