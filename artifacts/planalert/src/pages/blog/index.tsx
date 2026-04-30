@@ -60,7 +60,7 @@ export default function BlogIndex() {
             The PlanAlert <em className="font-serif italic text-secondary">Blog</em>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            Investigations, tips, and dispatches from the front lines of the household-bill economy.
+            Guides, updates, and practical advice for keeping your household bills in check.
           </p>
         </header>
 
