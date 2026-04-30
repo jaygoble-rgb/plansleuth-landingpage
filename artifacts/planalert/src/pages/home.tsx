@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Bell, CheckCircle, Wifi, Smartphone, ArrowRight, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "wouter";
+import SiteNav from "@/components/site-nav";
+import SiteFooter from "@/components/site-footer";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -18,18 +19,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-secondary/30">
-      {/* Navigation */}
-      <nav className="flex items-center justify-between p-6 md:px-12 max-w-7xl mx-auto w-full absolute top-0 left-0 right-0 z-50">
-        <div className="flex items-center gap-2 font-serif text-2xl font-bold text-primary">
-          <Bell className="w-6 h-6 text-secondary fill-secondary" strokeWidth={2.5} />
-          <span>PlanAlert</span>
-        </div>
-        <div className="flex items-center gap-6">
-          <Link href="/blog" className="text-sm font-medium text-primary/70 hover:text-primary transition-colors">
-            Blog
-          </Link>
-        </div>
-      </nav>
+      <SiteNav overlay />
 
       {/* Hero Section */}
       <header className="relative pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden flex items-center justify-center">
@@ -216,18 +206,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-background py-12 border-t border-primary/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2 font-serif text-xl font-bold text-primary">
-            <Bell className="w-5 h-5 text-secondary fill-secondary" strokeWidth={2.5} />
-            <span>PlanAlert</span>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} PlanAlert. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

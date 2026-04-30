@@ -136,7 +136,7 @@ const posts: BlogPost[] = [
       },
       {
         type: "h2",
-        text: "Frequently Asked Questions",
+        text: "FAQ",
       },
       {
         type: "faq",

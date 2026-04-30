@@ -69,18 +69,26 @@ export default function BlogPost() {
   const post = getPostBySlug(slug ?? "");
 
   useEffect(() => {
+    const prevTitle = document.title;
+    const metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    const prevDesc = metaDesc?.content ?? "";
+
     if (post) {
       document.title = post.metaTitle;
-      let metaDesc = document.querySelector('meta[name="description"]');
-      if (!metaDesc) {
-        metaDesc = document.createElement("meta");
-        (metaDesc as HTMLMetaElement).name = "description";
-        document.head.appendChild(metaDesc);
+      if (metaDesc) {
+        metaDesc.content = post.metaDescription;
+      } else {
+        const tag = document.createElement("meta");
+        tag.name = "description";
+        tag.content = post.metaDescription;
+        document.head.appendChild(tag);
       }
-      (metaDesc as HTMLMetaElement).content = post.metaDescription;
     }
+
     return () => {
-      document.title = "PlanAlert";
+      document.title = prevTitle;
+      const tag = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+      if (tag) tag.content = prevDesc;
     };
   }, [post]);
 
