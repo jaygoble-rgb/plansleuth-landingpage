@@ -42,7 +42,7 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
       <div className="flex items-center gap-6">
         <Link
           href="/blog"
-          className="text-sm font-medium text-primary/70 hover:text-primary transition-colors"
+          className="text-lg font-semibold text-primary/80 hover:text-primary transition-colors"
         >
           Blog
         </Link>
