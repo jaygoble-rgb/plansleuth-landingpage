@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
-import { and, desc, eq, ilike, or, sql } from "drizzle-orm";
-import { db, blogPostsTable } from "@workspace/db";
+import { and, desc, eq, ilike, or, sql, type SQL } from "drizzle-orm";
+import { db, blogPostsTable, type InsertBlogPost } from "@workspace/db";
 import { requireAdmin, type AuthedRequest } from "../lib/auth";
 import { isSlugAvailable, slugify } from "../lib/blog";
 
@@ -10,6 +10,18 @@ router.use("/admin/blog", requireAdmin);
 
 const STATUSES = ["draft", "published", "scheduled", "archived"] as const;
 type Status = (typeof STATUSES)[number];
+
+type PostFields = Partial<Omit<InsertBlogPost, "id" | "createdAt" | "updatedAt">>;
+
+function isRecord(v: unknown): v is Record<string, unknown> {
+  return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
+function errorMessage(err: unknown, fallback = "bad request"): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === "string") return err;
+  return fallback;
+}
 
 function parseDate(v: unknown): Date | null {
   if (!v) return null;
@@ -21,40 +33,50 @@ function parseDate(v: unknown): Date | null {
   return null;
 }
 
-function pickFields(body: any, isCreate: boolean) {
-  const out: Record<string, any> = {};
-  const stringFields = [
-    "title",
-    "body",
-    "excerpt",
-    "featuredImageUrl",
-    "featuredImageAlt",
-    "author",
-    "category",
-    "metaTitle",
-    "metaDescription",
-    "canonicalUrl",
-    "openGraphImageUrl",
-  ];
-  for (const f of stringFields) {
-    if (body[f] !== undefined) out[f] = String(body[f] ?? "");
+const STRING_FIELDS = [
+  "title",
+  "body",
+  "excerpt",
+  "featuredImageUrl",
+  "featuredImageAlt",
+  "author",
+  "category",
+  "metaTitle",
+  "metaDescription",
+  "canonicalUrl",
+  "openGraphImageUrl",
+] as const satisfies readonly (keyof PostFields)[];
+
+function pickFields(rawBody: unknown, isCreate: boolean): PostFields {
+  const body: Record<string, unknown> = isRecord(rawBody) ? rawBody : {};
+  const out: PostFields = {};
+  for (const f of STRING_FIELDS) {
+    if (body[f] !== undefined) {
+      out[f] = String(body[f] ?? "");
+    }
   }
   if (body.tags !== undefined) {
-    out.tags = Array.isArray(body.tags) ? body.tags.map((t: any) => String(t).trim()).filter(Boolean) : [];
+    out.tags = Array.isArray(body.tags)
+      ? body.tags.map((t) => String(t).trim()).filter(Boolean)
+      : [];
   }
-  if (body.commentsEnabled !== undefined) out.commentsEnabled = Boolean(body.commentsEnabled);
+  if (body.commentsEnabled !== undefined) {
+    out.commentsEnabled = Boolean(body.commentsEnabled);
+  }
   if (body.status !== undefined) {
     const s = String(body.status);
     if (!STATUSES.includes(s as Status)) throw new Error("invalid status");
     out.status = s as Status;
   }
   if (body.publishDate !== undefined) out.publishDate = parseDate(body.publishDate);
-  if (body.scheduledPublishAt !== undefined) out.scheduledPublishAt = parseDate(body.scheduledPublishAt);
+  if (body.scheduledPublishAt !== undefined) {
+    out.scheduledPublishAt = parseDate(body.scheduledPublishAt);
+  }
   if (out.status === "scheduled" && !out.scheduledPublishAt) {
     throw new Error("scheduledPublishAt is required when status is 'scheduled'");
   }
-  if (isCreate && body.title !== undefined && !body.slug) {
-    out.slug = slugify(String(body.title));
+  if (isCreate && typeof body.title === "string" && !body.slug) {
+    out.slug = slugify(body.title);
   }
   if (body.slug !== undefined) {
     const s = slugify(String(body.slug));
@@ -72,7 +94,7 @@ router.get("/admin/blog/posts", async (req, res) => {
   const author = String(req.query.author ?? "").trim();
   const category = String(req.query.category ?? "").trim();
 
-  const filters = [];
+  const filters: SQL[] = [];
   if (status && STATUSES.includes(status as Status)) {
     filters.push(eq(blogPostsTable.status, status as Status));
   }
@@ -88,17 +110,17 @@ router.get("/admin/blog/posts", async (req, res) => {
     if (cond) filters.push(cond);
   }
 
-  const where = filters.length > 0 ? and(...filters) : undefined;
+  const where: SQL | undefined = filters.length > 0 ? and(...filters) : undefined;
 
   const [items, totalRow] = await Promise.all([
     db
       .select()
       .from(blogPostsTable)
-      .where(where as any)
+      .where(where)
       .orderBy(desc(blogPostsTable.updatedAt))
       .limit(pageSize)
       .offset((page - 1) * pageSize),
-    db.select({ count: sql<number>`count(*)::int` }).from(blogPostsTable).where(where as any),
+    db.select({ count: sql<number>`count(*)::int` }).from(blogPostsTable).where(where),
   ]);
 
   res.json({ items, page, pageSize, total: totalRow[0]?.count ?? 0 });
@@ -116,33 +138,32 @@ router.get("/admin/blog/posts/:id", async (req, res) => {
 
 router.post("/admin/blog/posts", async (req: AuthedRequest, res) => {
   try {
-    const body = req.body ?? {};
-    if (!body.title || typeof body.title !== "string") {
+    const body: Record<string, unknown> = isRecord(req.body) ? req.body : {};
+    if (typeof body.title !== "string" || !body.title) {
       res.status(400).json({ error: "title is required" });
       return;
     }
+    const title = body.title;
     const fields = pickFields(body, true);
-    if (!fields.slug) fields.slug = slugify(String(body.title));
-    if (!(await isSlugAvailable(fields.slug))) {
+    const slug = fields.slug ?? slugify(title);
+    if (!(await isSlugAvailable(slug))) {
       res.status(409).json({ error: "slug already in use", field: "slug" });
       return;
     }
     if (fields.status === "archived" && !fields.archivedAt) fields.archivedAt = new Date();
     if (fields.status === "published" && !fields.publishDate) fields.publishDate = new Date();
 
-    const inserted = await db
-      .insert(blogPostsTable)
-      .values({
-        ...fields,
-        title: String(body.title),
-        slug: fields.slug,
-        createdBy: req.admin?.email ?? null,
-        updatedBy: req.admin?.email ?? null,
-      } as any)
-      .returning();
+    const insertValues: InsertBlogPost = {
+      ...fields,
+      title,
+      slug,
+      createdBy: req.admin?.email ?? null,
+      updatedBy: req.admin?.email ?? null,
+    };
+    const inserted = await db.insert(blogPostsTable).values(insertValues).returning();
     res.status(201).json(inserted[0]);
-  } catch (err: any) {
-    res.status(400).json({ error: err?.message ?? "bad request" });
+  } catch (err) {
+    res.status(400).json({ error: errorMessage(err) });
   }
 });
 
@@ -154,7 +175,7 @@ router.patch("/admin/blog/posts/:id", async (req: AuthedRequest, res) => {
       res.status(404).json({ error: "not found" });
       return;
     }
-    const fields = pickFields(req.body ?? {}, false);
+    const fields = pickFields(req.body, false);
     if (fields.slug && !(await isSlugAvailable(fields.slug, id))) {
       res.status(409).json({ error: "slug already in use", field: "slug" });
       return;
@@ -179,8 +200,8 @@ router.patch("/admin/blog/posts/:id", async (req: AuthedRequest, res) => {
       .where(eq(blogPostsTable.id, id))
       .returning();
     res.json(updated[0]);
-  } catch (err: any) {
-    res.status(400).json({ error: err?.message ?? "bad request" });
+  } catch (err) {
+    res.status(400).json({ error: errorMessage(err) });
   }
 });
 

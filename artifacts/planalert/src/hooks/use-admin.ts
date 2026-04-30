@@ -7,8 +7,15 @@ export function useAdminMe() {
     queryFn: async () => {
       try {
         return await adminAuth.me();
-      } catch (e: any) {
-        if (e?.status === 401) return null;
+      } catch (e: unknown) {
+        if (
+          e !== null &&
+          typeof e === "object" &&
+          "status" in e &&
+          (e as { status?: unknown }).status === 401
+        ) {
+          return null;
+        }
         throw e;
       }
     },

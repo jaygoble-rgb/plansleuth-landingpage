@@ -54,7 +54,11 @@ async function http<T>(path: string, init: RequestInit = {}): Promise<T> {
   const text = await res.text();
   const data = text ? (() => { try { return JSON.parse(text); } catch { return text; } })() : null;
   if (!res.ok) {
-    const message = (data && typeof data === "object" && (data as any).error) || res.statusText;
+    const errField =
+      data && typeof data === "object" && "error" in data
+        ? (data as { error?: unknown }).error
+        : undefined;
+    const message = typeof errField === "string" && errField ? errField : res.statusText;
     const err = new Error(message) as Error & { status?: number; data?: unknown };
     err.status = res.status;
     err.data = data;

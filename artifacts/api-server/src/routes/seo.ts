@@ -1,19 +1,26 @@
-import { Router, type IRouter } from "express";
+import { Router, type IRouter, type Request } from "express";
 import { eq } from "drizzle-orm";
 import { db, blogPostsTable } from "@workspace/db";
 import { promoteScheduledPosts } from "../lib/blog";
 
 const router: IRouter = Router();
 
-function siteOrigin(req: any): string {
+function firstHeader(value: string | string[] | undefined): string {
+  if (Array.isArray(value)) return value[0] ?? "";
+  return value ?? "";
+}
+
+function siteOrigin(req: Request): string {
   const envOrigin = process.env.PUBLIC_SITE_ORIGIN?.replace(/\/$/, "");
   if (envOrigin) return envOrigin;
   if (process.env.NODE_ENV === "production") {
     // In production, require an explicit origin to avoid host-header poisoning.
     return "";
   }
-  const proto = (req.headers["x-forwarded-proto"] as string) || req.protocol || "http";
-  const host = (req.headers["x-forwarded-host"] as string) || req.get("host") || "localhost";
+  const proto =
+    firstHeader(req.headers["x-forwarded-proto"]) || req.protocol || "http";
+  const host =
+    firstHeader(req.headers["x-forwarded-host"]) || req.get("host") || "localhost";
   // Only allow safe characters in host to prevent header injection.
   if (!/^[A-Za-z0-9.\-:]+$/.test(host)) return "";
   return `${proto}://${host}`;

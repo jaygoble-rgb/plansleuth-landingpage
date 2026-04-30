@@ -5,7 +5,7 @@ import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
 import { bootstrapAdmin } from "./lib/auth";
-import { startScheduler } from "./lib/blog";
+import { seedFirstPost, startScheduler } from "./lib/blog";
 
 const app: Express = express();
 
@@ -35,9 +35,18 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
 
-void bootstrapAdmin().catch((err) =>
-  logger.error({ err }, "bootstrapAdmin failed"),
-);
+void (async () => {
+  try {
+    await bootstrapAdmin();
+  } catch (err) {
+    logger.error({ err }, "bootstrapAdmin failed");
+  }
+  try {
+    await seedFirstPost();
+  } catch (err) {
+    logger.error({ err }, "seedFirstPost failed");
+  }
+})();
 startScheduler();
 
 export default app;

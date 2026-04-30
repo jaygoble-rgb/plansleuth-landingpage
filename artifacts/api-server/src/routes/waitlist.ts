@@ -1,5 +1,5 @@
-import { Router, type IRouter } from "express";
-import { desc, sql } from "drizzle-orm";
+import { Router, type IRouter, type Request } from "express";
+import { desc, eq, sql } from "drizzle-orm";
 import { db, waitlistSignupsTable } from "@workspace/db";
 import { requireAdmin } from "../lib/auth";
 import { logger } from "../lib/logger";
@@ -8,14 +8,18 @@ const router: IRouter = Router();
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-function clientIp(req: any): string {
-  const fwd = (req.headers["x-forwarded-for"] as string) || "";
+function clientIp(req: Request): string {
+  const fwdHeader = req.headers["x-forwarded-for"];
+  const fwd = Array.isArray(fwdHeader) ? fwdHeader[0] : fwdHeader ?? "";
   return fwd.split(",")[0]?.trim() || req.ip || "";
 }
 
 router.post("/waitlist", async (req, res) => {
   try {
-    const body = req.body ?? {};
+    const body: Record<string, unknown> =
+      req.body && typeof req.body === "object" && !Array.isArray(req.body)
+        ? (req.body as Record<string, unknown>)
+        : {};
     const email = String(body.email ?? "").trim().toLowerCase();
     if (!email || !EMAIL_RE.test(email) || email.length > 320) {
       res.status(400).json({ error: "Please enter a valid email address." });
@@ -32,8 +36,11 @@ router.post("/waitlist", async (req, res) => {
       .onConflictDoNothing({ target: waitlistSignupsTable.email });
 
     res.status(201).json({ ok: true });
-  } catch (err: any) {
-    logger.error({ err: err?.message }, "waitlist signup failed");
+  } catch (err) {
+    logger.error(
+      { err: err instanceof Error ? err.message : String(err) },
+      "waitlist signup failed",
+    );
     res.status(500).json({ error: "Something went wrong. Please try again." });
   }
 });
@@ -78,7 +85,6 @@ router.get("/admin/waitlist.csv", requireAdmin, async (_req, res) => {
 
 router.delete("/admin/waitlist/:id", requireAdmin, async (req, res) => {
   const id = String(req.params.id);
-  const { eq } = await import("drizzle-orm");
   await db.delete(waitlistSignupsTable).where(eq(waitlistSignupsTable.id, id));
   res.json({ ok: true });
 });

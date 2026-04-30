@@ -120,9 +120,9 @@ function EditorInner() {
       setAutosaveState("saved");
       navigate(`/blogadmin/edit/${created.id}`, { replace: true });
     },
-    onError: (e: any) => {
+    onError: (e: unknown) => {
       setAutosaveState("error");
-      setErrorMsg(e?.message || "Save failed");
+      setErrorMsg(e instanceof Error ? e.message : "Save failed");
     },
   });
 
@@ -135,9 +135,9 @@ function EditorInner() {
       setAutosaveState("saved");
       setErrorMsg(null);
     },
-    onError: (e: any) => {
+    onError: (e: unknown) => {
       setAutosaveState("error");
-      setErrorMsg(e?.message || "Save failed");
+      setErrorMsg(e instanceof Error ? e.message : "Save failed");
     },
   });
 
@@ -189,8 +189,11 @@ function EditorInner() {
       "commentsEnabled",
     ];
     const norm = (p: Editable, tags: string[]) => {
-      const o: Record<string, any> = { tags };
-      for (const k of editableKeys) o[k as string] = (p as any)[k] ?? (typeof (p as any)[k] === "boolean" ? false : "");
+      const o: Record<string, unknown> = { tags };
+      for (const k of editableKeys) {
+        const val = (p as Partial<BlogPost>)[k];
+        o[k as string] = val ?? (typeof val === "boolean" ? false : "");
+      }
       return JSON.stringify(o);
     };
     const liveTags = tagsInput.split(",").map((t) => t.trim()).filter(Boolean);
