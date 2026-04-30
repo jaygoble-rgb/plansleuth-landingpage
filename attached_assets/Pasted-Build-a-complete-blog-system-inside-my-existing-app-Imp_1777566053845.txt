@@ -1,0 +1,217 @@
+Build a complete blog system inside my existing app.
+
+Important:
+- Use the existing design system, styling, layout patterns, and navigation already used in the app.
+- Do not break any existing functionality.
+- Integrate this cleanly into the current codebase rather than creating a disconnected mini-app.
+- Reuse existing auth/session/user patterns if they already exist.
+
+GOAL
+I want a public-facing blog on my site so visitors and search engines can read our articles and improve SEO. I also want a secure admin portal where approved team members can create, edit, publish, delete, and manage blog posts.
+
+PUBLIC BLOG REQUIREMENTS
+
+1. Navigation
+- Add a "Blog" button/link to the top navigation.
+- The Blog link should always be visible in the main nav.
+- Place it on the right side of the top navigation in a way that matches the current UI.
+- This Blog link should be visible whether a user is logged in or not.
+
+2. Public routes
+Create these routes:
+- /blog → blog index page
+- /blog/:slug → individual blog post page
+- /blogadmin → admin login page or admin dashboard entry point
+
+3. Blog index page (/blog)
+Create a public page where anyone can browse blog posts without logging in.
+Include:
+- Page title / heading
+- Grid or list of blog post cards
+- Featured image thumbnail
+- Post title
+- Excerpt
+- Author
+- Publish date
+- Category
+- Tags if appropriate
+- Pagination or load more if needed
+- Search and/or category/tag filtering if simple to add cleanly
+- Only show published posts on the public page
+- Draft, scheduled, and archived posts should not appear publicly
+
+4. Individual blog page (/blog/:slug)
+Create a public blog detail page that displays:
+- Post title
+- Featured image
+- Featured image alt text
+- Author
+- Publish date
+- Category
+- Tags
+- Full body content
+- Open Graph/meta support
+- Canonical URL support
+- Clean readable blog layout optimized for desktop and mobile
+
+SEO REQUIREMENTS
+This is a major priority.
+
+For each published blog post:
+- Generate SEO-friendly URLs using the slug
+- Support editable meta title
+- Support editable meta description
+- Support editable canonical URL
+- Support editable Open Graph image
+- Use semantic heading structure
+- Ensure public blog pages are server-rendered or otherwise indexable by search engines
+- Make sure published posts can be crawled and indexed
+- Do not expose draft content to search engines
+- Add proper title/meta tags on both blog index and blog detail pages
+- Use the featured image or OG image for social previews
+- Make sure slug changes do not break everything; preserve integrity cleanly
+
+ADMIN PORTAL REQUIREMENTS
+
+1. Access and security
+- The admin area should live at /blogadmin
+- It must be protected and not publicly accessible
+- Do NOT use a single hardcoded shared password
+- Use secure authentication
+- Prefer role-based access using existing auth if available
+- Only authorized admin users should be able to access blog management
+- Unauthorized users should be redirected away or shown an access denied/login screen
+
+2. Admin capabilities
+Authorized admins should be able to:
+- Create blog posts
+- Edit blog posts
+- Delete blog posts
+- Save drafts
+- Publish posts
+- Schedule posts
+- Unpublish/archive posts
+- Preview posts before publishing
+- Upload/select featured images
+- Upload/select Open Graph images
+- Manage tags and categories
+
+3. Blog editor fields
+For each blog post, include editable fields for:
+- Post Title
+- Slug
+- Body Content
+- Excerpt
+- Featured Image
+- Featured Image Alt Text
+- Author
+- Category
+- Tags
+- Status
+- Publish Date/Time
+- Meta Title
+- Meta Description
+- Canonical URL
+- Open Graph Image
+- Comments Enabled
+
+Also include read-only/system-managed fields:
+- Created At
+- Updated At
+
+4. Editor UX
+- Use a rich text editor for Body Content
+- Include autosave
+- Include Preview
+- Make the form easy to use and organized into sections such as Content, SEO, Publishing, and Media
+- Validate required fields
+- Prevent duplicate slug conflicts
+- Show helpful error/success messages
+
+CONTENT STATUS REQUIREMENTS
+Support these statuses:
+- Draft
+- Published
+- Scheduled
+- Archived
+
+Rules:
+- Draft posts are only visible in admin
+- Published posts are visible publicly
+- Scheduled posts become public automatically at the selected publish date/time
+- Archived posts are hidden from the public site
+
+DATA / BACKEND REQUIREMENTS
+Create whatever backend model, database table(s), API endpoints, and admin UI are needed to support this system.
+
+At minimum, the blog post model should support:
+- id
+- title
+- slug
+- body
+- excerpt
+- featuredImageUrl
+- featuredImageAlt
+- author
+- category
+- tags
+- status
+- publishDate
+- metaTitle
+- metaDescription
+- canonicalUrl
+- openGraphImageUrl
+- commentsEnabled
+- createdAt
+- updatedAt
+
+Add any additional implementation fields needed, such as:
+- createdBy
+- updatedBy
+- scheduledPublishAt
+- deletedAt or archivedAt
+
+ADMIN LIST VIEW
+Create a blog management table/list inside /blogadmin where admins can:
+- See all posts
+- Search posts
+- Filter by status
+- Filter by author/category if practical
+- Sort by created date or publish date
+- Open posts to edit
+- Create a new post
+- Delete/archive a post
+
+COMMENTS
+For now:
+- Add a Comments Enabled field to the data model and admin UI
+- It does not need a full comments system yet unless one already exists
+- Just store and expose the toggle for future use
+
+DESIGN REQUIREMENTS
+- Keep the UI clean and professional
+- Match the existing app’s styling
+- Make the public blog highly readable
+- Make the admin dashboard simple and efficient
+
+DELIVERABLES
+Please implement the full feature directly in the app and provide:
+1. The new routes/pages/components created
+2. The database/schema changes made
+3. The auth/authorization approach used for /blogadmin
+4. Any environment variables or setup steps required
+5. A short explanation of how scheduled publishing works
+6. A short explanation of how SEO metadata is rendered
+
+ACCEPTANCE CRITERIA
+The feature is complete when:
+- A public Blog link appears in the main nav for all users
+- Visitors can browse published blogs at /blog
+- Visitors can open individual posts at /blog/:slug
+- Authorized admins can securely access /blogadmin
+- Admins can create, edit, preview, publish, schedule, archive, and delete posts
+- SEO metadata is editable and rendered correctly
+- Autosave works
+- Created At and Updated At are tracked
+- Drafts and archived posts are not publicly visible
+- The implementation works on desktop and mobile
