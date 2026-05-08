@@ -5,18 +5,26 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  BlogImageUploadResponse,
+  ErrorEnvelope,
+  HealthStatus,
+  UploadBlogImageBody,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -99,3 +107,94 @@ export function useHealthCheck<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * Admin-only multipart upload for blog featured / open-graph images.
+Stores the file in public object storage and returns its public URL.
+
+ * @summary Upload a blog image
+ */
+export const getUploadBlogImageUrl = () => {
+  return `/api/admin/blog/uploads`;
+};
+
+export const uploadBlogImage = async (
+  uploadBlogImageBody: UploadBlogImageBody,
+  options?: RequestInit,
+): Promise<BlogImageUploadResponse> => {
+  const formData = new FormData();
+  formData.append(`file`, uploadBlogImageBody.file);
+
+  return customFetch<BlogImageUploadResponse>(getUploadBlogImageUrl(), {
+    ...options,
+    method: "POST",
+    body: formData,
+  });
+};
+
+export const getUploadBlogImageMutationOptions = <
+  TError = ErrorType<ErrorEnvelope>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof uploadBlogImage>>,
+    TError,
+    { data: BodyType<UploadBlogImageBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof uploadBlogImage>>,
+  TError,
+  { data: BodyType<UploadBlogImageBody> },
+  TContext
+> => {
+  const mutationKey = ["uploadBlogImage"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof uploadBlogImage>>,
+    { data: BodyType<UploadBlogImageBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return uploadBlogImage(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type UploadBlogImageMutationResult = NonNullable<
+  Awaited<ReturnType<typeof uploadBlogImage>>
+>;
+export type UploadBlogImageMutationBody = BodyType<UploadBlogImageBody>;
+export type UploadBlogImageMutationError = ErrorType<ErrorEnvelope>;
+
+/**
+ * @summary Upload a blog image
+ */
+export const useUploadBlogImage = <
+  TError = ErrorType<ErrorEnvelope>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof uploadBlogImage>>,
+    TError,
+    { data: BodyType<UploadBlogImageBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof uploadBlogImage>>,
+  TError,
+  { data: BodyType<UploadBlogImageBody> },
+  TContext
+> => {
+  return useMutation(getUploadBlogImageMutationOptions(options));
+};

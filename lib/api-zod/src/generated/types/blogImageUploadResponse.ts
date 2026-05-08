@@ -5,9 +5,6 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-export interface HealthStatus {
-  status: string;
-}
 
 export interface BlogImageUploadResponse {
   /** Public URL where the uploaded image is served. */
@@ -20,12 +17,3 @@ export interface BlogImageUploadResponse {
    */
   size: number;
 }
-
-export interface ErrorEnvelope {
-  error: string;
-}
-
-export type UploadBlogImageBody = {
-  /** Image file (PNG, JPEG, WebP, GIF or SVG, max 5 MB). */
-  file: Blob;
-};

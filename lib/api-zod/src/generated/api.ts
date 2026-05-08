@@ -14,3 +14,15 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Admin-only multipart upload for blog featured / open-graph images.
+Stores the file in public object storage and returns its public URL.
+
+ * @summary Upload a blog image
+ */
+export const UploadBlogImageBody = zod.object({
+  file: zod
+    .instanceof(File)
+    .describe("Image file (PNG, JPEG, WebP, GIF or SVG, max 5 MB)."),
+});

@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: adminBlog
+    description: Admin blog operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,57 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /admin/blog/uploads:
+    post:
+      operationId: uploadBlogImage
+      tags: [adminBlog]
+      summary: Upload a blog image
+      description: |
+        Admin-only multipart upload for blog featured / open-graph images.
+        Stores the file in public object storage and returns its public URL.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Image file (PNG, JPEG, WebP, GIF or SVG, max 5 MB).
+      responses:
+        "201":
+          description: Upload succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogImageUploadResponse"
+        "400":
+          description: Invalid file (wrong type or missing).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "401":
+          description: Not authenticated as an admin.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "413":
+          description: File exceeds the 5 MB size limit.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
+        "500":
+          description: Upload failed unexpectedly.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorEnvelope"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +86,23 @@ components:
           type: string
       required:
         - status
-
+    BlogImageUploadResponse:
+      type: object
+      required: [url, contentType, size]
+      properties:
+        url:
+          type: string
+          description: Public URL where the uploaded image is served.
+        contentType:
+          type: string
+          description: MIME type of the stored file.
+        size:
+          type: integer
+          minimum: 0
+          description: Size in bytes of the stored file.
+    ErrorEnvelope:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string

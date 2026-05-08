@@ -27,6 +27,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Markdown } from "@/components/markdown";
+import { ImageUploadField } from "@/components/image-upload-field";
 import { adminBlog, type BlogPost } from "@/lib/blog-api";
 
 type Editable = Partial<BlogPost> & { title: string };
@@ -379,10 +380,14 @@ function EditorInner() {
                 <Label htmlFor="canonical">Canonical URL</Label>
                 <Input id="canonical" value={post.canonicalUrl ?? ""} onChange={(e) => setPost((p) => ({ ...p, canonicalUrl: e.target.value }))} className="mt-1.5" placeholder="https://…" data-testid="input-canonical" />
               </div>
-              <div>
-                <Label htmlFor="ogImage">Open Graph Image URL</Label>
-                <Input id="ogImage" value={post.openGraphImageUrl ?? ""} onChange={(e) => setPost((p) => ({ ...p, openGraphImageUrl: e.target.value }))} className="mt-1.5" placeholder="https://…" data-testid="input-og-image" />
-              </div>
+              <ImageUploadField
+                id="ogImage"
+                label="Open Graph Image"
+                value={post.openGraphImageUrl ?? ""}
+                onChange={(url) => setPost((p) => ({ ...p, openGraphImageUrl: url }))}
+                helpText="Shown when this post is shared on social media."
+                testId="input-og-image"
+              />
             </div>
           </section>
         </div>
@@ -468,13 +473,14 @@ function EditorInner() {
           <section className="bg-white border border-primary/10 rounded-2xl p-6">
             <h2 className="text-xs font-semibold uppercase tracking-widest text-secondary mb-4">Media</h2>
             <div className="space-y-4">
-              <div>
-                <Label htmlFor="featured">Featured Image URL</Label>
-                <Input id="featured" value={post.featuredImageUrl ?? ""} onChange={(e) => setPost((p) => ({ ...p, featuredImageUrl: e.target.value }))} className="mt-1.5" placeholder="https://…" data-testid="input-featured-image" />
-                {post.featuredImageUrl && (
-                  <img src={post.featuredImageUrl} alt="" className="mt-2 w-full aspect-[16/9] object-cover rounded-lg border border-primary/10" />
-                )}
-              </div>
+              <ImageUploadField
+                id="featured"
+                label="Featured Image"
+                value={post.featuredImageUrl ?? ""}
+                onChange={(url) => setPost((p) => ({ ...p, featuredImageUrl: url }))}
+                helpText="Upload an image or paste a public URL."
+                testId="input-featured-image"
+              />
               <div>
                 <Label htmlFor="featuredAlt">Alt Text</Label>
                 <Input id="featuredAlt" value={post.featuredImageAlt ?? ""} onChange={(e) => setPost((p) => ({ ...p, featuredImageAlt: e.target.value }))} className="mt-1.5" data-testid="input-featured-alt" />
