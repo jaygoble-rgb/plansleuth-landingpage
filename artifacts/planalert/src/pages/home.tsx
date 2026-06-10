@@ -9,7 +9,6 @@ import {
   BellRing,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import DashboardMockup from "@/components/dashboard-mockup";
@@ -198,27 +197,15 @@ export default function Home() {
                 You're on the list! We'll be in touch.
               </div>
             ) : (
-              <>
-                <Input
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="h-14 rounded-xl px-5 text-base bg-white border-[#E5EAF2] shadow-sm focus-visible:ring-[#2563FF]"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={submitting}
-                  data-testid="input-waitlist-email-cta"
-                />
-                <Button
-                  type="submit"
-                  size="lg"
-                  disabled={submitting}
-                  className="h-14 rounded-xl px-8 bg-[#2563FF] hover:bg-[#1E55E6] text-white font-semibold text-base border-0 whitespace-nowrap"
-                  data-testid="button-waitlist-submit-cta"
-                >
-                  {submitting ? "Joining…" : "Get Started Free"}
-                </Button>
-              </>
+              <Button
+                type="submit"
+                size="lg"
+                disabled={submitting}
+                className="h-14 rounded-xl px-8 bg-[#2563FF] hover:bg-[#1E55E6] text-white font-semibold text-base border-0 whitespace-nowrap"
+                data-testid="button-waitlist-submit-cta"
+              >
+                {submitting ? "Joining…" : "Get Started Free"}
+              </Button>
             )}
           </form>
           {errorMsg && !submitted && (
