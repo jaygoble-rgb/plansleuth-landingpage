@@ -76,7 +76,7 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
 
       <div className="flex items-center gap-3 md:gap-5">
         <a
-          href={homeHash("get-started")}
+          href="https://app.planalert.com/getstarted"
           className="hidden sm:inline-block text-base font-medium text-primary/80 hover:text-primary transition-colors"
         >
           Sign in
@@ -134,7 +134,7 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
               </SheetClose>
               <SheetClose asChild>
                 <a
-                  href={homeHash("get-started")}
+                  href="https://app.planalert.com/getstarted"
                   className="rounded-lg px-3 py-3 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
                 >
                   Sign in
