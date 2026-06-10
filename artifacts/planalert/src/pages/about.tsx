@@ -4,8 +4,6 @@ import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import { useMeta } from "@/hooks/use-meta";
 
-const BASE = import.meta.env.BASE_URL;
-
 export default function About() {
   useMeta({
     title: "About PlanAlert — Built to close the loyalty gap",
@@ -92,7 +90,7 @@ export default function About() {
             className="h-14 w-full sm:w-auto rounded-xl px-8 bg-[#2563FF] hover:bg-[#1E55E6] text-white font-semibold text-base border-0"
             data-testid="button-about-get-started"
           >
-            <a href={`${BASE}#get-started`}>
+            <a href="https://app.planalert.com">
               Get Started Free
               <ArrowRight className="w-5 h-5" />
             </a>

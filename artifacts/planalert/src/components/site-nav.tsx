@@ -82,7 +82,7 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
           Sign in
         </a>
         <a
-          href={homeHash("get-started")}
+          href="https://app.planalert.com"
           className="hidden sm:inline-flex items-center justify-center rounded-lg bg-[#2563FF] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-[#2563FF]/20 hover:bg-[#1E55E6] transition-colors"
         >
           Get Started Free
@@ -145,7 +145,7 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
             <div className="mt-auto px-1 pb-2">
               <SheetClose asChild>
                 <a
-                  href={homeHash("get-started")}
+                  href="https://app.planalert.com"
                   className="flex items-center justify-center rounded-lg bg-[#2563FF] px-5 py-3 text-base font-semibold text-white shadow-sm shadow-[#2563FF]/20 hover:bg-[#1E55E6] transition-colors"
                 >
                   Get Started Free

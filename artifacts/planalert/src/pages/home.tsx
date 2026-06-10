@@ -65,13 +65,15 @@ export default function Home() {
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Button
+                asChild
                 size="lg"
-                onClick={() => scrollToId("get-started")}
                 className="h-14 rounded-xl px-7 bg-[#2563FF] hover:bg-[#1E55E6] text-white text-base font-semibold border-0 shadow-lg shadow-[#2563FF]/25"
                 data-testid="button-start-monitoring"
               >
-                Start Monitoring
-                <ArrowRight className="w-5 h-5" />
+                <a href="https://app.planalert.com">
+                  Start Monitoring
+                  <ArrowRight className="w-5 h-5" />
+                </a>
               </Button>
               <Button
                 size="lg"
