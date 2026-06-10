@@ -6,16 +6,12 @@ import {
   LineChart,
   BellRing,
 } from "lucide-react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import DashboardMockup from "@/components/dashboard-mockup";
 import { useMeta } from "@/hooks/use-meta";
-
-function scrollToId(id: string) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
 
 const steps = [
   {
@@ -76,16 +72,18 @@ export default function Home() {
                 </a>
               </Button>
               <Button
+                asChild
                 size="lg"
                 variant="outline"
-                onClick={() => scrollToId("how-it-works")}
                 className="h-14 rounded-xl px-7 bg-white text-primary text-base font-semibold border border-[#E5EAF2] gap-3"
                 data-testid="button-see-how"
               >
-                <span className="inline-flex items-center justify-center w-[22px] h-[22px] rounded-full bg-primary text-white">
-                  <Play className="w-2.5 h-2.5 fill-white" />
-                </span>
-                See How It Works
+                <Link href="/how-it-works">
+                  <span className="inline-flex items-center justify-center w-[22px] h-[22px] rounded-full bg-primary text-white">
+                    <Play className="w-2.5 h-2.5 fill-white" />
+                  </span>
+                  See How It Works
+                </Link>
               </Button>
             </div>
 
