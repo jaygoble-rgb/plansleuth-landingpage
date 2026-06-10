@@ -1,9 +1,7 @@
-import React, { useState } from "react";
 import {
   ArrowRight,
   Play,
   Lock,
-  CheckCircle,
   ClipboardList,
   LineChart,
   BellRing,
@@ -13,7 +11,6 @@ import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import DashboardMockup from "@/components/dashboard-mockup";
 import { useMeta } from "@/hooks/use-meta";
-import { waitlist } from "@/lib/blog-api";
 
 function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -42,37 +39,11 @@ const steps = [
 ];
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
   useMeta({
     title: "PlanAlert — Never overpay for household plans again",
     description:
       "Tell us about your current plan and we'll compare it against the market - then monitor it continuously so you always know when a better plan becomes available.",
   });
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const value = email.trim();
-    if (!value || submitting) return;
-    setSubmitting(true);
-    setErrorMsg(null);
-    try {
-      await waitlist.signup(value, "home");
-      setSubmitted(true);
-      setEmail("");
-    } catch (err: unknown) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. Please try again.";
-      setErrorMsg(message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-secondary/30 overflow-x-hidden">
@@ -183,39 +154,14 @@ export default function Home() {
             It takes two minutes to set up. We'll handle the watching.
           </p>
 
-          <form
-            onSubmit={handleSubscribe}
-            className="flex flex-col sm:flex-row gap-3 justify-center max-w-lg mx-auto"
-            data-testid="form-waitlist-cta"
+          <Button
+            asChild
+            size="lg"
+            className="h-14 rounded-xl px-8 bg-[#2563FF] hover:bg-[#1E55E6] text-white font-semibold text-base border-0"
+            data-testid="button-get-started-cta"
           >
-            {submitted ? (
-              <div
-                className="flex items-center justify-center gap-3 p-4 bg-white border border-primary/10 rounded-xl text-primary font-medium w-full animate-in zoom-in-95"
-                data-testid="text-waitlist-success"
-              >
-                <CheckCircle className="w-6 h-6 text-secondary" />
-                You're on the list! We'll be in touch.
-              </div>
-            ) : (
-              <Button
-                type="submit"
-                size="lg"
-                disabled={submitting}
-                className="h-14 rounded-xl px-8 bg-[#2563FF] hover:bg-[#1E55E6] text-white font-semibold text-base border-0 whitespace-nowrap"
-                data-testid="button-waitlist-submit-cta"
-              >
-                {submitting ? "Joining…" : "Get Started Free"}
-              </Button>
-            )}
-          </form>
-          {errorMsg && !submitted && (
-            <p
-              className="mt-4 text-sm text-destructive"
-              data-testid="text-waitlist-error"
-            >
-              {errorMsg}
-            </p>
-          )}
+            <a href="https://app.planalert.com">Get Started Free</a>
+          </Button>
           <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <Lock className="w-4 h-4" />
             Secure. Private. No spam.
