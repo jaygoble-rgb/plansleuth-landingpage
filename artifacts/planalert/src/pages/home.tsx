@@ -76,15 +76,15 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-secondary/30">
+    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-secondary/30 overflow-x-hidden">
       <SiteNav variant="sticky" />
 
       {/* Hero */}
       <header className="relative overflow-hidden bg-[#F7F9FC]">
         <div className="absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full bg-[#2563FF]/5 blur-3xl pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
-          <div className="animate-in fade-in slide-in-from-bottom-6 duration-700 fill-mode-both">
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-[4.25rem] font-bold leading-[1.05] tracking-tight text-primary">
+          <div className="min-w-0 animate-in fade-in slide-in-from-bottom-6 duration-700 fill-mode-both">
+            <h1 className="font-serif text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4.25rem] font-bold leading-[1.07] sm:leading-[1.05] tracking-tight text-primary">
               Never overpay for household plans again.
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
@@ -123,7 +123,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex justify-center lg:justify-end animate-in fade-in slide-in-from-right-6 duration-1000 fill-mode-both delay-150">
+          <div className="min-w-0 flex justify-center lg:justify-end animate-in fade-in slide-in-from-right-6 duration-1000 fill-mode-both delay-150">
             <DashboardMockup />
           </div>
         </div>

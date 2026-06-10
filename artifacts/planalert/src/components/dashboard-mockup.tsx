@@ -84,7 +84,7 @@ function ServiceRow({
           {icon}
         </div>
         <div className="min-w-0">
-          <div className="text-sm font-bold text-primary leading-tight">{name}</div>
+          <div className="text-sm font-bold text-primary leading-tight truncate">{name}</div>
           <div className="text-[11px] text-muted-foreground leading-tight truncate">
             {provider}
           </div>
@@ -95,7 +95,7 @@ function ServiceRow({
           <div className="text-[10px] text-muted-foreground">Current cost</div>
         </div>
       </div>
-      <div className="bg-green-50 p-3 flex flex-col justify-between w-[42%] shrink-0">
+      <div className="bg-green-50 p-3 flex flex-col justify-between w-[38%] shrink-0">
         <div>
           <div className="text-[10px] font-semibold uppercase tracking-wide text-green-700/70">
             Potential Savings
@@ -146,7 +146,7 @@ export function DashboardMockup() {
         </div>
 
         {/* Main */}
-        <div className="p-4">
+        <div className="p-4 min-w-0">
           <h3 className="text-sm font-bold text-primary mb-3">Dashboard</h3>
 
           <div className="rounded-xl border border-primary/8 p-3 mb-4">
