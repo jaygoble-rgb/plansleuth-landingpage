@@ -1,16 +1,58 @@
 import React, { useState } from "react";
-import { Bell, CheckCircle, Wifi, Smartphone, ArrowRight, Clock } from "lucide-react";
+import {
+  ArrowRight,
+  Play,
+  Lock,
+  CheckCircle,
+  ClipboardList,
+  LineChart,
+  BellRing,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
+import DashboardMockup from "@/components/dashboard-mockup";
+import { useMeta } from "@/hooks/use-meta";
 import { waitlist } from "@/lib/blog-api";
+
+function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+const steps = [
+  {
+    icon: ClipboardList,
+    number: "1",
+    title: "Identify your plans",
+    body: "Tell us about your current household plans.",
+  },
+  {
+    icon: LineChart,
+    number: "2",
+    title: "We analyze the market",
+    body: "Our system compares thousands of plans to find better options.",
+  },
+  {
+    icon: BellRing,
+    number: "3",
+    title: "Get alerts & start saving",
+    body: "We notify you when better plans become available.",
+  },
+];
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useMeta({
+    title: "PlanAlert — Never overpay for household plans again",
+    description:
+      "Tell us about your current plan and we'll compare it against the market - then monitor it continuously so you always know when a better plan becomes available.",
+  });
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,156 +77,92 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-secondary/30">
-      <SiteNav overlay />
+      <SiteNav variant="sticky" />
 
-      {/* Hero Section */}
-      <header className="relative pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden flex items-center justify-center">
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-20 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-secondary/40 via-background to-background" />
-        
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full grid md:grid-cols-2 gap-12 items-center">
-          <div className="animate-in slide-in-from-bottom-8 duration-700 fade-in fill-mode-both">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 text-secondary-foreground text-sm font-medium mb-6">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
-              </span>
-              Now monitoring
-            </div>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6 text-primary">
-              Stop overpaying on your<br /><em className="font-serif italic text-secondary">cell phone &amp; internet plans</em>
+      {/* Hero */}
+      <header className="relative overflow-hidden bg-[#F7F9FC]">
+        <div className="absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full bg-[#2563FF]/5 blur-3xl pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
+          <div className="animate-in fade-in slide-in-from-bottom-6 duration-700 fill-mode-both">
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-[4.25rem] font-bold leading-[1.05] tracking-tight text-primary">
+              Never overpay for household plans again.
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-4 leading-relaxed">
-              We built <strong className="text-xl md:text-2xl text-primary">PlanAlert</strong> to continuously monitor <strong className="text-xl md:text-2xl text-primary">cell phone</strong> and <strong className="text-xl md:text-2xl text-primary">internet plans</strong> — ours, yours, everyone's — and ping you the moment a better deal appears. The more members, the smarter we all get.
+            <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
+              Tell us about your current plan and we'll compare it against the
+              market - then monitor it continuously so you always know when a
+              better plan becomes available.
             </p>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-              <strong className="text-xl md:text-2xl text-primary">PlanAlert</strong> is currently in private beta. <strong className="text-xl md:text-2xl text-primary">Join the waitlist for early access</strong> — we're opening spots in small batches.
-            </p>
-            
-            <form onSubmit={handleSubscribe} className="relative flex flex-col sm:flex-row gap-3 max-w-md w-full" data-testid="form-waitlist-hero">
-              {submitted ? (
-                <div className="flex items-center gap-3 p-4 bg-primary/5 border border-primary/10 rounded-xl text-primary font-medium w-full animate-in zoom-in-95" data-testid="text-waitlist-success">
-                  <CheckCircle className="w-5 h-5 text-secondary" />
-                  You're on the list! We'll be in touch.
-                </div>
-              ) : (
-                <>
-                  <Input
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="h-14 rounded-xl px-4 text-base bg-white border-primary/10 shadow-sm focus-visible:ring-secondary"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    disabled={submitting}
-                    data-testid="input-waitlist-email-hero"
-                  />
-                  <Button type="submit" size="lg" disabled={submitting} className="h-14 rounded-xl px-8 bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20" data-testid="button-waitlist-submit-hero">
-                    {submitting ? "Joining…" : "Join Waitlist"}
-                  </Button>
-                </>
-              )}
-            </form>
-            {errorMsg && !submitted && (
-              <p className="mt-3 text-sm text-destructive" data-testid="text-waitlist-error">
-                {errorMsg}
-              </p>
-            )}
-          </div>
-          
-          <div className="relative flex items-center justify-center animate-in fade-in slide-in-from-right-8 duration-1000 fill-mode-both delay-300">
-            {/* Bills + alert notification visual */}
-            <div className="relative w-80 h-96 md:w-96 md:h-[440px]">
-              <img src="/bill.svg" alt="Wireless bill" className="absolute inset-0 w-full h-full" />
 
-              {/* Alert notification card */}
-              <img
-                src="/notification.svg"
-                alt="Better deal found notification"
-                className="absolute w-64"
-                style={{ bottom: -8, right: -16 }}
-              />
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+              <Button
+                size="lg"
+                onClick={() => scrollToId("get-started")}
+                className="h-14 rounded-xl px-7 bg-[#2563FF] hover:bg-[#1E55E6] text-white text-base font-semibold border-0 shadow-lg shadow-[#2563FF]/25"
+                data-testid="button-start-monitoring"
+              >
+                Start Monitoring
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => scrollToId("how-it-works")}
+                className="h-14 rounded-xl px-7 bg-white text-primary text-base font-semibold border border-[#E5EAF2] gap-3"
+                data-testid="button-see-how"
+              >
+                <span className="inline-flex items-center justify-center w-[22px] h-[22px] rounded-full bg-primary text-white">
+                  <Play className="w-2.5 h-2.5 fill-white" />
+                </span>
+                See How It Works
+              </Button>
             </div>
 
+            <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
+              <Lock className="w-4 h-4" />
+              Secure. Private. No spam.
+            </div>
+          </div>
+
+          <div className="flex justify-center lg:justify-end animate-in fade-in slide-in-from-right-6 duration-1000 fill-mode-both delay-150">
+            <DashboardMockup />
           </div>
         </div>
       </header>
 
-      {/* The Problem Section */}
-      <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-32 opacity-5 pointer-events-none">
-          <Bell className="w-96 h-96" />
-        </div>
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 text-white">A $400 Billion Problem</h2>
-              <p className="text-xl text-primary-foreground/80 leading-relaxed mb-8">
-                US consumers lose approximately $400B every year on household services. That's about <strong className="text-secondary">$4,500 per household</strong> taken from your pocket.
-              </p>
-              <p className="text-xl text-primary-foreground/80 leading-relaxed">
-                Providers rely on you setting it and forgetting it. This isn't going to change, but together we can stay one step ahead.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { label: "Cell Phone", icon: Smartphone, active: true },
-                { label: "Internet", icon: Wifi, active: true },
-              ].map((service, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-2xl flex flex-col items-center justify-center text-center gap-3 hover:bg-white/10 transition-colors">
-                  <service.icon className="w-8 h-8 text-secondary" />
-                  <span className="font-medium text-white">{service.label}</span>
-                  <span className="text-xs text-secondary font-medium px-2 py-0.5 bg-secondary/20 rounded-full">Available at launch</span>
-                </div>
-              ))}
-              <div className="col-span-2 bg-white/5 border border-white/10 border-dashed p-6 rounded-2xl flex flex-col items-center justify-center text-center gap-3">
-                <Clock className="w-8 h-8 text-white/40" />
-                <span className="font-medium text-white/60">More services coming</span>
-                <span className="text-xs text-white/40">Car insurance, home insurance, mortgages & more</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works — Three Steps */}
-      <section className="py-24 md:py-32 relative">
+      {/* How It Works */}
+      <section
+        id="how-it-works"
+        className="py-24 md:py-28 bg-white border-t border-[#E5EAF2] scroll-mt-20"
+      >
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <p className="text-sm font-semibold uppercase tracking-widest text-secondary mb-4">How it works</p>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#2563FF] mb-4">
+              How it works
+            </p>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-primary">
-              Three steps.<br /><em className="font-serif font-normal text-secondary">One less headache.</em>
+              Three simple steps to start saving
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                number: "01",
-                title: "Add your plan",
-                desc: "Tell us what plan you're on. Cell phone and internet plans — whatever you've been quietly dreading to look into.",
-                tag: "Takes 2 minutes"
-              },
-              {
-                number: "02",
-                title: "We watch the market",
-                desc: "PlanAlert monitors providers continuously — and cross-checks them against what thousands of real members are paying and switching to.",
-                tag: "Community-powered"
-              },
-              {
-                number: "03",
-                title: "You get the alert",
-                desc: "The moment a genuinely better plan for you appears, we'll ping you with the details so you can switch with confidence.",
-                tag: "Switch and save"
-              }
-            ].map((step, i) => (
-              <div key={i} className="p-8 rounded-2xl bg-white border border-primary/5 shadow-sm hover:shadow-md transition-all group relative overflow-hidden">
-                <div className="text-4xl font-serif font-bold text-primary mb-6">{step.number}</div>
-                <h3 className="text-xl font-bold mb-3 text-primary">{step.title}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-6">{step.desc}</p>
-                <div className="inline-flex items-center gap-2 text-sm font-medium text-secondary">
-                  <ArrowRight className="w-4 h-4" />
-                  {step.tag}
+          <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+            {steps.map((step) => (
+              <div
+                key={step.number}
+                className="flex items-start gap-5 text-left"
+              >
+                <div className="shrink-0 w-20 h-20 rounded-full bg-[#EEF2FA] flex items-center justify-center text-[#2563FF]">
+                  <step.icon className="w-9 h-9" strokeWidth={1.6} />
+                </div>
+                <div>
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-primary tracking-tight">
+                    <span className="inline-flex items-center justify-center w-[22px] h-[22px] rounded-full border-[1.5px] border-[#2563FF] text-[#2563FF] text-xs font-bold">
+                      {step.number}
+                    </span>
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground max-w-[270px]">
+                    {step.body}
+                  </p>
                 </div>
               </div>
             ))}
@@ -192,45 +170,69 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary"></div>
-        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
-        
-        <div className="max-w-3xl mx-auto px-6 relative z-10 text-center">
-          <Bell className="w-16 h-16 text-secondary fill-secondary mx-auto mb-8" strokeWidth={2.5} />
-          <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6 text-white">We've got your back.</h2>
-          <p className="text-xl text-white/80 mb-12">
-            PlanAlert is currently in private beta, starting with cell phone and internet plans. Join the waitlist to be among the first to stop overpaying.
+      {/* Closing CTA */}
+      <section id="get-started" className="py-24 md:py-28 scroll-mt-20 bg-[#F7F9FC]">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <BellRing
+            className="w-14 h-14 text-secondary mx-auto mb-8"
+            strokeWidth={2}
+          />
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-primary mb-5">
+            Get alerts &amp; start saving
+          </h2>
+          <p className="text-lg md:text-xl text-muted-foreground mb-10">
+            It takes two minutes to set up. We'll handle the watching.
           </p>
-          
-          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto" data-testid="form-waitlist-cta">
+
+          <form
+            onSubmit={handleSubscribe}
+            className="flex flex-col sm:flex-row gap-3 justify-center max-w-lg mx-auto"
+            data-testid="form-waitlist-cta"
+          >
             {submitted ? (
-              <div className="flex items-center justify-center gap-3 p-4 bg-white/10 rounded-xl text-white font-medium w-full border border-white/20 animate-in zoom-in-95">
+              <div
+                className="flex items-center justify-center gap-3 p-4 bg-white border border-primary/10 rounded-xl text-primary font-medium w-full animate-in zoom-in-95"
+                data-testid="text-waitlist-success"
+              >
                 <CheckCircle className="w-6 h-6 text-secondary" />
-                You're on the list! Talk soon.
+                You're on the list! We'll be in touch.
               </div>
             ) : (
               <>
                 <Input
                   type="email"
                   placeholder="Enter your email address"
-                  className="h-14 rounded-xl px-6 text-lg bg-white/10 border-white/20 text-white placeholder:text-white/50 focus-visible:ring-secondary focus-visible:border-transparent"
+                  className="h-14 rounded-xl px-5 text-base bg-white border-[#E5EAF2] shadow-sm focus-visible:ring-[#2563FF]"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={submitting}
                   data-testid="input-waitlist-email-cta"
                 />
-                <Button type="submit" size="lg" disabled={submitting} className="h-14 rounded-xl px-8 bg-secondary hover:bg-secondary/90 text-primary font-bold text-lg" data-testid="button-waitlist-submit-cta">
-                  {submitting ? "Joining…" : "Join Waitlist"}
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={submitting}
+                  className="h-14 rounded-xl px-8 bg-[#2563FF] hover:bg-[#1E55E6] text-white font-semibold text-base border-0 whitespace-nowrap"
+                  data-testid="button-waitlist-submit-cta"
+                >
+                  {submitting ? "Joining…" : "Get Started Free"}
                 </Button>
               </>
             )}
           </form>
           {errorMsg && !submitted && (
-            <p className="mt-4 text-sm text-secondary text-center">{errorMsg}</p>
+            <p
+              className="mt-4 text-sm text-destructive"
+              data-testid="text-waitlist-error"
+            >
+              {errorMsg}
+            </p>
           )}
+          <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
+            <Lock className="w-4 h-4" />
+            Secure. Private. No spam.
+          </div>
         </div>
       </section>
 
