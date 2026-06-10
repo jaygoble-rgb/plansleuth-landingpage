@@ -20,21 +20,19 @@ export default function About() {
       {/* Hero */}
       <header className="relative overflow-hidden bg-[#F7F9FC] border-b border-[#E5EAF2]">
         <div className="absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full bg-[#2563FF]/5 blur-3xl pointer-events-none" />
-        <div className="max-w-3xl mx-auto px-6 md:px-12 py-16 md:py-24 relative z-10 animate-in fade-in slide-in-from-bottom-6 duration-700 fill-mode-both">
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#2563FF] mb-4">
+        <div className="max-w-3xl mx-auto px-6 md:px-12 py-14 md:py-24 relative z-10 animate-in fade-in slide-in-from-bottom-6 duration-700 fill-mode-both">
+          <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-[#2563FF] mb-4">
             About
           </p>
-          <h1 className="font-serif text-5xl md:text-6xl font-bold leading-[1.05] tracking-tight text-primary">
-            Built to close
-            <br />
-            the loyalty gap
+          <h1 className="font-serif text-[2.5rem] sm:text-5xl md:text-6xl font-bold leading-[1.08] sm:leading-[1.05] tracking-tight text-primary text-balance">
+            Built to close the loyalty gap
           </h1>
         </div>
       </header>
 
       {/* Story body */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-3xl mx-auto px-6 md:px-12 space-y-6 text-lg leading-relaxed text-muted-foreground">
+      <section className="py-14 md:py-24 bg-white">
+        <div className="max-w-3xl mx-auto px-6 md:px-12 space-y-6 text-base sm:text-lg leading-relaxed text-muted-foreground">
           <p>
             Somewhere along the way, most of us just accepted that we're probably
             paying more than we should for things like our phone plan or internet
@@ -76,22 +74,22 @@ export default function About() {
       </section>
 
       {/* Closing CTA */}
-      <section className="py-24 md:py-28 bg-[#F7F9FC] border-t border-[#E5EAF2]">
+      <section className="py-16 md:py-28 bg-[#F7F9FC] border-t border-[#E5EAF2]">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <BellRing
-            className="w-14 h-14 text-secondary mx-auto mb-8"
+            className="w-12 h-12 md:w-14 md:h-14 text-secondary mx-auto mb-7 md:mb-8"
             strokeWidth={2}
           />
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-primary mb-5">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-4 md:mb-5 text-balance">
             Stop absorbing the loyalty tax
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground mb-10">
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 md:mb-10">
             It takes two minutes to set up. We'll handle the watching.
           </p>
           <Button
             asChild
             size="lg"
-            className="h-14 rounded-xl px-8 bg-[#2563FF] hover:bg-[#1E55E6] text-white font-semibold text-base border-0"
+            className="h-14 w-full sm:w-auto rounded-xl px-8 bg-[#2563FF] hover:bg-[#1E55E6] text-white font-semibold text-base border-0"
             data-testid="button-about-get-started"
           >
             <a href={`${BASE}#get-started`}>

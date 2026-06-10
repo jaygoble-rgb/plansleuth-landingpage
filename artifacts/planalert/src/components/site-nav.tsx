@@ -1,5 +1,14 @@
-import { Bell } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
+import { useState } from "react";
 import { Link } from "wouter";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export type SiteNavVariant = "default" | "overlay" | "sticky";
 
@@ -20,6 +29,7 @@ const homeHash = (hash: string) => `${BASE}#${hash}`;
 
 export function SiteNav({ variant, overlay = false }: SiteNavProps) {
   const resolved: SiteNavVariant = variant ?? (overlay ? "overlay" : "default");
+  const [open, setOpen] = useState(false);
 
   const wrapperClass =
     resolved === "sticky"
@@ -73,10 +83,77 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
         </a>
         <a
           href={homeHash("get-started")}
-          className="inline-flex items-center justify-center rounded-lg bg-[#2563FF] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-[#2563FF]/20 hover:bg-[#1E55E6] transition-colors"
+          className="hidden sm:inline-flex items-center justify-center rounded-lg bg-[#2563FF] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-[#2563FF]/20 hover:bg-[#1E55E6] transition-colors"
         >
           Get Started Free
         </a>
+
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger
+            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-primary hover:bg-primary/5 transition-colors"
+            aria-label="Open menu"
+            data-testid="button-mobile-menu"
+          >
+            <Menu className="w-6 h-6" strokeWidth={2.25} />
+          </SheetTrigger>
+          <SheetContent side="right" className="flex w-72 flex-col sm:w-80">
+            <SheetHeader className="text-left">
+              <SheetTitle className="flex items-center gap-2 font-serif text-xl font-bold text-primary">
+                <Bell
+                  className="w-5 h-5 text-secondary fill-secondary"
+                  strokeWidth={2.5}
+                />
+                PlanAlert
+              </SheetTitle>
+            </SheetHeader>
+
+            <div className="mt-2 flex flex-col px-1">
+              <SheetClose asChild>
+                <a
+                  href={homeHash("how-it-works")}
+                  className="rounded-lg px-3 py-3 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
+                >
+                  How it Works
+                </a>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href="/about"
+                  className="rounded-lg px-3 py-3 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
+                >
+                  About
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href="/blog"
+                  className="rounded-lg px-3 py-3 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
+                >
+                  Blog
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <a
+                  href={homeHash("get-started")}
+                  className="rounded-lg px-3 py-3 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
+                >
+                  Sign in
+                </a>
+              </SheetClose>
+            </div>
+
+            <div className="mt-auto px-1 pb-2">
+              <SheetClose asChild>
+                <a
+                  href={homeHash("get-started")}
+                  className="flex items-center justify-center rounded-lg bg-[#2563FF] px-5 py-3 text-base font-semibold text-white shadow-sm shadow-[#2563FF]/20 hover:bg-[#1E55E6] transition-colors"
+                >
+                  Get Started Free
+                </a>
+              </SheetClose>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </nav>
   );
