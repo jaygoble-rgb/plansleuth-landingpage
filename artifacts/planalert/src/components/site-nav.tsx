@@ -51,6 +51,12 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
           How it Works
         </a>
         <Link
+          href="/about"
+          className="text-base font-medium text-primary/80 hover:text-primary transition-colors"
+        >
+          About
+        </Link>
+        <Link
           href="/blog"
           className="text-base font-medium text-primary/80 hover:text-primary transition-colors"
         >

@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
+import About from "@/pages/about";
 import BlogIndex from "@/pages/blog/index";
 import BlogPost from "@/pages/blog/post";
 import BlogAdminLogin from "@/pages/blogadmin/login";
@@ -17,6 +18,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/about" component={About} />
       <Route path="/blog" component={BlogIndex} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/blogadmin/login" component={BlogAdminLogin} />
