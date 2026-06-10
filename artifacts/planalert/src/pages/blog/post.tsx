@@ -72,11 +72,11 @@ export default function BlogPostPage() {
 
           {isError && (
             <div className="text-center py-20">
-              <h1 className="font-serif text-4xl text-primary mb-4">Case not found</h1>
+              <h1 className="font-serif text-4xl text-primary mb-4">Post not found</h1>
               <p className="text-muted-foreground mb-6">
                 {(error as Error)?.message || "We couldn't find this post."}
               </p>
-              <Link href="/blog" className="text-secondary font-medium hover:underline">
+              <Link href="/blog" className="text-[#2563FF] font-medium hover:underline">
                 Back to all posts
               </Link>
             </div>
@@ -86,11 +86,11 @@ export default function BlogPostPage() {
             <article>
               <header className="mb-10">
                 {post.category && (
-                  <span className="inline-block text-xs font-semibold uppercase tracking-widest text-secondary mb-4">
+                  <span className="inline-block text-xs font-semibold uppercase tracking-widest text-[#2563FF] mb-4">
                     {post.category}
                   </span>
                 )}
-                <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight mb-6">
+                <h1 className="font-serif text-[2.5rem] sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-[1.08] sm:leading-tight tracking-tight text-balance mb-6">
                   {post.title}
                 </h1>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">

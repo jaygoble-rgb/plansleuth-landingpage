@@ -55,16 +55,22 @@ export default function BlogIndex() {
     <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
       <SiteNav variant="sticky" />
       <main className="flex-1">
-        <header className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-12">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold text-primary mb-6">
-            The PlanAlert <em className="font-serif italic text-secondary">Blog</em>
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Guides, updates, and practical advice for keeping your household bills in check.
-          </p>
+        <header className="relative overflow-hidden bg-[#F7F9FC] border-b border-[#E5EAF2]">
+          <div className="absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full bg-[#2563FF]/5 blur-3xl pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-14 md:py-24 relative z-10 animate-in fade-in slide-in-from-bottom-6 duration-700 fill-mode-both">
+            <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-[#2563FF] mb-4">
+              Blog
+            </p>
+            <h1 className="font-serif text-[2.5rem] sm:text-5xl md:text-6xl font-bold leading-[1.08] sm:leading-[1.05] tracking-tight text-primary text-balance mb-5 md:mb-6">
+              The PlanAlert Blog
+            </h1>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl">
+              Guides, updates, and practical advice for keeping your household bills in check.
+            </p>
+          </div>
         </header>
 
-        <section className="max-w-7xl mx-auto px-6 md:px-12 mb-10">
+        <section className="max-w-7xl mx-auto px-6 md:px-12 pt-10 md:pt-12 mb-10">
           <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
             <div className="relative w-full md:max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -115,8 +121,8 @@ export default function BlogIndex() {
             <p className="text-muted-foreground">Could not load posts. Try again later.</p>
           ) : items.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-xl font-serif text-primary mb-2">The case is quiet.</p>
-              <p className="text-muted-foreground">No posts yet. Check back soon.</p>
+              <p className="text-xl font-serif text-primary mb-2">Nothing here yet.</p>
+              <p className="text-muted-foreground">No posts published yet. Check back soon.</p>
             </div>
           ) : (
             <>
@@ -138,17 +144,17 @@ export default function BlogIndex() {
                         />
                       </div>
                     ) : (
-                      <div className="aspect-[16/9] bg-gradient-to-br from-primary/5 via-secondary/5 to-primary/10 flex items-center justify-center">
-                        <Search className="w-12 h-12 text-secondary/40" />
+                      <div className="aspect-[16/9] bg-gradient-to-br from-[#2563FF]/5 via-[#2563FF]/10 to-primary/10 flex items-center justify-center">
+                        <Search className="w-12 h-12 text-[#2563FF]/30" />
                       </div>
                     )}
                     <div className="p-6 flex-1 flex flex-col">
                       {post.category && (
-                        <span className="text-xs font-semibold uppercase tracking-wider text-secondary mb-2">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-[#2563FF] mb-2">
                           {post.category}
                         </span>
                       )}
-                      <h2 className="font-serif text-2xl font-bold text-primary mb-3 leading-tight group-hover:text-secondary transition-colors">
+                      <h2 className="font-serif text-2xl font-bold text-primary mb-3 leading-tight group-hover:text-[#2563FF] transition-colors">
                         {post.title}
                       </h2>
                       {post.excerpt && (
