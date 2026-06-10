@@ -139,18 +139,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-
-          <div className="mt-16 max-w-3xl mx-auto">
-            <div className="overflow-hidden rounded-2xl border border-[#E5EAF2] shadow-sm bg-white">
-              <iframe
-                src="https://scribehow.com/embed/How_to_start_monitoring_your_cellular_plan__jM01b0PLRxOEVAzJfJ0DVQ"
-                title="How to start monitoring your cellular plan"
-                allow="fullscreen"
-                className="w-full block"
-                style={{ aspectRatio: "1 / 1", border: 0, minHeight: 480 }}
-              />
-            </div>
-          </div>
         </div>
       </section>
 
