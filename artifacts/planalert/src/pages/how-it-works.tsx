@@ -91,8 +91,8 @@ export default function HowItWorks() {
           </div>
           <div className="overflow-hidden rounded-2xl border border-[#E5EAF2] shadow-sm bg-white">
             <iframe
-              src="https://scribehow.com/embed/How_to_start_monitoring_your_cellular_plan__jM01b0PLRxOEVAzJfJ0DVQ"
-              title="How to start monitoring your cellular plan"
+              src="https://scribehow.com/o/X_25OUPkTXa7w9SQPJ0u4w/viewer/How_to_start_monitoring_your_plans__4Wob1c6DQsaCIR5Kw_J9FA"
+              title="How to start monitoring your plans"
               allow="fullscreen"
               className="w-full block"
               style={{ aspectRatio: "1 / 1", border: 0, minHeight: 480 }}
