@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "PlanAlert - Coming Soon"
+title = "PlanAlert"
 version = "1.0.0"
 id = "artifacts/planalert"
 router = "path"
