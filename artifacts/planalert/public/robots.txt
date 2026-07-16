@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /blogadmin
+
+Sitemap: https://planalert.com/sitemap.xml

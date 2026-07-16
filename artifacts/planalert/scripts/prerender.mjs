@@ -74,9 +74,26 @@ const staticRoutes = [
 
 for (const route of staticRoutes) renderRoute(route);
 
+function writeSitemap(blogRows) {
+  const now = new Date().toISOString();
+  const urls = [
+    ...staticRoutes.map(
+      (r) => `<url><loc>${siteOrigin}${r.path === "/" ? "/" : r.path}</loc><lastmod>${now}</lastmod></url>`,
+    ),
+    ...blogRows.map((row) => {
+      const lastmod = new Date(row.updated_at ?? row.publish_date ?? Date.now()).toISOString();
+      return `<url><loc>${siteOrigin}/blog/${row.slug}</loc><lastmod>${lastmod}</lastmod></url>`;
+    }),
+  ].join("");
+  const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>\n`;
+  writeFileSync(join(distDir, "sitemap.xml"), xml);
+  console.log(`wrote sitemap.xml with ${staticRoutes.length + blogRows.length} url(s)`);
+}
+
 async function prerenderBlogPosts() {
   if (!process.env.DATABASE_URL) {
     console.warn("prerender: DATABASE_URL not set, skipping blog post prerendering");
+    writeSitemap([]);
     return;
   }
   const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
@@ -84,7 +101,7 @@ async function prerenderBlogPosts() {
     await client.connect();
     const { rows } = await client.query(
       `SELECT slug, title, excerpt, meta_title, meta_description,
-              open_graph_image_url, featured_image_url
+              open_graph_image_url, featured_image_url, updated_at, publish_date
          FROM blog_posts
         WHERE status = 'published' AND archived_at IS NULL`,
     );
@@ -98,6 +115,7 @@ async function prerenderBlogPosts() {
       });
     }
     console.log(`prerendered ${rows.length} blog post(s)`);
+    writeSitemap(rows);
   } catch (err) {
     console.error(`prerender: failed to prerender blog posts (${err.message})`);
     process.exitCode = 1;
