@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { publicBlog } from "@/lib/blog-api";
 import { Markdown } from "@/components/markdown";
 import { useMeta } from "@/hooks/use-meta";
+import { canonicalUrl } from "@/lib/site";
 
 function formatDate(d: string | null) {
   if (!d) return "";
@@ -23,8 +24,7 @@ export default function BlogPostPage() {
     retry: false,
   });
 
-  const origin = typeof window !== "undefined" ? window.location.origin : "";
-  const url = post ? `${origin}/blog/${post.slug}` : undefined;
+  const url = post ? canonicalUrl(`/blog/${post.slug}`) : undefined;
 
   useMeta({
     title: post ? (post.metaTitle || `${post.title} — PlanAlert Blog`) : "Loading…",

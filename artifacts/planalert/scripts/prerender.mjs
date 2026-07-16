@@ -5,7 +5,7 @@ import pg from "pg";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = join(__dirname, "..", "dist", "public");
-const siteOrigin = "https://planalert.com";
+const siteOrigin = "https://www.planalert.com";
 const defaultOgImage = `${siteOrigin}/opengraph.jpg`;
 
 const template = readFileSync(join(distDir, "index.html"), "utf8");

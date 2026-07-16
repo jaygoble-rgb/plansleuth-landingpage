@@ -2,6 +2,7 @@ import { ClipboardList, LineChart, BellRing } from "lucide-react";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import { useMeta } from "@/hooks/use-meta";
+import { canonicalUrl } from "@/lib/site";
 
 const steps = [
   {
@@ -29,10 +30,7 @@ export default function HowItWorks() {
     title: "How it works — PlanAlert",
     description:
       "See how PlanAlert helps you stop overpaying: tell us your plans, we monitor the market, and we alert you when a better deal appears.",
-    canonical:
-      typeof window !== "undefined"
-        ? `${window.location.origin}/how-it-works`
-        : undefined,
+    canonical: canonicalUrl("/how-it-works"),
     ogType: "website",
   });
 

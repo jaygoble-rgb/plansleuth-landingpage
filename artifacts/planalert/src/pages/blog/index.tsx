@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { publicBlog } from "@/lib/blog-api";
 import { useMeta } from "@/hooks/use-meta";
+import { canonicalUrl } from "@/lib/site";
 
 const PAGE_SIZE = 9;
 
@@ -27,7 +28,7 @@ export default function BlogIndex() {
     title: "Blog — PlanAlert",
     description:
       "Insights, tips, and updates from PlanAlert on saving money on cell phone, internet, and household plans.",
-    canonical: typeof window !== "undefined" ? `${window.location.origin}/blog` : undefined,
+    canonical: canonicalUrl("/blog"),
     ogType: "website",
   });
 

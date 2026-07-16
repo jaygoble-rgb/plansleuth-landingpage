@@ -12,6 +12,7 @@ import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import DashboardMockup from "@/components/dashboard-mockup";
 import { useMeta } from "@/hooks/use-meta";
+import { SITE_ORIGIN, canonicalUrl } from "@/lib/site";
 
 const steps = [
   {
@@ -39,13 +40,9 @@ export default function Home() {
     title: "PlanAlert — Never overpay for household plans again",
     description:
       "Tell us about your current plan and we'll compare it against the market - then monitor it continuously so you always know when a better plan becomes available.",
-    canonical:
-      typeof window !== "undefined" ? `${window.location.origin}/` : undefined,
+    canonical: canonicalUrl("/"),
     ogType: "website",
-    ogImage:
-      typeof window !== "undefined"
-        ? `${window.location.origin}/opengraph.jpg`
-        : undefined,
+    ogImage: `${SITE_ORIGIN}/opengraph.jpg`,
   });
 
   return (
