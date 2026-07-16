@@ -29,3 +29,13 @@ to = "/index.html"
 [services.env]
 PORT = "18839"
 BASE_PATH = "/"
+
+[[services.production.responseHeaders]]
+path = "/assets/*"
+name = "Cache-Control"
+value = "public, max-age=31536000, immutable"
+
+[[services.production.responseHeaders]]
+path = "/*"
+name = "Cache-Control"
+value = "no-cache"

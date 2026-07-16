@@ -1,0 +1,72 @@
+# PlanAlert — SEO Fix Instructions (Round 2)
+
+Context: the previous round of SEO fixes (static meta tags, robots.txt, sitemap.xml, canonical tags) was implemented, but a re-audit found the fixes aren't fully reaching visitors. Three issues to resolve, in priority order.
+
+---
+
+## 1. Purge the deployment/CDN cache (do this first — highest impact, no code change)
+
+**Problem:** The homepage, `/robots.txt`, and `/sitemap.xml` all now return correct content when fetched fresh (confirmed by appending a cache-busting query string, e.g. `/?v=2`), but the exact bare URLs (`https://www.planalert.com/`, `https://www.planalert.com/robots.txt`, `https://www.planalert.com/sitemap.xml`) still serve an old, stale, pre-fix version — the "PlanAlert - Coming Soon" placeholder title and empty body. This means real visitors, search crawlers, and anyone sharing a link right now are seeing the broken old version, even though the underlying code is fixed.
+
+**What to do:**
+- In the Replit Deployments dashboard, find the cache/CDN settings for this deployment (Static Deployments and some Autoscale deployments cache responses at the edge) and purge/invalidate the cache for the whole site, or at minimum for `/`, `/robots.txt`, and `/sitemap.xml`.
+- If there's no purge control in the Replit UI, trigger a fresh redeploy — a new deploy often invalidates the edge cache automatically.
+- **Prevent recurrence:** add explicit cache headers to the server response for these paths so they're never cached long-term by a CDN:
+  ```js
+  app.get('/robots.txt', (req, res) => {
+    res.set('Cache-Control', 'public, max-age=300'); // 5 min, not indefinite
+    res.type('text/plain').send(robotsContent);
+  });
+
+  app.get('/sitemap.xml', (req, res) => {
+    res.set('Cache-Control', 'public, max-age=300');
+    res.type('application/xml').send(sitemapXml);
+  });
+  ```
+  For the main `index.html` response, set `Cache-Control: no-cache` (or a short max-age) so each deploy's HTML changes propagate immediately instead of getting stuck behind a stale cached copy.
+
+**How to verify it worked:** fetch `https://www.planalert.com/` directly (no query string) and confirm the page title is "PlanAlert — Never overpay for household plans again," not "PlanAlert - Coming Soon."
+
+---
+
+## 2. Fix the canonical tag bug on the About and How-it-works pages
+
+**Problem:** Every page should have a canonical tag pointing to *itself*. Right now, the About page (`/about`) and How-it-works page (`/how-it-works`) both have their canonical tag hardcoded to the homepage URL (`https://planalert.com/`) instead of their own URL. This tells Google "these pages are duplicates of the homepage, don't index them separately" — actively suppressing them from search results. The blog pages don't have this bug; they already canonicalize to themselves correctly.
+
+**What to do:** find the shared layout/head component used by the About and How-it-works pages (likely the same component that sets `<title>` and meta description for those pages) and make the canonical tag dynamic — it should use the current page's own URL, not a fixed homepage default. For example, if using `react-helmet-async`:
+```jsx
+<Helmet>
+  <link rel="canonical" href={`https://www.planalert.com${window.location.pathname}`} />
+</Helmet>
+```
+Apply this pattern (or whatever the existing per-page canonical logic is, matching how the blog pages already do it) to every static page — Home, About, How-it-works — so each one self-references instead of pointing at the homepage.
+
+**How to verify it worked:** load `/about` and `/how-it-works` and check that each page's canonical `<link>` tag matches its own URL, not the homepage's.
+
+---
+
+## 3. Standardize on one domain (www) and redirect the other
+
+**Problem:** `https://planalert.com` and `https://www.planalert.com` both serve the site independently right now, with no redirect between them — confirmed both return content directly. On top of that, canonical tags are inconsistent about which one they treat as authoritative: Home/About/How-it-works point to the non-www domain, while blog pages point to the www domain. Search engines may index both domains as separate sites and split ranking authority between them.
+
+**What to do:**
+- Pick `https://www.planalert.com` as the canonical domain (recommended, since it's what you're already promoting).
+- Add a 301 redirect from `planalert.com` (and `http://` versions of both) to `https://www.planalert.com`, at the DNS/domain level if your registrar supports it, or in the Express server:
+  ```js
+  app.use((req, res, next) => {
+    const host = req.headers.host;
+    if (host === 'planalert.com') {
+      return res.redirect(301, `https://www.planalert.com${req.originalUrl}`);
+    }
+    next();
+  });
+  ```
+- Update every canonical tag site-wide (including the Home/About/How-it-works fix in step 2) to consistently use `https://www.planalert.com/...`.
+
+**How to verify it worked:** fetch `https://planalert.com/` and confirm it 301-redirects to `https://www.planalert.com/`, and check that canonical tags across all pages use the same www domain.
+
+---
+
+## Not included in this round
+- Full per-route prerendering for blog posts (so search engines see post-specific titles/meta in the raw HTML, not just after JS runs) — this is a larger follow-up project, separate from these fixes.
+- Adding H2 subheadings to blog post content — explicitly excluded from this round per Jay's request.
