@@ -29,6 +29,11 @@ export default function HowItWorks() {
     title: "How it works — PlanAlert",
     description:
       "See how PlanAlert helps you stop overpaying: tell us your plans, we monitor the market, and we alert you when a better deal appears.",
+    canonical:
+      typeof window !== "undefined"
+        ? `${window.location.origin}/how-it-works`
+        : undefined,
+    ogType: "website",
   });
 
   return (

@@ -9,6 +9,11 @@ export default function About() {
     title: "About PlanAlert — Built to close the loyalty gap",
     description:
       "PlanAlert exists to close the loyalty gap. We watch the market so households stop absorbing the loyalty tax on cellular, internet, and other everyday plans.",
+    canonical:
+      typeof window !== "undefined"
+        ? `${window.location.origin}/about`
+        : undefined,
+    ogType: "website",
   });
 
   return (
