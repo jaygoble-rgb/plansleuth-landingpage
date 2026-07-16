@@ -19,23 +19,8 @@ run = "pnpm --filter @workspace/planalert run dev"
 
 [services.production]
 build = [ "pnpm", "--filter", "@workspace/planalert", "run", "build" ]
-publicDir = "artifacts/planalert/dist/public"
-serve = "static"
-
-[[services.production.rewrites]]
-from = "/*"
-to = "/index.html"
+run = "pnpm --filter @workspace/planalert run serve"
 
 [services.env]
 PORT = "18839"
 BASE_PATH = "/"
-
-[[services.production.responseHeaders]]
-path = "/assets/*"
-name = "Cache-Control"
-value = "public, max-age=31536000, immutable"
-
-[[services.production.responseHeaders]]
-path = "/*"
-name = "Cache-Control"
-value = "no-cache"
