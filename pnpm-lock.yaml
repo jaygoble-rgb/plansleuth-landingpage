@@ -413,9 +413,6 @@ importers:
 
   artifacts/planalert:
     dependencies:
-      express:
-        specifier: ^5.2.1
-        version: 5.2.1
       react-markdown:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@19.2.14)(react@19.1.0)
