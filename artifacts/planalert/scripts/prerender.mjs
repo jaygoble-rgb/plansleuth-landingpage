@@ -32,11 +32,8 @@ function renderRoute({ path, title, description, ogType = "website", ogImage = d
     .replace(/<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${escapeHtml(ogImage)}" />`)
     .replace(/<meta name="twitter:title" content="[^"]*" \/>/, `<meta name="twitter:title" content="${t}" />`)
     .replace(/<meta name="twitter:description" content="[^"]*" \/>/, `<meta name="twitter:description" content="${d}" />`)
-    .replace(/<meta name="twitter:image" content="[^"]*" \/>/, `<meta name="twitter:image" content="${escapeHtml(ogImage)}" />`);
-  html = html.replace(
-    /<link rel="icon"/,
-    `<link rel="canonical" href="${url}" />\n    <link rel="icon"`,
-  );
+    .replace(/<meta name="twitter:image" content="[^"]*" \/>/, `<meta name="twitter:image" content="${escapeHtml(ogImage)}" />`)
+    .replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${url}" />`);
 
   const outFile =
     path === "/" ? join(distDir, "index.html") : join(distDir, path.slice(1), "index.html");

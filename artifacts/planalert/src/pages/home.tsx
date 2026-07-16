@@ -39,6 +39,13 @@ export default function Home() {
     title: "PlanAlert — Never overpay for household plans again",
     description:
       "Tell us about your current plan and we'll compare it against the market - then monitor it continuously so you always know when a better plan becomes available.",
+    canonical:
+      typeof window !== "undefined" ? `${window.location.origin}/` : undefined,
+    ogType: "website",
+    ogImage:
+      typeof window !== "undefined"
+        ? `${window.location.origin}/opengraph.jpg`
+        : undefined,
   });
 
   return (
