@@ -15,7 +15,7 @@ import BlogAdminWaitlist from "@/pages/blogadmin/waitlist";
 
 const queryClient = new QueryClient();
 
-function Router() {
+export function AppRoutes() {
   return (
     <Switch>
       <Route path="/" component={Home} />
@@ -38,7 +38,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
+          <AppRoutes />
         </WouterRouter>
         <Toaster />
       </TooltipProvider>

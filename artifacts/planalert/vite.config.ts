@@ -54,6 +54,11 @@ export default defineConfig({
     dedupe: ["react", "react-dom"],
   },
   root: path.resolve(import.meta.dirname),
+  ssr: {
+    // Bundle every dependency into the SSR output so it runs on a bare
+    // node runtime with no node_modules (deployment images ship none).
+    noExternal: true,
+  },
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
