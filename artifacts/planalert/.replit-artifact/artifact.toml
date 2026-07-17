@@ -19,7 +19,7 @@ run = "pnpm --filter @workspace/planalert run dev"
 
 [services.production]
 build = [ "pnpm", "--filter", "@workspace/planalert", "run", "build" ]
-run = "pnpm --filter @workspace/planalert run serve"
+run = "node artifacts/planalert/server/index.mjs"
 
 [services.env]
 PORT = "18839"

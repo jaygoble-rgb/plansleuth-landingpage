@@ -1,0 +1,1 @@
+- [Deployment runtime deps](deployment-runtime-deps.md) — production run commands can't use workspace node_modules; bundle or go dependency-free, and launch with node directly (pnpm slows cold starts).
