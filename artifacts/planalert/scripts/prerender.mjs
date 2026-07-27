@@ -77,6 +77,12 @@ const staticRoutes = [
       "See how PlanAlert helps you stop overpaying: tell us your plans, we monitor the market, and we alert you when a better deal appears.",
   },
   {
+    path: "/medicare",
+    title: "Medicare Plan Monitoring — PlanAlert",
+    description:
+      "We monitor your Medicare Advantage and Part D plans and alert you plainly when a better option exists. Secure, private, and independent.",
+  },
+  {
     path: "/about",
     title: "About PlanAlert — Built to close the loyalty gap",
     description:

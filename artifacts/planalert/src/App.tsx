@@ -6,6 +6,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import HowItWorks from "@/pages/how-it-works";
 import About from "@/pages/about";
+import Medicare from "@/pages/medicare";
 import BlogIndex from "@/pages/blog/index";
 import BlogPost from "@/pages/blog/post";
 import BlogAdminLogin from "@/pages/blogadmin/login";
@@ -21,6 +22,7 @@ export function AppRoutes() {
       <Route path="/" component={Home} />
       <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/about" component={About} />
+      <Route path="/medicare" component={Medicare} />
       <Route path="/blog" component={BlogIndex} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/blogadmin/login" component={BlogAdminLogin} />
