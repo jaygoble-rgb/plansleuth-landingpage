@@ -179,8 +179,8 @@ export default function Medicare() {
                   <step.icon className="w-10 h-10 lg:w-12 lg:h-12" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="flex items-center justify-center md:justify-start gap-3 text-xl lg:text-2xl font-bold text-primary tracking-tight mb-3">
-                    <span className="inline-flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#2563FF] text-[#2563FF] text-sm lg:text-base font-bold">
+                  <h3 className="flex items-start justify-center md:justify-start gap-3 text-xl lg:text-2xl font-bold text-primary tracking-tight mb-3">
+                    <span className="mt-px lg:mt-0.5 shrink-0 inline-flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#2563FF] text-[#2563FF] text-sm lg:text-base font-bold">
                       {step.number}
                     </span>
                     {step.title}

@@ -128,8 +128,8 @@ export default function Home() {
                   <step.icon className="w-9 h-9" strokeWidth={1.6} />
                 </div>
                 <div>
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-primary tracking-tight">
-                    <span className="inline-flex items-center justify-center w-[22px] h-[22px] rounded-full border-[1.5px] border-[#2563FF] text-[#2563FF] text-xs font-bold">
+                  <h3 className="flex items-start gap-2 text-lg font-bold text-primary tracking-tight">
+                    <span className="mt-[3px] shrink-0 inline-flex items-center justify-center w-[22px] h-[22px] rounded-full border-[1.5px] border-[#2563FF] text-[#2563FF] text-xs font-bold">
                       {step.number}
                     </span>
                     {step.title}
