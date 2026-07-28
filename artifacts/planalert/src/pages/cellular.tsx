@@ -82,10 +82,6 @@ export default function Cellular() {
                 <Lock className="w-4 h-4 lg:w-5 lg:h-5 text-[#2563FF]" />
                 <span>100% Private</span>
               </div>
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 lg:w-5 lg:h-5 text-[#2563FF]" />
-                <span>Not a carrier salesperson</span>
-              </div>
             </div>
           </div>
 
