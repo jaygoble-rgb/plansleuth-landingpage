@@ -109,7 +109,7 @@ export default function Home() {
         className="py-24 md:py-28 bg-white border-t border-[#E5EAF2] scroll-mt-20"
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#2563FF] mb-4">
               How it works
             </p>
@@ -118,23 +118,23 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+          <div className="grid md:grid-cols-3 gap-10 md:gap-12">
             {steps.map((step) => (
               <div
                 key={step.number}
-                className="flex items-start gap-5 text-left"
+                className="flex flex-col items-center text-center md:items-start md:text-left gap-5 lg:gap-6"
               >
-                <div className="shrink-0 w-20 h-20 rounded-full bg-[#EEF2FA] flex items-center justify-center text-[#2563FF]">
-                  <step.icon className="w-9 h-9" strokeWidth={1.6} />
+                <div className="shrink-0 w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-[#EEF2FA] flex items-center justify-center text-[#2563FF]">
+                  <step.icon className="w-10 h-10 lg:w-12 lg:h-12" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="flex items-start gap-2 text-lg font-bold text-primary tracking-tight">
-                    <span className="mt-[3px] shrink-0 inline-flex items-center justify-center w-[22px] h-[22px] rounded-full border-[1.5px] border-[#2563FF] text-[#2563FF] text-xs font-bold">
+                  <h3 className="flex items-start justify-center md:justify-start gap-3 text-xl lg:text-2xl font-bold text-primary tracking-tight mb-3">
+                    <span className="mt-px lg:mt-0.5 shrink-0 inline-flex items-center justify-center w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 border-[#2563FF] text-[#2563FF] text-sm lg:text-base font-bold">
                       {step.number}
                     </span>
                     {step.title}
                   </h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground max-w-[270px]">
+                  <p className="text-base lg:text-lg leading-relaxed text-muted-foreground max-w-sm">
                     {step.body}
                   </p>
                 </div>
