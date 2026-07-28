@@ -10,6 +10,12 @@ const port = Number(process.env.PORT) || 18839;
 const CANONICAL_HOST = "www.planalert.com";
 const APEX_HOST = "planalert.com";
 
+// Old/external URLs that should permanently redirect to a real page.
+const REDIRECTS = {
+  "/home": "/",
+  "/index.html": "/",
+};
+
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -264,8 +270,8 @@ async function renderSitemapXml() {
   return cacheSet("sitemap", value);
 }
 
-function sendHtml(res, html, headOnly, contentType = "text/html; charset=utf-8") {
-  res.writeHead(200, {
+function sendHtml(res, html, headOnly, contentType = "text/html; charset=utf-8", status = 200) {
+  res.writeHead(status, {
     "Content-Type": contentType,
     "Cache-Control": "no-cache",
   });
@@ -301,7 +307,18 @@ async function sendSpaFallback(res, pathname, headOnly) {
       return;
     }
   }
-  sendHtml(res, indexTemplate, headOnly);
+  // Client-only routes (e.g. the blog admin) are valid pages that simply
+  // aren't prerendered — serve them with 200. Anything else is an unknown
+  // URL: serve the SPA shell (which renders the Not Found page) with a
+  // real 404 status so crawlers don't record soft 404s.
+  const isClientRoute = cleanPath === "/" || cleanPath.startsWith("/blogadmin");
+  sendHtml(
+    res,
+    indexTemplate,
+    headOnly,
+    "text/html; charset=utf-8",
+    isClientRoute ? 200 : 404,
+  );
 }
 
 const server = http.createServer((req, res) => {
@@ -322,6 +339,24 @@ const server = http.createServer((req, res) => {
     res
       .writeHead(301, {
         Location: `https://${CANONICAL_HOST}${req.url || "/"}`,
+        "Cache-Control": "no-cache",
+      })
+      .end();
+    return;
+  }
+
+  let rawPathname;
+  try {
+    rawPathname = new URL(req.url || "/", "http://localhost").pathname;
+  } catch {
+    res.writeHead(400).end("Bad Request");
+    return;
+  }
+  // Legacy/external links to /home should land on the canonical homepage.
+  if (REDIRECTS[rawPathname.replace(/\/+$/, "") || "/"]) {
+    res
+      .writeHead(301, {
+        Location: `https://${CANONICAL_HOST}${REDIRECTS[rawPathname.replace(/\/+$/, "") || "/"]}`,
         "Cache-Control": "no-cache",
       })
       .end();
