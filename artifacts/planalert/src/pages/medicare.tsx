@@ -92,7 +92,7 @@ export default function Medicare() {
 
           <div className="min-w-0 flex justify-center lg:justify-end animate-in fade-in slide-in-from-right-6 duration-1000 fill-mode-both delay-150">
              <div className="relative w-full max-w-md bg-white rounded-2xl shadow-xl shadow-primary/5 border border-[#E5EAF2] p-6 lg:p-8">
-               <div className="absolute -left-6 top-10 w-12 h-12 bg-[#2563FF] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#2563FF]/20 animate-in zoom-in fade-in delay-500 duration-500 fill-mode-both">
+               <div className="absolute -left-3 sm:-left-6 top-10 w-12 h-12 bg-[#2563FF] text-white rounded-full flex items-center justify-center shadow-lg shadow-[#2563FF]/20 animate-in zoom-in fade-in delay-500 duration-500 fill-mode-both">
                  <BellRing className="w-6 h-6" />
                </div>
                <div className="space-y-6">
