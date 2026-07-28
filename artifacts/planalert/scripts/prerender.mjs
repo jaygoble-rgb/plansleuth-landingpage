@@ -83,6 +83,12 @@ const staticRoutes = [
       "We monitor your Medicare Advantage and Part D plans and alert you plainly when a better option exists. Secure, private, and independent.",
   },
   {
+    path: "/cellular",
+    title: "Cell Phone Plan Monitoring — PlanAlert",
+    description:
+      "We monitor the wireless market across all carriers and alert you plainly when a better cell phone plan exists for your data usage.",
+  },
+  {
     path: "/about",
     title: "About PlanAlert — Built to close the loyalty gap",
     description:
