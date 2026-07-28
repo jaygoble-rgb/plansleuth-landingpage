@@ -71,11 +71,11 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
         </Link>
         <DropdownMenu>
           <DropdownMenuTrigger
-            className="flex items-center gap-1 text-base font-medium text-primary/80 hover:text-primary transition-colors outline-none data-[state=open]:text-primary"
+            className="group flex items-center gap-1 rounded-md text-base font-medium text-primary/80 hover:text-primary transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=open]:text-primary"
             data-testid="button-nav-services"
           >
             Services
-            <ChevronDown className="w-4 h-4 transition-transform data-[state=open]:rotate-180" />
+            <ChevronDown className="w-4 h-4 transition-transform group-data-[state=open]:rotate-180" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="center" className="min-w-[10rem]">
             {services.map((s) => (

@@ -8,6 +8,7 @@ import HowItWorks from "@/pages/how-it-works";
 import About from "@/pages/about";
 import Medicare from "@/pages/medicare";
 import Cellular from "@/pages/cellular";
+import Internet from "@/pages/internet";
 import BlogIndex from "@/pages/blog/index";
 import BlogPost from "@/pages/blog/post";
 import BlogAdminLogin from "@/pages/blogadmin/login";
@@ -25,6 +26,7 @@ export function AppRoutes() {
       <Route path="/about" component={About} />
       <Route path="/medicare" component={Medicare} />
       <Route path="/cellular" component={Cellular} />
+      <Route path="/internet" component={Internet} />
       <Route path="/blog" component={BlogIndex} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/blogadmin/login" component={BlogAdminLogin} />

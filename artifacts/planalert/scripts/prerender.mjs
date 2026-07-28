@@ -89,6 +89,12 @@ const staticRoutes = [
       "We monitor the wireless market across all carriers and alert you plainly when a better cell phone plan exists for your data usage.",
   },
   {
+    path: "/internet",
+    title: "Home Internet Plan Monitoring — PlanAlert",
+    description:
+      "Stop overpaying after your promo rate expires. We monitor home internet providers at your address and alert you plainly when a better fiber or 5G deal arrives.",
+  },
+  {
     path: "/about",
     title: "About PlanAlert — Built to close the loyalty gap",
     description:
