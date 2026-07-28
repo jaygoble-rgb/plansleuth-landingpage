@@ -1,6 +1,12 @@
-import { Bell, Menu } from "lucide-react";
+import { Bell, ChevronDown, Menu } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Sheet,
   SheetClose,
@@ -9,6 +15,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
+const services = [
+  { label: "Medicare", href: "/medicare" },
+  { label: "Cellular", href: "/cellular" },
+  { label: "Internet", href: "/internet" },
+];
 
 export type SiteNavVariant = "default" | "overlay" | "sticky";
 
@@ -57,12 +69,27 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
         >
           How it Works
         </Link>
-        <Link
-          href="/medicare"
-          className="text-base font-medium text-primary/80 hover:text-primary transition-colors"
-        >
-          Medicare
-        </Link>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            className="flex items-center gap-1 text-base font-medium text-primary/80 hover:text-primary transition-colors outline-none data-[state=open]:text-primary"
+            data-testid="button-nav-services"
+          >
+            Services
+            <ChevronDown className="w-4 h-4 transition-transform data-[state=open]:rotate-180" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="center" className="min-w-[10rem]">
+            {services.map((s) => (
+              <DropdownMenuItem key={s.href} asChild>
+                <Link
+                  href={s.href}
+                  className="w-full cursor-pointer text-base font-medium text-primary/80"
+                >
+                  {s.label}
+                </Link>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Link
           href="/about"
           className="text-base font-medium text-primary/80 hover:text-primary transition-colors"
@@ -119,14 +146,19 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
                   How it Works
                 </Link>
               </SheetClose>
-              <SheetClose asChild>
-                <Link
-                  href="/medicare"
-                  className="rounded-lg px-3 py-3 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
-                >
-                  Medicare
-                </Link>
-              </SheetClose>
+              <div className="px-3 pt-3 pb-1 text-sm font-semibold uppercase tracking-wide text-primary/50">
+                Services
+              </div>
+              {services.map((s) => (
+                <SheetClose asChild key={s.href}>
+                  <Link
+                    href={s.href}
+                    className="rounded-lg px-3 py-3 pl-6 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
+                  >
+                    {s.label}
+                  </Link>
+                </SheetClose>
+              ))}
               <SheetClose asChild>
                 <Link
                   href="/about"
