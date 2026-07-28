@@ -64,6 +64,12 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
 
       <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
         <Link
+          href="/about"
+          className="text-base font-medium text-primary/80 hover:text-primary transition-colors"
+        >
+          About
+        </Link>
+        <Link
           href="/how-it-works"
           className="text-base font-medium text-primary/80 hover:text-primary transition-colors"
         >
@@ -90,12 +96,6 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Link
-          href="/about"
-          className="text-base font-medium text-primary/80 hover:text-primary transition-colors"
-        >
-          About
-        </Link>
         <Link
           href="/blog"
           className="text-base font-medium text-primary/80 hover:text-primary transition-colors"
@@ -140,6 +140,14 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
             <div className="mt-2 flex flex-col px-1">
               <SheetClose asChild>
                 <Link
+                  href="/about"
+                  className="rounded-lg px-3 py-3 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
+                >
+                  About
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
                   href="/how-it-works"
                   className="rounded-lg px-3 py-3 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
                 >
@@ -159,14 +167,6 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
                   </Link>
                 </SheetClose>
               ))}
-              <SheetClose asChild>
-                <Link
-                  href="/about"
-                  className="rounded-lg px-3 py-3 text-lg font-medium text-primary/90 hover:bg-primary/5 transition-colors"
-                >
-                  About
-                </Link>
-              </SheetClose>
               <SheetClose asChild>
                 <Link
                   href="/blog"
