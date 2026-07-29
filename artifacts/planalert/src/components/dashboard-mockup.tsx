@@ -1,5 +1,4 @@
 import {
-  Bell,
   LayoutGrid,
   FileText,
   BellRing,
@@ -8,6 +7,7 @@ import {
   Wifi,
   ChevronRight,
 } from "lucide-react";
+import { BellLogo } from "@/components/bell-logo";
 
 const savingsTrend = [
   18, 22, 20, 28, 26, 34, 30, 38, 42, 40, 48, 52, 50, 58, 64, 62, 70, 74, 80,
@@ -125,7 +125,7 @@ export function DashboardMockup() {
         {/* Sidebar */}
         <div className="border-r border-primary/8 p-4">
           <div className="flex items-center gap-1.5 font-serif text-sm font-bold text-primary mb-5">
-            <Bell className="w-4 h-4 text-secondary fill-secondary" strokeWidth={2.5} />
+            <BellLogo className="h-4 w-auto" />
             PlanAlert
           </div>
           <nav className="space-y-1">

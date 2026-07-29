@@ -1,4 +1,5 @@
-import { Bell, ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
+import { BellLogo } from "@/components/bell-logo";
 import { useState } from "react";
 import { Link } from "wouter";
 import {
@@ -58,7 +59,7 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
         href="/"
         className="flex items-center gap-2 font-serif text-2xl font-bold text-primary hover:opacity-90 transition-opacity"
       >
-        <Bell className="w-6 h-6 text-secondary fill-secondary" strokeWidth={2.5} />
+        <BellLogo className="h-6 w-auto" />
         <span>PlanAlert</span>
       </Link>
 
@@ -129,10 +130,7 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
           <SheetContent side="right" className="flex w-72 flex-col sm:w-80">
             <SheetHeader className="text-left">
               <SheetTitle className="flex items-center gap-2 font-serif text-xl font-bold text-primary">
-                <Bell
-                  className="w-5 h-5 text-secondary fill-secondary"
-                  strokeWidth={2.5}
-                />
+                <BellLogo className="h-5 w-auto" />
                 PlanAlert
               </SheetTitle>
             </SheetHeader>

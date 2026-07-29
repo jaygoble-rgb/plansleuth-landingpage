@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "wouter";
-import { Bell, LogOut, FileText, Plus, Users } from "lucide-react";
+import { LogOut, FileText, Plus, Users } from "lucide-react";
+import { BellLogo } from "@/components/bell-logo";
 import { Button } from "@/components/ui/button";
 import { useAdminLogout, useAdminMe } from "@/hooks/use-admin";
 
@@ -21,7 +22,7 @@ export function AdminShell({ children, title, actions }: AdminShellProps) {
         <div className="max-w-7xl mx-auto px-6 md:px-8 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2 font-serif text-xl font-bold text-primary">
-              <Bell className="w-5 h-5 text-secondary fill-secondary" strokeWidth={2.5} />
+              <BellLogo className="h-5 w-auto" />
               <span>PlanAlert</span>
             </Link>
             <span className="hidden md:inline text-xs uppercase tracking-widest text-muted-foreground">

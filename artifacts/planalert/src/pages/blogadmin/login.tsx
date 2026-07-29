@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "wouter";
-import { Bell, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
+import { BellLogo } from "@/components/bell-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -31,7 +32,7 @@ export default function BlogAdminLogin() {
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="w-full max-w-md">
         <Link href="/" className="flex items-center justify-center gap-2 font-serif text-2xl font-bold text-primary mb-8">
-          <Bell className="w-6 h-6 text-secondary fill-secondary" strokeWidth={2.5} />
+          <BellLogo className="h-6 w-auto" />
           <span>PlanAlert</span>
         </Link>
 

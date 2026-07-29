@@ -1,4 +1,5 @@
-import { Bell, Linkedin, Instagram, Facebook } from "lucide-react";
+import { Linkedin, Instagram, Facebook } from "lucide-react";
+import { BellLogo } from "@/components/bell-logo";
 import { Link } from "wouter";
 
 const socials = [
@@ -45,7 +46,7 @@ export function SiteFooter() {
           href="/"
           className="flex items-center gap-2.5 font-bold text-xl tracking-tight text-white hover:opacity-90 transition-opacity"
         >
-          <Bell className="w-6 h-6 text-secondary fill-secondary" strokeWidth={2.5} />
+          <BellLogo className="h-6 w-auto" />
           <span>PlanAlert</span>
         </Link>
 
