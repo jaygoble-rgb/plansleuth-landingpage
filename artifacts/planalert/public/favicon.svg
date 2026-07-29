@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Bell body -->
-  <path d="M32 14c-7.2 0-13 5.8-13 13v8.5l-3 5.5h32l-3-5.5V27c0-7.2-5.8-13-13-13z" fill="#F59F0A"/>
-  <!-- Bell top knob -->
-  <circle cx="32" cy="13" r="3" fill="#F59F0A"/>
-  <!-- Bell clapper -->
-  <path d="M28 45a4 4 0 0 0 8 0z" fill="#F59F0A"/>
-</svg>
