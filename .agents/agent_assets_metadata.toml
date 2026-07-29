@@ -11,3 +11,21 @@ id = "r45S597B_Onb887u5V6ax"
 uri = "file://artifacts/planalert/public/bell-icon.svg"
 type = "image"
 title = "PlanAlert Bell Icon"
+
+[[outputs]]
+id = "USFOrZYDapfFkwVIwGeob"
+uri = "file://artifacts/planalert/brand/planalert-logo.png"
+type = "image"
+title = "PlanAlert logo (transparent)"
+
+[[outputs]]
+id = "BDpqqMdetkR7SW26wSgt3"
+uri = "file://artifacts/planalert/brand/planalert-logo-white-bg.png"
+type = "image"
+title = "PlanAlert logo (white background)"
+
+[[outputs]]
+id = "QhuqTiU-AA01oJBPP6aJ2"
+uri = "file://artifacts/planalert/brand/planalert-bell-mark.png"
+type = "image"
+title = "PlanAlert bell mark"
