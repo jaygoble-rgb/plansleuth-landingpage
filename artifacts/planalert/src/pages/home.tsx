@@ -10,7 +10,6 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
-import heroImage from "@/assets/hero-lifestyle.jpg";
 import { useMeta } from "@/hooks/use-meta";
 import { SITE_ORIGIN, canonicalUrl } from "@/lib/site";
 
@@ -52,18 +51,18 @@ export default function Home() {
       {/* Hero */}
       <header className="relative overflow-hidden bg-[#F7F9FC]">
         <div className="absolute -top-24 -right-24 w-[28rem] h-[28rem] rounded-full bg-[#2563FF]/5 blur-3xl pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center relative z-10">
-          <div className="min-w-0 animate-in fade-in slide-in-from-bottom-6 duration-700 fill-mode-both">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-28 relative z-10">
+          <div className="max-w-3xl mx-auto text-center animate-in fade-in slide-in-from-bottom-6 duration-700 fill-mode-both">
             <h1 className="font-serif text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[4.25rem] font-bold leading-[1.07] sm:leading-[1.05] tracking-tight text-primary">
               Never overpay for household plans again.
             </h1>
-            <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
+            <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Tell us about your current plan and we'll compare it against the
               market - then monitor it continuously so you always know when a
               better plan becomes available.
             </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 asChild
                 size="lg"
@@ -91,21 +90,10 @@ export default function Home() {
               </Button>
             </div>
 
-            <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
               <Lock className="w-4 h-4" />
               Secure. Private. No spam.
             </div>
-          </div>
-
-          <div className="min-w-0 flex justify-center lg:justify-end animate-in fade-in slide-in-from-right-6 duration-1000 fill-mode-both delay-150">
-            <img
-              src={heroImage}
-              alt="A relaxed woman at home reviewing her household bills on a laptop"
-              width={1024}
-              height={1024}
-              className="w-full max-w-[560px] rounded-2xl border border-[#E5EAF2] shadow-xl object-cover"
-              data-testid="img-hero"
-            />
           </div>
         </div>
       </header>
