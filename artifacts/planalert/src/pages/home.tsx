@@ -10,7 +10,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
-import DashboardMockup from "@/components/dashboard-mockup";
+import heroImage from "@/assets/hero-lifestyle.jpg";
 import { useMeta } from "@/hooks/use-meta";
 import { SITE_ORIGIN, canonicalUrl } from "@/lib/site";
 
@@ -98,7 +98,14 @@ export default function Home() {
           </div>
 
           <div className="min-w-0 flex justify-center lg:justify-end animate-in fade-in slide-in-from-right-6 duration-1000 fill-mode-both delay-150">
-            <DashboardMockup />
+            <img
+              src={heroImage}
+              alt="A relaxed woman at home reviewing her household bills on a laptop"
+              width={1024}
+              height={1024}
+              className="w-full max-w-[560px] rounded-2xl border border-[#E5EAF2] shadow-xl object-cover"
+              data-testid="img-hero"
+            />
           </div>
         </div>
       </header>
