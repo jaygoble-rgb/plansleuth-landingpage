@@ -194,8 +194,8 @@ export default function Internet() {
       <section className="py-24 md:py-32 bg-white scroll-mt-20 border-t border-[#E5EAF2]">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <BellRing
-            className="w-16 h-16 lg:w-20 lg:h-20 text-[#2563FF] mx-auto mb-8"
-            strokeWidth={1.5}
+            className="w-14 h-14 text-secondary mx-auto mb-8"
+            strokeWidth={2}
           />
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-6 leading-[1.1]">
             Stop worrying about missing a better internet deal
