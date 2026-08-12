@@ -1,6 +1,7 @@
 import http from "node:http";
 import path from "node:path";
 import fs from "node:fs";
+import zlib from "node:zlib";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -48,22 +49,87 @@ if (!fs.existsSync(indexHtml)) {
   process.exit(1);
 }
 
+const COMPRESSIBLE_EXT = new Set([".html", ".js", ".mjs", ".css", ".json", ".xml", ".txt", ".svg", ".map"]);
+
+// Parse Accept-Encoding with q-values per RFC 9110 and return the encodings
+// we support ("br", "gzip") that the client accepts, in our order of
+// preference (br first) among acceptable codings, honoring q=0 exclusions
+// and "*" wildcard.
+function acceptedEncodings(req) {
+  const header = req?.headers?.["accept-encoding"];
+  if (header === undefined) return [];
+  const q = new Map();
+  for (const part of String(header).toLowerCase().split(",")) {
+    const [tokenRaw, ...params] = part.split(";");
+    const token = tokenRaw.trim();
+    if (!token) continue;
+    let weight = 1;
+    for (const p of params) {
+      const m = p.trim().match(/^q=([0-9.]+)$/);
+      if (m) weight = parseFloat(m[1]);
+    }
+    q.set(token, Number.isFinite(weight) ? weight : 0);
+  }
+  const wildcard = q.get("*");
+  const weightOf = (enc) => (q.has(enc) ? q.get(enc) : wildcard !== undefined ? wildcard : 0);
+  return ["br", "gzip"]
+    .map((enc) => ({ enc, w: weightOf(enc) }))
+    .filter(({ w }) => w > 0)
+    .sort((a, b) => b.w - a.w) // stable: br wins ties
+    .map(({ enc }) => enc);
+}
+
+// Availability index of precompressed sidecar files, built once at startup
+// so request handling never touches the filesystem synchronously.
+const precompressed = new Set();
+(function indexSidecars(dir) {
+  if (!fs.existsSync(dir)) return;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) indexSidecars(full);
+    else if (full.endsWith(".br") || full.endsWith(".gz")) precompressed.add(full);
+  }
+})(publicDir);
+
 function sendFile(res, filePath, status = 200, headOnly = false) {
   const ext = path.extname(filePath).toLowerCase();
   const isAsset = filePath.includes(`${path.sep}assets${path.sep}`);
-  res.writeHead(status, {
+  const headers = {
     "Content-Type": MIME[ext] || "application/octet-stream",
     "Cache-Control": isAsset
       ? "public, max-age=31536000, immutable"
       : "no-cache",
-  });
+  };
+
+  // Serve a precompressed variant (written at build time) when available.
+  // Range requests bypass compression: we don't implement 206 responses,
+  // and ignoring Range (serving a full 200) is permitted, but the bytes
+  // must then be the identity representation.
+  let servePath = filePath;
+  const req = res.req;
+  const hasRange = Boolean(req?.headers?.range);
+  if (COMPRESSIBLE_EXT.has(ext)) {
+    headers["Vary"] = "Accept-Encoding";
+    if (!hasRange) {
+      for (const enc of acceptedEncodings(req)) {
+        const suffix = enc === "br" ? ".br" : ".gz";
+        if (precompressed.has(filePath + suffix)) {
+          servePath = filePath + suffix;
+          headers["Content-Encoding"] = enc;
+          break;
+        }
+      }
+    }
+  }
+
+  res.writeHead(status, headers);
   if (headOnly) {
     res.end();
     return;
   }
-  const stream = fs.createReadStream(filePath);
+  const stream = fs.createReadStream(servePath);
   stream.on("error", (err) => {
-    console.error(`sendFile: read failed for ${filePath} (${err.message})`);
+    console.error(`sendFile: read failed for ${servePath} (${err.message})`);
     res.destroy();
   });
   stream.pipe(res);
@@ -278,11 +344,26 @@ async function renderSitemapXml() {
 }
 
 function sendHtml(res, html, headOnly, contentType = "text/html; charset=utf-8", status = 200) {
-  res.writeHead(status, {
+  const headers = {
     "Content-Type": contentType,
     "Cache-Control": "no-cache",
-  });
-  res.end(headOnly ? undefined : html);
+    "Vary": "Accept-Encoding",
+  };
+  // Select the representation before handling HEAD so HEAD and GET
+  // describe the same response.
+  let body = Buffer.from(html);
+  const enc = acceptedEncodings(res.req)[0];
+  if (enc === "br") {
+    body = zlib.brotliCompressSync(body, {
+      params: { [zlib.constants.BROTLI_PARAM_QUALITY]: 5 },
+    });
+    headers["Content-Encoding"] = "br";
+  } else if (enc === "gzip") {
+    body = zlib.gzipSync(body, { level: 6 });
+    headers["Content-Encoding"] = "gzip";
+  }
+  res.writeHead(status, headers);
+  res.end(headOnly ? undefined : body);
 }
 
 async function sendSpaFallback(res, pathname, headOnly, fallbackFile = null) {
