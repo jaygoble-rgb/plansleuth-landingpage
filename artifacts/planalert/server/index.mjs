@@ -180,34 +180,41 @@ function cacheSet(key, value) {
   return value;
 }
 
+const API_NOT_FOUND = Symbol("api-not-found");
+
 async function apiGet(pathname, timeoutMs = 2000) {
   const resp = await fetch(`${API_ORIGIN}${pathname}`, {
     signal: AbortSignal.timeout(timeoutMs),
   });
-  if (!resp.ok) return null;
+  if (resp.status === 404) return API_NOT_FOUND;
+  if (!resp.ok) throw new Error(`api responded ${resp.status}`);
   return resp.json();
 }
 
+// Returns { post, meta } when found, null when the API confirms the post
+// does not exist (cached), or { unavailable: true } when the API is
+// unreachable (not cached, so recovery is immediate).
 async function fetchPost(slug) {
   const cached = cacheGet(`post:${slug}`);
   if (cached) return cached.value;
-  let value = null;
   try {
     const post = await apiGet(`/api/blog/posts/${encodeURIComponent(slug)}`);
-    if (post) {
-      value = {
-        post,
-        meta: {
-          title: post.metaTitle || `${post.title} — PlanAlert Blog`,
-          description: post.metaDescription || post.excerpt || "",
-          canonical: post.canonicalUrl || `${SITE_ORIGIN}/blog/${post.slug}`,
-        },
-      };
+    if (post === API_NOT_FOUND || !post) {
+      return cacheSet(`post:${slug}`, null);
     }
+    return cacheSet(`post:${slug}`, {
+      post,
+      meta: {
+        title: post.metaTitle || `${post.title} — PlanAlert Blog`,
+        description: post.metaDescription || post.excerpt || "",
+        canonical: post.canonicalUrl || `${SITE_ORIGIN}/blog/${post.slug}`,
+      },
+    });
   } catch {
-    // API unavailable or timed out — fall back to default meta
+    // API unavailable or timed out — caller may fall back to the
+    // build-time prerendered file. Not cached.
+    return { unavailable: true };
   }
-  return cacheSet(`post:${slug}`, value);
 }
 
 // Runtime-rendered blog index so posts published after the last deploy
@@ -278,7 +285,7 @@ function sendHtml(res, html, headOnly, contentType = "text/html; charset=utf-8",
   res.end(headOnly ? undefined : html);
 }
 
-async function sendSpaFallback(res, pathname, headOnly) {
+async function sendSpaFallback(res, pathname, headOnly, fallbackFile = null) {
   const cleanPath = pathname.replace(/\/+$/, "") || "/";
   if (STATIC_META[cleanPath]) {
     const meta = {
@@ -291,7 +298,7 @@ async function sendSpaFallback(res, pathname, headOnly) {
   const blogMatch = cleanPath.match(/^\/blog\/([^/]+)$/);
   if (blogMatch) {
     const data = await fetchPost(blogMatch[1]);
-    if (data) {
+    if (data && !data.unavailable) {
       let html = injectMeta(indexTemplate, data.meta);
       // Render the full article body so the content is in the raw HTML
       // even for posts published after the last build.
@@ -304,6 +311,13 @@ async function sendSpaFallback(res, pathname, headOnly) {
         }
       }
       sendHtml(res, html, headOnly);
+      return;
+    }
+    // Live render unavailable (API down/erroring) — fall back to the
+    // build-time prerendered file if one exists. A confirmed-missing
+    // post (data === null) falls through to the 404 response instead.
+    if (data && data.unavailable && fallbackFile && fs.existsSync(fallbackFile)) {
+      sendFile(res, fallbackFile, 200, headOnly);
       return;
     }
   }
@@ -403,6 +417,29 @@ const server = http.createServer((req, res) => {
         }
       })
       .catch(() => sendHtml(res, indexTemplate, headOnly));
+    return;
+  }
+
+  // Blog posts must render from the live API (60s cache) rather than the
+  // build-time prerendered file, so edits published after the last deploy
+  // appear without a rebuild. The prerendered file is only a fallback.
+  const blogSlugMatch = pathname
+    .replace(/\/+$/, "")
+    .match(/^\/blog\/([^/]+)$/);
+  if (blogSlugMatch) {
+    const prerenderedFile = path.join(
+      publicDir,
+      "blog",
+      blogSlugMatch[1],
+      "index.html",
+    );
+    sendSpaFallback(res, pathname, headOnly, prerenderedFile).catch(() => {
+      if (!res.headersSent) {
+        sendHtml(res, indexTemplate, headOnly);
+      } else {
+        res.end();
+      }
+    });
     return;
   }
 
