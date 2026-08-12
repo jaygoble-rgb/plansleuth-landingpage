@@ -3,6 +3,7 @@ import { and, desc, eq, ilike, or, sql, type SQL } from "drizzle-orm";
 import { db, blogPostsTable, type InsertBlogPost } from "@workspace/db";
 import { requireAdmin, type AuthedRequest } from "../lib/auth";
 import { isSlugAvailable, slugify } from "../lib/blog";
+import { stripMarkdownArtifacts } from "../lib/markdown";
 
 const router: IRouter = Router();
 
@@ -54,6 +55,9 @@ function pickFields(rawBody: unknown, isCreate: boolean): PostFields {
     if (body[f] !== undefined) {
       out[f] = String(body[f] ?? "");
     }
+  }
+  if (out.body !== undefined) {
+    out.body = stripMarkdownArtifacts(out.body);
   }
   if (body.tags !== undefined) {
     out.tags = Array.isArray(body.tags)
