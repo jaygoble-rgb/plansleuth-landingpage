@@ -12,6 +12,7 @@ export interface BlogPost {
   featuredImageUrl: string;
   featuredImageAlt: string;
   author: string;
+  authorCredential: string;
   category: string;
   tags: string[];
   status: "draft" | "published" | "scheduled" | "archived";

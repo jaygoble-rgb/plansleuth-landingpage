@@ -20,6 +20,7 @@ export const blogPostsTable = pgTable(
     featuredImageUrl: text("featured_image_url").notNull().default(""),
     featuredImageAlt: text("featured_image_alt").notNull().default(""),
     author: text("author").notNull().default(""),
+    authorCredential: text("author_credential").notNull().default(""),
     category: text("category").notNull().default(""),
     tags: jsonb("tags").$type<string[]>().notNull().default([]),
     status: postStatusEnum("status").notNull().default("draft"),

@@ -41,6 +41,7 @@ const STRING_FIELDS = [
   "featuredImageUrl",
   "featuredImageAlt",
   "author",
+  "authorCredential",
   "category",
   "metaTitle",
   "metaDescription",

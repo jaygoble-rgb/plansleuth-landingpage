@@ -14,6 +14,7 @@ const PUBLIC_FIELDS = {
   featuredImageUrl: blogPostsTable.featuredImageUrl,
   featuredImageAlt: blogPostsTable.featuredImageAlt,
   author: blogPostsTable.author,
+  authorCredential: blogPostsTable.authorCredential,
   category: blogPostsTable.category,
   tags: blogPostsTable.tags,
   publishDate: blogPostsTable.publishDate,

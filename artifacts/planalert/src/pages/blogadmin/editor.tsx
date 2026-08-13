@@ -40,6 +40,7 @@ const EMPTY: Editable = {
   featuredImageUrl: "",
   featuredImageAlt: "",
   author: "",
+  authorCredential: "",
   category: "",
   tags: [],
   status: "draft",
@@ -153,6 +154,7 @@ function EditorInner() {
       featuredImageUrl: post.featuredImageUrl ?? "",
       featuredImageAlt: post.featuredImageAlt ?? "",
       author: post.author ?? "",
+      authorCredential: post.authorCredential ?? "",
       category: post.category ?? "",
       tags,
       status: post.status,
@@ -179,6 +181,7 @@ function EditorInner() {
       "featuredImageUrl",
       "featuredImageAlt",
       "author",
+      "authorCredential",
       "category",
       "status",
       "publishDate",
@@ -494,6 +497,10 @@ function EditorInner() {
               <div>
                 <Label htmlFor="author">Author</Label>
                 <Input id="author" value={post.author ?? ""} onChange={(e) => setPost((p) => ({ ...p, author: e.target.value }))} className="mt-1.5" data-testid="input-author" />
+              </div>
+              <div>
+                <Label htmlFor="authorCredential">Author credential (optional)</Label>
+                <Input id="authorCredential" value={post.authorCredential ?? ""} onChange={(e) => setPost((p) => ({ ...p, authorCredential: e.target.value }))} placeholder="e.g. Consumer pricing analyst" className="mt-1.5" data-testid="input-author-credential" />
               </div>
               <div>
                 <Label htmlFor="category">Category</Label>

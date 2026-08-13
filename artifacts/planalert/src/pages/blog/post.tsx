@@ -1,6 +1,7 @@
 import { Link, useParams, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { Calendar, User, ChevronLeft, Tag as TagIcon } from "lucide-react";
+import { Calendar, ChevronLeft, Tag as TagIcon } from "lucide-react";
+import { PostByline } from "@/components/post-byline";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { Badge } from "@/components/ui/badge";
@@ -94,11 +95,7 @@ export default function BlogPostPage() {
                   {post.title}
                 </h1>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                  {post.author && (
-                    <span className="inline-flex items-center gap-1.5">
-                      <User className="w-4 h-4" /> {post.author}
-                    </span>
-                  )}
+                  <PostByline author={post.author} credential={post.authorCredential} />
                   {post.publishDate && (
                     <span className="inline-flex items-center gap-1.5">
                       <Calendar className="w-4 h-4" /> {formatDate(post.publishDate)}

@@ -78,6 +78,16 @@ export default function HowItWorks() {
               </div>
             ))}
           </div>
+
+          {/* Methodology */}
+          <div className="mt-16 md:mt-20 max-w-3xl mx-auto rounded-2xl border border-[#E5EAF2] bg-[#F7F9FC] p-8 md:p-10">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary tracking-tight mb-4">
+              How we compare plans
+            </h2>
+            <div className="space-y-4 text-base leading-relaxed text-muted-foreground">
+              <p>[NEEDS REAL METHODOLOGY DETAILS]</p>
+            </div>
+          </div>
         </div>
       </section>
 

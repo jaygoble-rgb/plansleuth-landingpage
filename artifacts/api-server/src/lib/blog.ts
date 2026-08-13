@@ -147,7 +147,7 @@ export async function seedFirstPost(): Promise<void> {
     body: CHEAPEST_WIRELESS_CARRIER_BODY,
     excerpt:
       "If you are searching for the cheapest wireless carrier, you are probably trying to lower your monthly bill without losing the coverage and data you need.",
-    author: "PlanAlert Editorial",
+    author: "PlanAlert Team",
     category: "WIRELESS",
     tags: ["wireless", "phone plans", "savings", "carriers"],
     status: "published",
