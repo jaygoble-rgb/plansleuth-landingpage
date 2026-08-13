@@ -134,6 +134,8 @@ export function ImageUploadField({
         <img
           src={value}
           alt=""
+          width={1280}
+          height={720}
           onError={() => setPreviewError(true)}
           onLoad={() => setPreviewError(false)}
           className="mt-2 w-full aspect-[16/9] object-cover rounded-lg border border-primary/10 bg-muted"

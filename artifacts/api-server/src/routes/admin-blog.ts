@@ -3,6 +3,7 @@ import { and, desc, eq, ilike, or, sql, type SQL } from "drizzle-orm";
 import { db, blogPostsTable, type InsertBlogPost } from "@workspace/db";
 import { requireAdmin, type AuthedRequest } from "../lib/auth";
 import { isSlugAvailable, slugify } from "../lib/blog";
+import { pingIndexNowForSlugs } from "../lib/indexnow";
 import { stripMarkdownArtifacts } from "../lib/markdown";
 
 const router: IRouter = Router();
@@ -166,6 +167,9 @@ router.post("/admin/blog/posts", async (req: AuthedRequest, res) => {
       updatedBy: req.admin?.email ?? null,
     };
     const inserted = await db.insert(blogPostsTable).values(insertValues).returning();
+    if (inserted[0].status === "published") {
+      pingIndexNowForSlugs([inserted[0].slug]);
+    }
     res.status(201).json(inserted[0]);
   } catch (err) {
     res.status(400).json({ error: errorMessage(err) });
@@ -204,6 +208,9 @@ router.patch("/admin/blog/posts/:id", async (req: AuthedRequest, res) => {
       })
       .where(eq(blogPostsTable.id, id))
       .returning();
+    if (fields.status === "published" && existing[0].status !== "published") {
+      pingIndexNowForSlugs([updated[0].slug]);
+    }
     res.json(updated[0]);
   } catch (err) {
     res.status(400).json({ error: errorMessage(err) });

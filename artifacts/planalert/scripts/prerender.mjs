@@ -1,4 +1,5 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { execSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import pg from "pg";
@@ -148,13 +149,68 @@ const blogIndexRoute = {
     "Insights, tips, and updates from PlanAlert on saving money on cell phone, internet, and household plans.",
 };
 
+// Real last-modified dates for static marketing pages, from the last git
+// commit touching each page's source file — not the build/request time.
+const ROUTE_SOURCES = {
+  "/": "src/pages/home.tsx",
+  "/how-it-works": "src/pages/how-it-works.tsx",
+  "/medicare": "src/pages/medicare.tsx",
+  "/cellular": "src/pages/cellular.tsx",
+  "/internet": "src/pages/internet.tsx",
+  "/privacy": "src/pages/privacy.tsx",
+  "/terms": "src/pages/terms.tsx",
+  "/contact": "src/pages/contact.tsx",
+  "/about": "src/pages/about.tsx",
+  "/blog": "src/pages/blog/index.tsx",
+};
+
+function gitLastModified(file) {
+  try {
+    const out = execSync(`git log -1 --format=%cI -- "${file}"`, {
+      cwd: join(__dirname, ".."),
+      stdio: ["ignore", "pipe", "ignore"],
+    })
+      .toString()
+      .trim();
+    return out ? new Date(out).toISOString() : null;
+  } catch {
+    return null;
+  }
+}
+
+function buildStaticLastmodMap(blogRows) {
+  const map = {};
+  for (const [routePath, source] of Object.entries(ROUTE_SOURCES)) {
+    const iso = gitLastModified(source);
+    if (iso) map[routePath] = iso;
+  }
+  // /blog also changes whenever a post is published or updated.
+  const newest = blogRows
+    .map((r) => new Date(r.updatedAt ?? r.publishDate ?? 0).getTime())
+    .filter((t) => t > 0)
+    .sort((a, b) => b - a)[0];
+  if (newest && (!map["/blog"] || newest > Date.parse(map["/blog"]))) {
+    map["/blog"] = new Date(newest).toISOString();
+  }
+  return map;
+}
+
 function writeSitemap(blogRows) {
-  const now = new Date().toISOString();
+  const lastmodMap = buildStaticLastmodMap(blogRows);
+  // Also written for the runtime server's sitemap generation (outside
+  // dist/public so it is never served).
+  writeFileSync(
+    join(distDir, "..", "static-lastmod.json"),
+    JSON.stringify(lastmodMap, null, 2),
+  );
   const allStatic = [...staticRoutes, blogIndexRoute];
   const urls = [
-    ...allStatic.map(
-      (r) => `<url><loc>${siteOrigin}${r.path === "/" ? "/" : r.path}</loc><lastmod>${now}</lastmod></url>`,
-    ),
+    ...allStatic.map((r) => {
+      const loc = `${siteOrigin}${r.path === "/" ? "/" : r.path}`;
+      const lastmod = lastmodMap[r.path];
+      // Omit <lastmod> entirely when we have no accurate date.
+      return `<url><loc>${loc}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ""}</url>`;
+    }),
     ...blogRows.map((row) => {
       const lastmod = new Date(row.updatedAt ?? row.publishDate ?? Date.now()).toISOString();
       return `<url><loc>${siteOrigin}/blog/${row.slug}</loc><lastmod>${lastmod}</lastmod></url>`;

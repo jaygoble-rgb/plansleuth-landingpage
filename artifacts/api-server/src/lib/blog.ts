@@ -1,6 +1,7 @@
 import { and, eq, lte, ne, sql } from "drizzle-orm";
 import { db, blogPostsTable, type InsertBlogPost } from "@workspace/db";
 import { logger } from "./logger";
+import { pingIndexNowForSlugs } from "./indexnow";
 
 export function slugify(input: string): string {
   return input
@@ -31,10 +32,11 @@ export async function promoteScheduledPosts(): Promise<number> {
         lte(blogPostsTable.scheduledPublishAt, now),
       ),
     )
-    .returning({ id: blogPostsTable.id });
+    .returning({ id: blogPostsTable.id, slug: blogPostsTable.slug });
 
   if (result.length > 0) {
     logger.info({ count: result.length }, "Promoted scheduled posts to published");
+    pingIndexNowForSlugs(result.map((r) => r.slug));
   }
   return result.length;
 }

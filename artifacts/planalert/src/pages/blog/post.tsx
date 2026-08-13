@@ -98,6 +98,8 @@ export default function BlogPostPage() {
                   <img
                     src={post.featuredImageUrl}
                     alt={post.featuredImageAlt || post.title}
+                    width={1280}
+                    height={720}
                     className="w-full h-full object-cover"
                   />
                 </div>

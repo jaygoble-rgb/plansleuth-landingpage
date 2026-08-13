@@ -140,6 +140,8 @@ export default function BlogIndex() {
                         <img
                           src={post.featuredImageUrl}
                           alt={post.featuredImageAlt || post.title}
+                          width={1280}
+                          height={720}
                           loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />

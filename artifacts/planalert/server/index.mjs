@@ -16,6 +16,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicDir = path.resolve(__dirname, "..", "dist", "public");
 const port = Number(process.env.PORT) || 18839;
 
+// Public IndexNow site-verification key (must match INDEXNOW_KEY in the
+// api-server's src/lib/indexnow.ts, which pings IndexNow on publish).
+const INDEXNOW_KEY = "78a1dad70a77f16a92de95d93165c1f6";
+
 const CANONICAL_HOST = "www.planalert.com";
 const APEX_HOST = "planalert.com";
 
@@ -358,16 +362,38 @@ async function renderBlogIndexHtml() {
   return cacheSet("blog-index", value);
 }
 
+// Real last-modified dates for static pages, written by the build's
+// prerender step (from git history). Sits in dist/ (not dist/public) so
+// it is never served. Missing file → lastmod omitted for static pages.
+let STATIC_LASTMOD = {};
+try {
+  STATIC_LASTMOD = JSON.parse(
+    fs.readFileSync(path.resolve(publicDir, "..", "static-lastmod.json"), "utf8"),
+  );
+} catch {
+  /* optional file — sitemap simply omits static lastmod */
+}
+
 // Runtime-generated sitemap so new posts are discoverable without a rebuild.
-const SITEMAP_STATIC_PATHS = [
+// Prefer the build manifest's route list (keys of static-lastmod.json,
+// written by scripts/prerender.mjs from its route table) so runtime and
+// build sitemaps can't drift; the literal list is only a fallback.
+const SITEMAP_STATIC_PATHS_FALLBACK = [
   "/",
   "/how-it-works",
+  "/medicare",
+  "/cellular",
+  "/internet",
   "/about",
   "/blog",
   "/privacy",
   "/terms",
   "/contact",
 ];
+const SITEMAP_STATIC_PATHS =
+  Object.keys(STATIC_LASTMOD).length > 0
+    ? Object.keys(STATIC_LASTMOD)
+    : SITEMAP_STATIC_PATHS_FALLBACK;
 
 async function renderSitemapXml() {
   const cached = cacheGet("sitemap");
@@ -383,11 +409,20 @@ async function renderSitemapXml() {
       if (posts.length >= (list.total ?? 0) || list.items.length === 0 || page >= 20) break;
       page += 1;
     }
-    const now = new Date().toISOString();
+    // /blog also changes when a post is published or updated after build.
+    const newestPost = posts
+      .map((p) => Date.parse(p.updatedAt ?? p.publishDate ?? ""))
+      .filter((t) => Number.isFinite(t))
+      .sort((a, b) => b - a)[0];
     const urls = [
-      ...SITEMAP_STATIC_PATHS.map(
-        (p) => `<url><loc>${SITE_ORIGIN}${p === "/" ? "/" : p}</loc><lastmod>${now}</lastmod></url>`,
-      ),
+      ...SITEMAP_STATIC_PATHS.map((p) => {
+        let lastmod = STATIC_LASTMOD[p];
+        if (p === "/blog" && newestPost && (!lastmod || newestPost > Date.parse(lastmod))) {
+          lastmod = new Date(newestPost).toISOString();
+        }
+        // Omit <lastmod> when no accurate date is known — never request time.
+        return `<url><loc>${SITE_ORIGIN}${p === "/" ? "/" : p}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ""}</url>`;
+      }),
       ...posts.map((post) => {
         const lastmod = new Date(post.updatedAt ?? post.publishDate ?? Date.now()).toISOString();
         return `<url><loc>${SITE_ORIGIN}/blog/${encodeURIComponent(post.slug)}</loc><lastmod>${lastmod}</lastmod></url>`;
@@ -578,6 +613,14 @@ const server = http.createServer((req, res) => {
   // Fresh content routes: serve from the live API (60s cache) so posts
   // published after the last build appear without a redeploy. Falls back
   // to the build-time static output on any failure.
+  // IndexNow key file (https://www.indexnow.org/documentation). The key is
+  // deliberately public — the protocol verifies site ownership by fetching
+  // this file. The api-server pings IndexNow with this key on publish.
+  if (pathname === `/${INDEXNOW_KEY}.txt`) {
+    sendHtml(res, INDEXNOW_KEY, headOnly, "text/plain; charset=utf-8");
+    return;
+  }
+
   if (pathname === "/sitemap.xml") {
     renderSitemapXml()
       .then((xml) => {
