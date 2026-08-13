@@ -7,6 +7,15 @@
 export const SITE_ORIGIN = "https://www.planalert.com";
 export const LOGO_URL = `${SITE_ORIGIN}/bell-logo.png`;
 
+// Google's structured-data rules require absolute image URLs; stored blog
+// image paths are site-relative (e.g. /api/storage/...), so prefix them.
+// Keep in sync with src/lib/json-ld.ts.
+export function absoluteUrl(pathOrUrl) {
+  if (!pathOrUrl) return undefined;
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  return `${SITE_ORIGIN}${pathOrUrl.startsWith("/") ? "" : "/"}${pathOrUrl}`;
+}
+
 export const SAME_AS = [
   "https://facebook.com/planalert",
   "https://instagram.com/getplanalert",
@@ -56,7 +65,7 @@ function toIso(value) {
 
 export function blogPostingJsonLd(post) {
   const url = `${SITE_ORIGIN}/blog/${post.slug}`;
-  const image = post.openGraphImageUrl || post.featuredImageUrl || undefined;
+  const image = absoluteUrl(post.openGraphImageUrl || post.featuredImageUrl);
   const block = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",

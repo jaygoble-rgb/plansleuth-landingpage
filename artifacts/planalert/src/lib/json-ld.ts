@@ -6,6 +6,15 @@ import type { BlogPost } from "@/lib/blog-api";
 
 export const LOGO_URL = `${SITE_ORIGIN}/bell-logo.png`;
 
+// Google's structured-data rules require absolute image URLs; stored blog
+// image paths are site-relative (e.g. /api/storage/...), so prefix them.
+// Keep in sync with server/json-ld.mjs.
+export function absoluteUrl(pathOrUrl: string | null | undefined): string | undefined {
+  if (!pathOrUrl) return undefined;
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  return `${SITE_ORIGIN}${pathOrUrl.startsWith("/") ? "" : "/"}${pathOrUrl}`;
+}
+
 export const SAME_AS = [
   "https://facebook.com/planalert",
   "https://instagram.com/getplanalert",
@@ -65,7 +74,7 @@ export function blogPostingJsonLd(post: BlogPost): Record<string, unknown> {
     url,
     datePublished: toIso(post.publishDate),
     dateModified: toIso(post.updatedAt) || toIso(post.publishDate),
-    image: post.openGraphImageUrl || post.featuredImageUrl || undefined,
+    image: absoluteUrl(post.openGraphImageUrl || post.featuredImageUrl),
     author: { "@type": "Organization", name: post.author || "PlanAlert" },
     publisher: {
       "@type": "Organization",
