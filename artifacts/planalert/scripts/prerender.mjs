@@ -2,6 +2,14 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import pg from "pg";
+import {
+  organizationJsonLd,
+  webSiteJsonLd,
+  breadcrumbJsonLd,
+  blogPostingJsonLd,
+  blogPostBreadcrumbJsonLd,
+  injectJsonLd,
+} from "../server/json-ld.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const distDir = join(__dirname, "..", "dist", "public");
@@ -27,7 +35,7 @@ function escapeHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
-function renderRoute({ path, title, description, ogType = "website", ogImage = defaultOgImage, ssrData }) {
+function renderRoute({ path, title, description, ogType = "website", ogImage = defaultOgImage, ssrData, jsonLd }) {
   const t = escapeHtml(title);
   const d = escapeHtml(description);
   const url = `${siteOrigin}${path === "/" ? "/" : path}`;
@@ -43,6 +51,7 @@ function renderRoute({ path, title, description, ogType = "website", ogImage = d
     .replace(/<meta name="twitter:description" content="[^"]*" \/>/, `<meta name="twitter:description" content="${d}" />`)
     .replace(/<meta name="twitter:image" content="[^"]*" \/>/, `<meta name="twitter:image" content="${escapeHtml(ogImage)}" />`)
     .replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${url}" />`);
+  if (jsonLd && jsonLd.length) html = injectJsonLd(html, jsonLd);
 
   // Server-render the page body so the full visible content (not just meta
   // tags) is present in the raw HTML for crawlers that don't execute JS.
@@ -69,6 +78,7 @@ const staticRoutes = [
     title: "PlanAlert — Never overpay for household plans again",
     description:
       "Tell us about your current plan and we'll compare it against the market - then monitor it continuously so you always know when a better plan becomes available.",
+    jsonLd: [organizationJsonLd(), webSiteJsonLd()],
   },
   {
     path: "/how-it-works",
@@ -115,6 +125,12 @@ const staticRoutes = [
     title: "About PlanAlert — Built to close the loyalty gap",
     description:
       "PlanAlert exists to close the loyalty gap. We watch the market so households stop absorbing the loyalty tax on cellular, internet, and other everyday plans.",
+    jsonLd: [
+      breadcrumbJsonLd([
+        { name: "Home", url: `${siteOrigin}/` },
+        { name: "About", url: `${siteOrigin}/about` },
+      ]),
+    ],
   },
 ];
 
@@ -211,6 +227,7 @@ async function main() {
       ogType: "article",
       ogImage: post.openGraphImageUrl || post.featuredImageUrl || defaultOgImage,
       ssrData: { post },
+      jsonLd: [blogPostingJsonLd(post), blogPostBreadcrumbJsonLd(post)],
     });
   }
   console.log(`prerendered ${posts.length} blog post(s)`);

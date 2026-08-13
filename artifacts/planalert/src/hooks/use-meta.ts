@@ -8,7 +8,7 @@ interface MetaOptions {
   ogDescription?: string;
   ogImage?: string;
   ogType?: string;
-  jsonLd?: Record<string, unknown> | null;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>> | null;
 }
 
 function setTag(selector: string, attrs: Record<string, string>): HTMLElement {
@@ -46,17 +46,29 @@ export function useMeta(opts: MetaOptions): void {
       const el = setTag(`meta[property="${prop}"]`, { property: prop, content: value });
       created.push(el);
     });
-    let scriptEl: HTMLScriptElement | null = null;
-    if (opts.jsonLd) {
-      scriptEl = document.createElement("script");
+    // The client owns JSON-LD after hydration: drop any server/prerender
+    // injected blocks (they lack data-dynamic) so direct loads don't end up
+    // with duplicates once the page's own blocks are appended below.
+    document.head
+      .querySelectorAll('script[type="application/ld+json"]:not([data-dynamic])')
+      .forEach((el) => el.remove());
+    const scriptEls: HTMLScriptElement[] = [];
+    const jsonLdBlocks = opts.jsonLd
+      ? Array.isArray(opts.jsonLd)
+        ? opts.jsonLd
+        : [opts.jsonLd]
+      : [];
+    for (const block of jsonLdBlocks) {
+      const scriptEl = document.createElement("script");
       scriptEl.type = "application/ld+json";
-      scriptEl.text = JSON.stringify(opts.jsonLd);
+      scriptEl.text = JSON.stringify(block);
       scriptEl.dataset.dynamic = "true";
       document.head.appendChild(scriptEl);
+      scriptEls.push(scriptEl);
     }
     return () => {
       document.title = original;
-      if (scriptEl) scriptEl.remove();
+      scriptEls.forEach((el) => el.remove());
     };
   }, [
     opts.title,

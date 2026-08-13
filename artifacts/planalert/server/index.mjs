@@ -3,6 +3,14 @@ import path from "node:path";
 import fs from "node:fs";
 import zlib from "node:zlib";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import {
+  organizationJsonLd,
+  webSiteJsonLd,
+  breadcrumbJsonLd,
+  blogPostingJsonLd,
+  blogPostBreadcrumbJsonLd,
+  injectJsonLd,
+} from "./json-ld.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicDir = path.resolve(__dirname, "..", "dist", "public");
@@ -199,6 +207,21 @@ const STATIC_META = {
   },
 };
 
+// Route-level JSON-LD for pages served through the runtime SPA fallback.
+// Prerendered files get the same blocks at build time (scripts/prerender.mjs).
+function routeJsonLd(cleanPath) {
+  if (cleanPath === "/") return [organizationJsonLd(), webSiteJsonLd()];
+  if (cleanPath === "/about") {
+    return [
+      breadcrumbJsonLd([
+        { name: "Home", url: `${SITE_ORIGIN}/` },
+        { name: "About", url: `${SITE_ORIGIN}/about` },
+      ]),
+    ];
+  }
+  return null;
+}
+
 function escapeHtml(s) {
   return String(s)
     .replace(/&/g, "&amp;")
@@ -394,14 +417,21 @@ async function sendSpaFallback(res, pathname, headOnly, fallbackFile = null) {
       ...STATIC_META[cleanPath],
       canonical: `${SITE_ORIGIN}${cleanPath}`,
     };
-    sendHtml(res, injectMeta(indexTemplate, meta), headOnly);
+    sendHtml(
+      res,
+      injectJsonLd(injectMeta(indexTemplate, meta), routeJsonLd(cleanPath)),
+      headOnly,
+    );
     return;
   }
   const blogMatch = cleanPath.match(/^\/blog\/([^/]+)$/);
   if (blogMatch) {
     const data = await fetchPost(blogMatch[1]);
     if (data && !data.unavailable) {
-      let html = injectMeta(indexTemplate, data.meta);
+      let html = injectJsonLd(injectMeta(indexTemplate, data.meta), [
+        blogPostingJsonLd(data.post),
+        blogPostBreadcrumbJsonLd(data.post),
+      ]);
       // Render the full article body so the content is in the raw HTML
       // even for posts published after the last build.
       const render = await loadSsrRender();
@@ -430,7 +460,7 @@ async function sendSpaFallback(res, pathname, headOnly, fallbackFile = null) {
   const isClientRoute = cleanPath === "/" || cleanPath.startsWith("/blogadmin");
   sendHtml(
     res,
-    indexTemplate,
+    injectJsonLd(indexTemplate, routeJsonLd(cleanPath)),
     headOnly,
     "text/html; charset=utf-8",
     isClientRoute ? 200 : 404,

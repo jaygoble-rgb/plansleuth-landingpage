@@ -4,6 +4,7 @@ import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import { useMeta } from "@/hooks/use-meta";
 import { canonicalUrl } from "@/lib/site";
+import { breadcrumbJsonLd } from "@/lib/json-ld";
 
 export default function About() {
   useMeta({
@@ -12,6 +13,10 @@ export default function About() {
       "PlanAlert exists to close the loyalty gap. We watch the market so households stop absorbing the loyalty tax on cellular, internet, and other everyday plans.",
     canonical: canonicalUrl("/about"),
     ogType: "website",
+    jsonLd: breadcrumbJsonLd([
+      { name: "Home", url: canonicalUrl("/") },
+      { name: "About", url: canonicalUrl("/about") },
+    ]),
   });
 
   return (

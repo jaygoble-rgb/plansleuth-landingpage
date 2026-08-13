@@ -9,6 +9,7 @@ import { publicBlog } from "@/lib/blog-api";
 import { Markdown } from "@/components/markdown";
 import { useMeta } from "@/hooks/use-meta";
 import { canonicalUrl } from "@/lib/site";
+import { blogPostingJsonLd, blogPostBreadcrumbJsonLd } from "@/lib/json-ld";
 
 function formatDate(d: string | null) {
   if (!d) return "";
@@ -35,19 +36,7 @@ export default function BlogPostPage() {
     ogDescription: post?.metaDescription || post?.excerpt,
     ogImage: post?.openGraphImageUrl || post?.featuredImageUrl || undefined,
     ogType: "article",
-    jsonLd: post
-      ? {
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
-          headline: post.title,
-          description: post.metaDescription || post.excerpt,
-          image: post.openGraphImageUrl || post.featuredImageUrl || undefined,
-          datePublished: post.publishDate,
-          dateModified: post.updatedAt,
-          author: post.author ? { "@type": "Person", name: post.author } : undefined,
-          mainEntityOfPage: url,
-        }
-      : null,
+    jsonLd: post ? [blogPostingJsonLd(post), blogPostBreadcrumbJsonLd(post)] : null,
   });
 
   return (

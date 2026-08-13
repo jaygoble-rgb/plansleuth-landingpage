@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import { useMeta } from "@/hooks/use-meta";
+import { organizationJsonLd, webSiteJsonLd } from "@/lib/json-ld";
 import { SITE_ORIGIN, canonicalUrl } from "@/lib/site";
 
 const steps = [
@@ -42,6 +43,7 @@ export default function Home() {
     canonical: canonicalUrl("/"),
     ogType: "website",
     ogImage: `${SITE_ORIGIN}/opengraph.jpg`,
+    jsonLd: [organizationJsonLd(), webSiteJsonLd()],
   });
 
   return (
