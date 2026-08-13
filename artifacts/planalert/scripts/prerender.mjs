@@ -95,6 +95,22 @@ const staticRoutes = [
       "Stop overpaying after your promo rate expires. We monitor home internet providers at your address and alert you plainly when a better fiber or 5G deal arrives.",
   },
   {
+    path: "/privacy",
+    title: "Privacy Policy — PlanAlert",
+    description: "How PlanAlert collects, uses, and protects your information.",
+  },
+  {
+    path: "/terms",
+    title: "Terms of Service — PlanAlert",
+    description: "The terms that govern your use of PlanAlert.",
+  },
+  {
+    path: "/contact",
+    title: "Contact — PlanAlert",
+    description:
+      "Questions about PlanAlert, your account, or plan monitoring? Get in touch with the PlanAlert team.",
+  },
+  {
     path: "/about",
     title: "About PlanAlert — Built to close the loyalty gap",
     description:

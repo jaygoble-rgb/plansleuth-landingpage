@@ -50,8 +50,19 @@ export function SiteFooter() {
           <span>PlanAlert</span>
         </Link>
 
-        <div className="text-sm text-[#8A94A8]">
-          &copy; {new Date().getFullYear()} PlanAlert. All rights reserved.
+        <div className="flex flex-col items-center gap-2 text-sm text-[#8A94A8]">
+          <nav className="flex items-center gap-4" aria-label="Legal">
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-white transition-colors">
+              Terms of Service
+            </Link>
+            <Link href="/contact" className="hover:text-white transition-colors">
+              Contact
+            </Link>
+          </nav>
+          <div>&copy; {new Date().getFullYear()} PlanAlert. All rights reserved.</div>
         </div>
 
         <div className="flex items-center gap-4">

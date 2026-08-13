@@ -184,6 +184,19 @@ const STATIC_META = {
     description:
       "Insights, tips, and updates from PlanAlert on saving money on cell phone, internet, and household plans.",
   },
+  "/privacy": {
+    title: "Privacy Policy — PlanAlert",
+    description: "How PlanAlert collects, uses, and protects your information.",
+  },
+  "/terms": {
+    title: "Terms of Service — PlanAlert",
+    description: "The terms that govern your use of PlanAlert.",
+  },
+  "/contact": {
+    title: "Contact — PlanAlert",
+    description:
+      "Questions about PlanAlert, your account, or plan monitoring? Get in touch with the PlanAlert team.",
+  },
 };
 
 function escapeHtml(s) {
@@ -310,7 +323,15 @@ async function renderBlogIndexHtml() {
 }
 
 // Runtime-generated sitemap so new posts are discoverable without a rebuild.
-const SITEMAP_STATIC_PATHS = ["/", "/how-it-works", "/about", "/blog"];
+const SITEMAP_STATIC_PATHS = [
+  "/",
+  "/how-it-works",
+  "/about",
+  "/blog",
+  "/privacy",
+  "/terms",
+  "/contact",
+];
 
 async function renderSitemapXml() {
   const cached = cacheGet("sitemap");
