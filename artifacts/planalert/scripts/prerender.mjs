@@ -10,6 +10,7 @@ import {
   blogPostingJsonLd,
   blogPostBreadcrumbJsonLd,
   injectJsonLd,
+  absoluteUrl,
 } from "../server/json-ld.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -304,7 +305,7 @@ async function main() {
       title: post.metaTitle || `${post.title} — PlanAlert Blog`,
       description: post.metaDescription || post.excerpt || "",
       ogType: "article",
-      ogImage: post.openGraphImageUrl || post.featuredImageUrl || defaultOgImage,
+      ogImage: absoluteUrl(post.openGraphImageUrl || post.featuredImageUrl) || defaultOgImage,
       ssrData: { post },
       jsonLd: [blogPostingJsonLd(post), blogPostBreadcrumbJsonLd(post)],
     });

@@ -10,6 +10,7 @@ import {
   blogPostingJsonLd,
   blogPostBreadcrumbJsonLd,
   injectJsonLd,
+  absoluteUrl,
 } from "./json-ld.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -280,10 +281,23 @@ function injectMeta(html, meta) {
         `$1${description}$2`,
       );
   }
-  return out.replace(
+  out = out.replace(
     /(<meta name="twitter:title" content=")[^"]*(")/,
     `$1${title}$2`,
   );
+  if (meta.ogImage) {
+    const ogImage = escapeHtml(meta.ogImage);
+    out = out
+      .replace(
+        /(<meta property="og:image" content=")[^"]*(")/,
+        `$1${ogImage}$2`,
+      )
+      .replace(
+        /(<meta name="twitter:image" content=")[^"]*(")/,
+        `$1${ogImage}$2`,
+      );
+  }
+  return out;
 }
 
 const CACHE_MS = 60_000;
@@ -327,6 +341,9 @@ async function fetchPost(slug) {
         title: post.metaTitle || `${post.title} — PlanAlert Blog`,
         description: post.metaDescription || post.excerpt || "",
         canonical: post.canonicalUrl || `${SITE_ORIGIN}/blog/${post.slug}`,
+        // Social platforms require absolute https:// image URLs; stored
+        // blog image paths are site-relative.
+        ogImage: absoluteUrl(post.openGraphImageUrl || post.featuredImageUrl),
       },
     });
   } catch {

@@ -9,7 +9,7 @@ import { publicBlog } from "@/lib/blog-api";
 import { Markdown } from "@/components/markdown";
 import { useMeta } from "@/hooks/use-meta";
 import { canonicalUrl } from "@/lib/site";
-import { blogPostingJsonLd, blogPostBreadcrumbJsonLd } from "@/lib/json-ld";
+import { blogPostingJsonLd, blogPostBreadcrumbJsonLd, absoluteUrl } from "@/lib/json-ld";
 
 function formatDate(d: string | null) {
   if (!d) return "";
@@ -34,7 +34,7 @@ export default function BlogPostPage() {
     canonical: post?.canonicalUrl || url,
     ogTitle: post?.metaTitle || post?.title,
     ogDescription: post?.metaDescription || post?.excerpt,
-    ogImage: post?.openGraphImageUrl || post?.featuredImageUrl || undefined,
+    ogImage: absoluteUrl(post?.openGraphImageUrl || post?.featuredImageUrl),
     ogType: "article",
     jsonLd: post ? [blogPostingJsonLd(post), blogPostBreadcrumbJsonLd(post)] : null,
   });
