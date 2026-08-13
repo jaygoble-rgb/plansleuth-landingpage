@@ -55,7 +55,14 @@ function renderRoute({ path, title, description, ogType = "website", ogImage = d
 
   // Server-render the page body so the full visible content (not just meta
   // tags) is present in the raw HTML for crawlers that don't execute JS.
-  const appHtml = render(path, ssrData ?? {});
+  // Strip React 19's auto-emitted image preload for the decorative nav
+  // bell logo only, so it doesn't compete with the hero font (the real
+  // LCP resource). Preloads for content images (e.g. blog featured
+  // images) are kept.
+  const appHtml = render(path, ssrData ?? {}).replace(
+    /<link rel="preload" as="image"[^>]*bell-logo[^>]*\/?>/g,
+    "",
+  );
   if (!appHtml || appHtml.length === 0) {
     throw new Error(`SSR produced empty output for ${path}`);
   }

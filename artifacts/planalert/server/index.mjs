@@ -171,8 +171,21 @@ function loadSsrRender() {
   return ssrRenderPromise;
 }
 
+// React 19's renderToString auto-emits an image preload for rendered <img>
+// elements. The nav bell logo is a tiny decorative asset — strip only its
+// hint so it doesn't compete with the real LCP resources (hero font),
+// while keeping preloads for meaningful content images (e.g. blog
+// featured images).
+function stripImagePreloads(appHtml) {
+  return appHtml.replace(
+    /<link rel="preload" as="image"[^>]*bell-logo[^>]*\/?>/g,
+    "",
+  );
+}
+
 function injectBody(html, appHtml) {
   if (!appHtml) return html;
+  appHtml = stripImagePreloads(appHtml);
   return html.replace('<div id="root"></div>', () => `<div id="root">${appHtml}</div>`);
 }
 
