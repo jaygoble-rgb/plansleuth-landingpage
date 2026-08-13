@@ -467,7 +467,44 @@ async function sendSpaFallback(res, pathname, headOnly, fallbackFile = null) {
   );
 }
 
+// Security headers on every response. HSTS is already handled upstream —
+// do not add it here. CSP starts in Report-Only mode so would-be
+// violations can be reviewed before enforcing; keep the policy in sync
+// with what the site actually loads (GA/gtag, Google Fonts, Scribe embed,
+// the app.planalert.com signup flow).
+const CSP_REPORT_ONLY = [
+  "default-src 'self'",
+  // gtag bootstraps via an inline snippet in index.html.
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.google-analytics.com",
+  // Tailwind/React inject inline styles; Google Fonts stylesheet.
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  // Blog images are editor-supplied URLs; keep img-src permissive for now.
+  "img-src 'self' data: https:",
+  // www.google.com is needed because GA4 region-routes some /g/collect
+  // beacons there (observed as a report-only violation in testing).
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://app.planalert.com",
+  // The how-it-works walkthrough embeds a Scribe viewer.
+  "frame-src https://scribehow.com",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "form-action 'self' https://app.planalert.com",
+  "object-src 'none'",
+].join("; ");
+
+const SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Content-Security-Policy-Report-Only": CSP_REPORT_ONLY,
+};
+
 const server = http.createServer((req, res) => {
+  // setHeader-set headers are sent alongside any later writeHead(status,
+  // headers) call, so every response path below inherits these.
+  for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+    res.setHeader(name, value);
+  }
   const method = req.method || "GET";
   if (method !== "GET" && method !== "HEAD") {
     res.writeHead(405, { Allow: "GET, HEAD" }).end();
