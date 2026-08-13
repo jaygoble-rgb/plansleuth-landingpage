@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import SiteNav from "@/components/site-nav";
 import SiteFooter from "@/components/site-footer";
 import { useMeta } from "@/hooks/use-meta";
@@ -31,7 +32,15 @@ export default function Terms() {
       {/* Body */}
       <section className="py-14 md:py-24 bg-white">
         <div className="max-w-3xl mx-auto px-6 md:px-12 space-y-6 text-base sm:text-lg leading-relaxed text-muted-foreground">
-          <p>[PLACEHOLDER — replace with reviewed legal copy before launch]</p>
+          <p>
+            Our full terms of service are being finalized and will be published
+            here. In the meantime, if you have any questions about using
+            PlanAlert, please reach out via our{" "}
+            <Link href="/contact" className="text-[#2563FF] underline underline-offset-2 hover:text-[#1E54E0]">
+              contact page
+            </Link>
+            .
+          </p>
         </div>
       </section>
 
