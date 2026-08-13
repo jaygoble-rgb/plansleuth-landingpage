@@ -63,7 +63,10 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
         <span>PlanAlert</span>
       </Link>
 
-      <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+      {/* Centered links are absolutely positioned, so they collide with the
+          right-side actions at tablet widths (768–1023px, e.g. iPad Mini/Air).
+          Show them only from lg up; tablets use the hamburger sheet instead. */}
+      <div className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
         <Link
           href="/about"
           className="text-base font-medium text-primary/80 hover:text-primary transition-colors"
@@ -121,7 +124,7 @@ export function SiteNav({ variant, overlay = false }: SiteNavProps) {
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
-            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-primary hover:bg-primary/5 transition-colors"
+            className="lg:hidden inline-flex items-center justify-center rounded-lg p-2 text-primary hover:bg-primary/5 transition-colors"
             aria-label="Open menu"
             data-testid="button-mobile-menu"
           >
