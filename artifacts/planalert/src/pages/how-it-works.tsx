@@ -78,39 +78,6 @@ export default function HowItWorks() {
               </div>
             ))}
           </div>
-
-          {/* Methodology */}
-          <div className="mt-16 md:mt-20 max-w-3xl mx-auto rounded-2xl border border-[#E5EAF2] bg-[#F7F9FC] p-8 md:p-10">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary tracking-tight mb-4">
-              How we compare plans
-            </h2>
-            <div className="space-y-4 text-base leading-relaxed text-muted-foreground">
-              <p>[NEEDS REAL METHODOLOGY DETAILS]</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Walkthrough */}
-      <section className="pb-20 md:pb-28 bg-white">
-        <div className="max-w-3xl mx-auto px-6 md:px-12">
-          <div className="text-center mb-10">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary">
-              Follow along
-            </h2>
-            <p className="mt-3 text-base md:text-lg text-muted-foreground">
-              A step-by-step walkthrough of getting started with PlanAlert.
-            </p>
-          </div>
-          <div className="overflow-hidden rounded-2xl border border-[#E5EAF2] shadow-sm bg-white">
-            <iframe
-              src="https://scribehow.com/o/X_25OUPkTXa7w9SQPJ0u4w/viewer/How_to_start_monitoring_your_plans__4Wob1c6DQsaCIR5Kw_J9FA"
-              title="How to start monitoring your plans"
-              allow="fullscreen"
-              className="w-full block"
-              style={{ aspectRatio: "1 / 1", border: 0, minHeight: 480 }}
-            />
-          </div>
         </div>
       </section>
 
