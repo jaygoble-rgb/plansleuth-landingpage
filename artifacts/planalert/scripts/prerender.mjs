@@ -228,11 +228,18 @@ async function fetchPublishedPosts() {
     await client.connect();
     // Field aliases mirror the public API response shape so the SSR pages
     // receive exactly the data the client-side fetch would have produced.
-    const { rows } = await client.query(
+    //
+    // author_credential fallback: during publish, this build runs against the
+    // production DB *before* the publish flow applies the dev→prod schema
+    // diff, so a freshly added column may not exist yet (42703). Retry
+    // without it — the byline just omits the credential for this build; the
+    // next build after the column lands picks it up. All other DB errors
+    // still fail the build loudly.
+    const postQuery = (credentialExpr) =>
       `SELECT id, title, slug, body, excerpt,
               featured_image_url AS "featuredImageUrl",
               featured_image_alt AS "featuredImageAlt",
-              author, author_credential AS "authorCredential",
+              author, ${credentialExpr} AS "authorCredential",
               category, tags,
               publish_date AS "publishDate",
               meta_title AS "metaTitle",
@@ -244,9 +251,18 @@ async function fetchPublishedPosts() {
               updated_at AS "updatedAt"
          FROM blog_posts
         WHERE status = 'published' AND archived_at IS NULL
-        ORDER BY publish_date DESC NULLS LAST, created_at DESC`,
-    );
-    return rows;
+        ORDER BY publish_date DESC NULLS LAST, created_at DESC`;
+    try {
+      const { rows } = await client.query(postQuery("author_credential"));
+      return rows;
+    } catch (err) {
+      if (err?.code !== "42703") throw err; // only tolerate the missing column
+      console.warn(
+        "prerender: author_credential column missing (schema not yet migrated); rendering without credentials",
+      );
+      const { rows } = await client.query(postQuery("NULL"));
+      return rows;
+    }
   } finally {
     await client.end().catch(() => {});
   }
