@@ -1,0 +1,119 @@
+ **Key Takeaways**
+> - AT&T, T-Mobile, and Verizon have all raised a carrier-added per-line fee in the past 18 months, without requiring any plan change.
+> - These fees are set and kept by the carrier. They are not government taxes, even when the name sounds regulatory.
+> - Verizon's equivalent fee has risen roughly 80% over two years ([PhoneArena](https://www.phonearena.com/news/verizon-activation-administrative-telco-regulatory-price-increase_id172776), retrieved 2026-08-12).
+> - Beyond fees, promo-period expiration and forgotten add-ons are the other two common, quiet causes of a rising bill.
+
+If your bill went up and you're sure you didn't change anything, you're very likely right. In the past 18 months, all three major U.S. carriers have raised a carrier-added, per-line fee, on top of whatever your plan is advertised to cost. This isn't a one-carrier problem or a one-time event. Here's exactly what changed, why it's legal, and how to catch it before it surprises you again.
+
+## All Three Major Carriers Raised Fees Recently, Without You Changing Anything
+
+AT&T, T-Mobile, and Verizon have each raised a carrier-set per-line fee in the past 18 months, and none of these increases required you to change plans, add a line, or do anything at all.
+
+**AT&T** raised its "Administrative & Regulatory Cost Recovery Fee" from $3.99 to $4.99 per postpaid line, effective August 5, 2026 ([PhoneArena](https://www.phonearena.com/news/at-t-raising-at-t-administrative---regulatory-cost-recovery-fee_id181340); [Android Authority](https://www.androidauthority.com/att-new-fee-hike-3680584/), retrieved 2026-08-12).
+
+**T-Mobile** raised its "Regulatory Programs & Telco Recovery Fee" from $3.99 to $4.49 per voice line and from $1.60 to $2.10 per mobile internet line, effective January 21, 2026 ([HowToGeek](https://www.howtogeek.com/t-mobile-is-raising-its-fees-yet-again/); [PhoneArena](https://www.phonearena.com/news/t-mobile-raising-regulatory-programs---telco-recovery-fee_id177131), retrieved 2026-08-12).
+
+**Verizon** raised its "Administrative & Telco Recovery Charge" from $3.50 to $3.78 per voice line and from $1.60 to $3.97 per data-only line around September 1, 2025. That charge has climbed roughly 80% over the past two years ([PhoneArena](https://www.phonearena.com/news/verizon-activation-administrative-telco-regulatory-price-increase_id172776), retrieved 2026-08-12).
+
+<figure>
+<svg viewBox="0 0 640 360" role="img" aria-labelledby="fee-hike-chart-title fee-hike-chart-desc" xmlns="http://www.w3.org/2000/svg">
+<title id="fee-hike-chart-title">Per-line carrier fee, before and after recent increases</title>
+<desc id="fee-hike-chart-desc">Grouped bar chart. AT&T Administrative and Regulatory Cost Recovery Fee went from three dollars ninety nine cents to four dollars ninety nine cents. T-Mobile Regulatory Programs and Telco Recovery Fee, voice line, went from three dollars ninety nine cents to four dollars forty nine cents. Verizon Administrative and Telco Recovery Charge, voice line, went from three dollars fifty cents to three dollars seventy eight cents.</desc>
+<style>
+  .bar-label { font: 600 14px system-ui, sans-serif; fill: #1f2933; }
+  .bar-value { font: 600 13px system-ui, sans-serif; fill: #1f2933; }
+  .axis-note { font: 400 12px system-ui, sans-serif; fill: #52606d; }
+  @media (prefers-color-scheme: dark) {
+    .bar-label, .bar-value { fill: #f0f4f8; }
+    .axis-note { fill: #cbd2d9; }
+  }
+</style>
+<text x="20" y="32" class="bar-label">AT&amp;T</text>
+<rect x="140" y="16" width="159.6" height="24" rx="3" fill="#8a97a5"/>
+<text x="304" y="33" class="bar-value">$3.99</text>
+<rect x="140" y="44" width="199.6" height="24" rx="3" fill="#2f9e6f"/>
+<text x="344" y="61" class="bar-value">$4.99</text>
+
+<text x="20" y="112" class="bar-label">T-Mobile (voice)</text>
+<rect x="140" y="96" width="159.6" height="24" rx="3" fill="#8a97a5"/>
+<text x="304" y="113" class="bar-value">$3.99</text>
+<rect x="140" y="124" width="179.6" height="24" rx="3" fill="#2f9e6f"/>
+<text x="324" y="141" class="bar-value">$4.49</text>
+
+<text x="20" y="192" class="bar-label">Verizon (voice)</text>
+<rect x="140" y="176" width="140" height="24" rx="3" fill="#8a97a5"/>
+<text x="284" y="193" class="bar-value">$3.50</text>
+<rect x="140" y="204" width="151.2" height="24" rx="3" fill="#2f9e6f"/>
+<text x="295" y="221" class="bar-value">$3.78</text>
+
+<rect x="140" y="250" width="14" height="14" fill="#8a97a5"/>
+<text x="160" y="262" class="axis-note">Previous rate</text>
+<rect x="280" y="250" width="14" height="14" fill="#2f9e6f"/>
+<text x="300" y="262" class="axis-note">Current rate</text>
+
+<text x="20" y="290" class="axis-note">Per line, per month. Dates and figures per sources cited above; individual fee tiers vary by line type and plan generation.</text>
+</svg>
+<figcaption>Sources: AT&T per PhoneArena and Android Authority; T-Mobile per HowToGeek and PhoneArena; Verizon per PhoneArena, retrieved 2026-08-12.</figcaption>
+</figure>
+
+## What These Fees Actually Are
+
+These are not government taxes. Each carrier sets, adjusts, and keeps this fee itself, even though the names ("Regulatory Programs," "Administrative & Regulatory Cost Recovery") sound official.
+
+Carriers describe these charges as recovering network, regulatory-compliance, and property-tax-related costs, but none of the three is required by any government body to charge this specific line item, and none of it goes to a government agency. The FCC's own consumer guidance on unexpected bill increases exists precisely because this pattern is common enough to have a name: "bill shock" ([FCC](https://www.fcc.gov/encyclopedia/bill-shock), retrieved 2026-08-12).
+
+The practical consequence is straightforward: your advertised plan price can stay exactly the same on paper while your actual charged total rises, because this fee lives outside the plan price itself.
+
+## Beyond Fees: Other Ways Your Bill Creeps Up Silently
+
+Carrier fees are one driver, but they're not the only one. Promo-period expiration and forgotten add-ons are just as common.
+
+**Promo-period expiration.** Many plans carry a first-year or first-several-months discounted rate that reverts to a higher standard rate automatically, with no separate notification calling out the change as an increase.
+
+**Device installment payments.** If you financed a phone, your monthly device payment is a separate line item from your plan cost. Paying off other debt or a previous device doesn't reduce it, and it's easy to lose track of exactly when a device payoff should have lowered your total.
+
+**Forgotten add-ons.** Insurance, streaming bundles, and other opt-in extras are easy to sign up for once during a promotion and then never revisit.
+
+### How to check what's actually on your bill
+
+Compare your bill's individual line items month over month, not just the total. A rising total with an unchanged plan name is the signature of exactly this kind of creep.
+
+## How to Catch This Before It Surprises You
+
+The fastest way to catch a silent increase is comparing your actual charged total month over month, not just checking whether your plan's name changed.
+
+Set a recurring reminder, monthly or quarterly, to scan your bill's individual line items rather than glancing at the total. Some carriers offer bill-change or price-increase notification settings; turning those on where available adds a second layer of warning. The honest limitation of this approach is the same one that applies to comparison shopping in general: it works exactly as long as you remember to keep doing it. For the fuller diagnostic on overpayment and what to do about it, see [Am I Overpaying for My Cell Phone Plan? The Complete Guide](/blog/am-i-overpaying-cell-phone-plan).
+
+## The Fix That Doesn't Rely on You Remembering
+
+Continuous monitoring exists specifically for this pattern. It catches a fee increase or a newly available better plan without you having to manually re-check your bill every month.
+
+PlanAlert monitors your cellular and internet plans on an ongoing basis and surfaces changes like these automatically, rather than requiring you to notice a few extra dollars buried in a line item. This is a different kind of fix than bill negotiation: a negotiation service can get your bill lowered once, but it isn't watching for the next fee increase after that. See [Rocket Money vs. PlanAlert: Bill Negotiation vs. Continuous Monitoring](/blog/rocket-money-vs-planalert) for the full comparison.
+
+## Frequently Asked Questions
+
+### Is it legal for carriers to raise fees without notifying me?
+
+Generally yes. Each of the three fee increases cited above was disclosed through a routine bill notice or account communication rather than requiring separate opt-in consent, since carriers treat the fee as part of normal account terms rather than a plan change. That's a practical observation about how these specific increases were rolled out, not a legal ruling; if you want the exact notice requirements that apply to your account, your carrier's terms of service is the authoritative source.
+
+### Why does my bill say a fee is not a tax if it funds regulatory compliance?
+
+Carriers use fee names that reference regulatory or administrative costs, but the fee itself is set by the carrier, not a government body, and the money is kept by the carrier rather than remitted as a tax.
+
+### Will switching plans avoid these fees?
+
+Usually not. These fees typically apply per line across most plan tiers from that carrier, so a plan change alone doesn't remove them; switching to a different carrier or an MVNO on the same network is more likely to change your total.
+
+### How often should I check my bill for creep like this?
+
+Monthly is ideal, but even a quarterly line-item review will catch most fee increases and forgotten add-ons before they compound over a full year.
+
+## Conclusion
+
+A rising bill with no plan change usually isn't a mistake or your imagination. It's one or more of a short, repeatable list: a carrier fee increase, a promo period ending, or an add-on you signed up for once and forgot about. Checking your bill's line items regularly catches most of it, and a monitoring tool removes the part where you have to remember to keep checking.
+
+**Continue learning:**
+- [Am I Overpaying for My Cell Phone Plan? The Complete Guide](/blog/am-i-overpaying-cell-phone-plan)
+- [Rocket Money vs. PlanAlert: Bill Negotiation vs. Continuous Monitoring](/blog/rocket-money-vs-planalert)
+- [MVNO vs. Major Carrier: Same Towers, Half the Price](/blog/mvno-vs-major-carrier)
