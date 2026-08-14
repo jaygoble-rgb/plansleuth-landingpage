@@ -1,0 +1,33 @@
+<figure>
+<svg viewBox="0 0 640 320" role="img" aria-labelledby="fee-chart-title fee-chart-desc" xmlns="http://www.w3.org/2000/svg">
+<title id="fee-chart-title">What you keep from $240 in first-year savings, by fee model</title>
+<desc id="fee-chart-desc">Horizontal bar chart. On two hundred forty dollars of negotiated first year savings: Rocket Money at the sixty percent fee tier leaves you ninety six dollars. Rocket Money at the thirty five percent fee tier leaves you one hundred fifty six dollars. Trim at a reported fifteen percent fee leaves you two hundred four dollars. Continuous monitoring with no negotiation cut leaves the full two hundred forty dollars.</desc>
+<style>
+  .bar-label { font: 600 15px system-ui, sans-serif; fill: #1f2933; }
+  .bar-value { font: 600 15px system-ui, sans-serif; fill: #1f2933; }
+  .axis-note { font: 400 12px system-ui, sans-serif; fill: #52606d; }
+  @media (prefers-color-scheme: dark) {
+    .bar-label, .bar-value { fill: #f0f4f8; }
+    .axis-note { fill: #cbd2d9; }
+  }
+</style>
+<text x="20" y="38" class="bar-label">Rocket Money (60% fee)</text>
+<rect x="20" y="46" width="192" height="30" rx="4" fill="#b5563b"/>
+<text x="222" y="66" class="bar-value">$96 kept</text>
+
+<text x="20" y="108" class="bar-label">Rocket Money (35% fee)</text>
+<rect x="20" y="116" width="312" height="30" rx="4" fill="#c98a3b"/>
+<text x="342" y="136" class="bar-value">$156 kept</text>
+
+<text x="20" y="178" class="bar-label">Trim (reported 15% fee)</text>
+<rect x="20" y="186" width="408" height="30" rx="4" fill="#3b6bb5"/>
+<text x="438" y="206" class="bar-value">$204 kept</text>
+
+<text x="20" y="248" class="bar-label">Continuous monitoring (no fee)</text>
+<rect x="20" y="256" width="480" height="30" rx="4" fill="#2f9e6f"/>
+<text x="510" y="276" class="bar-value">$240 kept</text>
+
+<text x="20" y="308" class="axis-note">Based on $240 in first-year negotiated savings ($20/month). Fee tiers per each service's published pricing.</text>
+</svg>
+<figcaption>Sources: Rocket Money fee structure per <a href="https://help.rocketmoney.com/en/articles/9744474-bill-negotiation-charge-explained">Rocket Money Help Center</a>; Trim fee per <a href="https://finmasters.com/best-bill-negotiation-services/">FinMasters</a>, retrieved 2026-08-12.</figcaption>
+</figure>
